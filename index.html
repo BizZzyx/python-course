@@ -221,6 +221,24 @@
       .panel {
         padding: 18px;
       }
+      #tutorial,
+#explanation {
+  white-space: pre-line;
+}
+
+#tutorial {
+  line-height: 1.85;
+}
+
+#example,
+#solution {
+  line-height: 1.75;
+}
+
+#explanation {
+  border-left: 3px solid var(--green);
+  padding-left: 14px;
+}
     }
   </style>
 </head>
@@ -1535,6 +1553,1665 @@ assert summarize_expenses([]) == {
     "The loop maintains an overall total and a total for each category. Integer cents avoid floating-point rounding issues in this project."
   )
 ];
+  /* ============================================================
+   ROZSZERZONE MATERIAŁY DO WSZYSTKICH 50 LEKCJI
+
+   Każdy wpis zawiera:
+   1. Dokładniejsze omówienie.
+   2. Rozbudowany przykład.
+   3. Wyjaśnienie rozwiązania zadania.
+
+   Kolejność odpowiada istniejącej tablicy lessons.
+   Przykłady służą do nauki — nie zastępują zadań.
+   ============================================================ */
+
+const extendedLessonContent = [
+  // 1. Hello, Python
+  [
+    `Funkcja print() wyświetla informacje na standardowym wyjściu programu. W tej aplikacji zobaczysz je w sekcji Results. Możesz przekazać do niej tekst, liczbę albo kilka wartości oddzielonych przecinkami. Domyślnie print() rozdziela takie wartości spacją i kończy wypisywanie znakiem nowej linii.
+
+Tekst zapisujemy w pasujących do siebie cudzysłowach lub apostrofach. Same znaki otaczające tekst nie są wyświetlane — informują Pythona, gdzie zaczyna się i kończy napis. Instrukcje wykonywane są od góry do dołu, a komentarze rozpoczynające się od # są pomijane.
+
+W zadaniach wymagających dokładnego tekstu znaczenie mają wielkość liter, spacje i interpunkcja. Dodatkowy komunikat diagnostyczny również staje się częścią wyjścia programu.`,
+
+    `# Każde wywołanie domyślnie rozpoczyna osobną linię.
+print("Witaj w kursie Pythona!")
+print('Ten napis zapisano w apostrofach.')
+
+# Kilka argumentów zostanie rozdzielonych spacjami.
+print("Liczba lekcji:", 50)
+
+# Możesz samodzielnie wybrać separator.
+print("Python", "HTML", "CSS", sep=" | ")
+
+# Parametr end zmienia zakończenie wywołania.
+print("Ładowanie", end="... ")
+print("gotowe!")
+
+# Wynik:
+# Witaj w kursie Pythona!
+# Ten napis zapisano w apostrofach.
+# Liczba lekcji: 50
+# Python | HTML | CSS
+# Ładowanie... gotowe!`,
+
+    `W rozwiązaniu wystarczy jedno wywołanie print() z napisem "Hello, Python!". Python wypisze zawartość napisu, a następnie standardowy znak nowej linii.
+
+Nie dodawaj innych komunikatów. W tym ćwiczeniu sprawdzany jest tekst wyświetlony przez program, a nie wartość zmiennej ani wynik zwracany przez funkcję.`
+  ],
+
+  // 2. Variables
+  [
+    `Zmienna jest nazwą powiązaną z wartością. Instrukcja points = 10 przypisuje nazwie points liczbę całkowitą 10. Operator = oznacza przypisanie, natomiast == służy do porównywania wartości — są to dwie różne operacje.
+
+W Pythonie nie trzeba osobno deklarować typu zmiennej. Typ wynika z przypisywanej wartości: "1991" jest napisem, a 1991 jest liczbą całkowitą. Ma to znaczenie, ponieważ dodawanie liczb wykonuje działanie matematyczne, a dodawanie napisów łączy tekst.
+
+Nazwy zmiennych rozróżniają wielkie i małe litery. Warto stosować czytelne nazwy, takie jak user_name lub total_points, zamiast przypadkowych pojedynczych liter. Ponowne przypisanie aktualizuje powiązanie danej nazwy z wartością.`,
+
+    `user_name = "Ala"
+points = 10
+bonus = 5
+
+# Najpierw obliczana jest prawa strona przypisania.
+points = points + bonus
+
+print(user_name, points)  # Ala 15
+
+# Liczba i tekst wyglądają podobnie, ale działają inaczej.
+numeric_year = 1991
+text_year = "1991"
+
+print(numeric_year + 1)  # 1992
+print(text_year + "1")   # 19911
+
+# Możemy sprawdzić typ wartości.
+print(type(points).__name__)     # int
+print(type(user_name).__name__)  # str`,
+
+    `Utwórz dokładnie zmienne language oraz year. Pierwsza ma przechowywać napis "Python", dlatego wymaga cudzysłowów. Druga ma przechowywać liczbę całkowitą 1991, dlatego zapisujemy ją bez cudzysłowów.
+
+Samo przypisanie nie wyświetla wartości. Nie musisz używać print(), ponieważ testy odczytują utworzone zmienne.`
+  ],
+
+  // 3. Your First Function
+  [
+    `Funkcja pozwala nazwać fragment programu i wykonywać go wielokrotnie dla różnych danych. Definicję rozpoczynamy słowem def, następnie podajemy nazwę, parametry w nawiasach i dwukropek. Instrukcje należące do funkcji zapisujemy z wcięciem, zwykle czterech spacji.
+
+Parametry są nazwami używanymi wewnątrz definicji. Argumenty to konkretne wartości przekazane podczas wywołania. Samo zdefiniowanie funkcji nie uruchamia jej ciała — potrzebne jest wywołanie z nawiasami.
+
+return przekazuje wynik do miejsca wywołania i kończy bieżące wykonanie funkcji. To nie to samo co print(): print() tylko wyświetla informację. Funkcja, która nie wykona return z wartością, zwraca None.`,
+
+    `def calculate_price(unit_price, quantity):
+    # Parametry wykorzystujemy w obliczeniu.
+    total = unit_price * quantity
+    return total
+
+# Wynik funkcji można zapisać w zmiennej.
+first_order = calculate_price(12, 3)
+second_order = calculate_price(7, 2)
+
+print(first_order)   # 36
+print(second_order)  # 14
+
+# Można też użyć go w kolejnym działaniu.
+print(first_order + second_order)  # 50
+
+# Argumenty można przekazywać po nazwie.
+print(calculate_price(quantity=4, unit_price=5))  # 20`,
+
+    `Funkcja add(a, b) powinna obliczyć a + b i zwrócić wynik instrukcją return. Dzięki temu test może porównać otrzymaną wartość z oczekiwaną.
+
+Jeżeli zamiast return użyjesz wyłącznie print(a + b), liczba pojawi się na ekranie, ale sama funkcja zwróci None i nie spełni warunków zadania.`
+  ],
+
+  // 4. Strings and F-Strings
+  [
+    `F-string to napis poprzedzony literą f, który pozwala umieszczać wartości i wyrażenia bezpośrednio w tekście. Fragmenty zapisane w nawiasach klamrowych są obliczane, a ich wyniki trafiają do tworzonego napisu.
+
+Możesz wstawiać nie tylko zmienne, ale także działania, na przykład {price * quantity}. Po dwukropku da się określić sposób formatowania. Zapis {price:.2f} wyświetla liczbę z dwoma miejscami po separatorze dziesiętnym.
+
+F-string tworzy zwykły napis. Można go zapisać w zmiennej, zwrócić z funkcji lub wypisać. Spacje i znaki interpunkcyjne poza nawiasami klamrowymi pozostają dokładnie takie, jak w kodzie.`,
+
+    `name = "Ola"
+product = "notes"
+quantity = 3
+price = 7.5
+
+message = f"Cześć, {name}!"
+print(message)  # Cześć, Ola!
+
+print(f"Produkt: {product}, liczba sztuk: {quantity}")
+# Produkt: notes, liczba sztuk: 3
+
+print(f"Do zapłaty: {quantity * price:.2f} zł")
+# Do zapłaty: 22.50 zł
+
+# Podwójne klamry oznaczają dosłowny znak klamry.
+print(f"Zmienna {{name}} ma wartość: {name}")
+# Zmienna {name} ma wartość: Ola`,
+
+    `Wyrażenie f"Hello, {name}!" tworzy napis na podstawie argumentu name. Przecinek, pojedyncza spacja i wykrzyknik są stałymi częściami wyniku.
+
+Nawet pusty napis jest poprawnym argumentem: funkcja powinna wtedy zwrócić "Hello, !". Nie dopisuj dodatkowego czyszczenia ani zmiany wielkości liter.`
+  ],
+
+  // 5. Even or Odd
+  [
+    `Operator % oblicza resztę z dzielenia. Przykładowo 17 % 5 daje 2, ponieważ w 17 mieszczą się trzy pełne piątki i pozostaje 2. Reszta z dzielenia przez 2 pozwala ustalić parzystość liczby całkowitej.
+
+Operator == porównuje wartości i zwraca wartość logiczną True albo False. Wyrażenie number % 2 == 0 sprawdza więc, czy liczba dzieli się przez 2 bez reszty.
+
+Nie trzeba otaczać takiego porównania rozbudowaną instrukcją if. Wynik porównania można bezpośrednio zwrócić z funkcji. Zero jest parzyste; ten sam warunek poprawnie rozpoznaje również ujemne liczby parzyste.`,
+
+    `print(17 % 5)  # 2
+print(18 % 3)  # 0
+
+def divisible_by_three(number):
+    remainder = number % 3
+    return remainder == 0
+
+print(divisible_by_three(12))  # True
+print(divisible_by_three(14))  # False
+print(divisible_by_three(0))   # True
+
+number = -8
+is_even_result = number % 2 == 0
+
+print(is_even_result)                 # True
+print(type(is_even_result).__name__)  # bool`,
+
+    `Najpierw number % 2 oblicza resztę, a potem == 0 sprawdza, czy wynosi ona zero. Całe wyrażenie ma typ bool.
+
+Zwracaj True lub False, a nie napisy "True" i "False". Testy sprawdzają tutaj również, czy wynik jest rzeczywiście wartością logiczną.`
+  ],
+
+  // 6. For Loops
+  [
+    `Pętla for wykonuje blok instrukcji dla kolejnych elementów obiektu, po którym można iterować. Funkcja range() dostarcza kolejne liczby całkowite i jest przydatna wtedy, gdy chcesz wykonać określoną liczbę kroków.
+
+W range(start, stop) początek jest uwzględniany, ale koniec już nie. Dlatego range(1, 4) dostarcza 1, 2 i 3. Aby uwzględnić górną granicę n, zwykle zapisujemy range(1, n + 1).
+
+Akumulator to zmienna przechowująca wynik narastający podczas pętli. Dla sumowania zaczynamy od zera i w każdym kroku dodajemy kolejną wartość. Inicjalizacja akumulatora powinna znajdować się przed pętlą, żeby nie zerować go przy każdej iteracji.`,
+
+    `total = 0
+
+for number in range(1, 5):
+    total += number
+    print(f"Dodano {number}; suma: {total}")
+
+# Dodano 1; suma: 1
+# Dodano 2; suma: 3
+# Dodano 3; suma: 6
+# Dodano 4; suma: 10
+
+print("Końcowy wynik:", total)  # Końcowy wynik: 10
+
+# Trzeci argument range określa krok.
+print(list(range(2, 9, 2)))  # [2, 4, 6, 8]
+
+# Gdy nie ma liczb w zadanym przedziale, pętla nie ruszy.
+print(list(range(1, 1)))  # []`,
+
+    `Utwórz total = 0, następnie dodawaj liczby z range(1, n + 1). Instrukcję return total umieść po pętli, a nie w jej wnętrzu.
+
+Dla n = 0 zakres jest pusty, więc żadna iteracja się nie wykona. Zwrócone zostanie początkowe zero, zgodnie z wymaganiem zadania.`
+  ],
+
+  // 7. Lists
+  [
+    `Lista przechowuje uporządkowaną kolekcję elementów. Może zawierać powtarzające się wartości, a kolejność elementów ma znaczenie. Tworzymy ją za pomocą nawiasów kwadratowych.
+
+Metoda append() dopisuje jeden element na końcu istniejącej listy. Zmienia listę w miejscu i zwraca None, dlatego nie należy pisać result = result.append(value). Wystarczy samo result.append(value).
+
+Jeśli zadanie wymaga zachowania danych wejściowych, utwórz oddzielną listę wynikową. Przypisanie result = numbers nie tworzy kopii — obie nazwy wskazywałyby tę samą listę. Operator ** oznacza potęgowanie; do kwadratu podnosimy przez ** 2.`,
+
+    `numbers = [-2, 0, 3]
+doubled = []
+
+for number in numbers:
+    new_value = number * 2
+    doubled.append(new_value)
+
+print(numbers)  # [-2, 0, 3]
+print(doubled)  # [-4, 0, 6]
+
+# Modyfikujemy tylko listę wynikową.
+doubled.append(100)
+
+print(numbers)  # [-2, 0, 3]
+print(doubled)  # [-4, 0, 6, 100]
+
+print(3 ** 2)     # 9
+print((-3) ** 2)  # 9`,
+
+    `Nowa lista result zbiera kwadraty kolejnych elementów. Dzięki append() wartości zachowują kolejność z listy wejściowej.
+
+Dla pustej listy pętla nie wykona żadnego kroku i funkcja zwróci nową pustą listę. Nie zmieniaj elementów numbers bezpośrednio, ponieważ testy sprawdzają zachowanie oryginału.`
+  ],
+
+  // 8. Dictionaries
+  [
+    `Słownik przechowuje pary klucz–wartość. Klucz służy do odnalezienia odpowiadającej mu informacji, na przykład nazwa produktu może wskazywać liczbę sztuk. Klucze są unikalne: kolejne przypisanie pod istniejący klucz zastępuje jego poprzednią wartość.
+
+Metoda get(key, default) odczytuje wartość albo zwraca wartość domyślną, jeśli klucza nie ma. Samo get() nie dodaje brakującego klucza do słownika.
+
+Podczas zliczania elementów łączymy odczyt i przypisanie: pobieramy dotychczasowy licznik, zwiększamy go o jeden i zapisujemy. Wielkość liter ma znaczenie, dlatego "Python" i "python" są różnymi kluczami.`,
+
+    `products = ["apple", "pear", "apple", "banana", "pear"]
+counts = {}
+
+for product in products:
+    previous_count = counts.get(product, 0)
+    counts[product] = previous_count + 1
+
+print(counts)
+# {'apple': 2, 'pear': 2, 'banana': 1}
+
+print(counts.get("apple", 0))   # 2
+print(counts.get("orange", 0))  # 0
+
+# Odczyt brakującego klucza go nie tworzy.
+print("orange" in counts)  # False
+
+# Przypisanie już zmienia słownik.
+counts["orange"] = 4
+print(counts["orange"])  # 4`,
+
+    `Dla każdego słowa obliczamy counts.get(word, 0) + 1. Pierwsze wystąpienie zaczyna od zera, więc zapisuje licznik 1. Następne wystąpienia zwiększają istniejącą wartość.
+
+Słownik tworzony jest wewnątrz funkcji, dzięki czemu każde wywołanie zaczyna z pustym wynikiem. Lista wejściowa jest tylko odczytywana.`
+  ],
+
+  // 9. String Methods
+  [
+    `Napisy udostępniają metody do przekształcania tekstu. Wywołujemy je po kropce, na przykład message.upper(). Nawiasy są potrzebne, ponieważ chcemy wykonać metodę, a nie tylko odwołać się do niej.
+
+Metoda upper() tworzy napis z literami zamienionymi na wielkie. Napisy są niemutowalne: metoda nie zmienia oryginalnego obiektu. Jeśli chcesz korzystać z przekształconego tekstu, zapisz wynik albo od razu go zwróć.
+
+Operator + łączy napisy. Nie dodaje automatycznie spacji ani interpunkcji, dlatego wszystko, co ma pojawić się pomiędzy fragmentami, trzeba zapisać jawnie.`,
+
+    `message = "Witaj, Python!"
+uppercase_message = message.upper()
+
+print(message)            # Witaj, Python!
+print(uppercase_message)  # WITAJ, PYTHON!
+
+prefix = "UWAGA: "
+announcement = prefix + uppercase_message
+
+print(announcement)  # UWAGA: WITAJ, PYTHON!
+
+# Cyfry i interpunkcja pozostają w tym przykładzie bez zmian.
+print("lekcja 9?".upper())  # LEKCJA 9?
+
+# Pusty napis też można przekształcić i połączyć.
+print("".upper() + "!")  # !`,
+
+    `Najpierw text.upper() tworzy wersję wielkimi literami. Następnie + "!" dopisuje dokładnie jeden dodatkowy wykrzyknik.
+
+Jeżeli wejście kończy się już wykrzyknikiem, pozostaje on w tekście. Dlatego shout("wow!") powinno zwrócić "WOW!!", a nie "WOW!".`
+  ],
+
+  // 10. Cleaning Text
+  [
+    `Dane tekstowe często zawierają przypadkowe spacje, tabulatory lub znaki końca linii. Metoda strip() bez argumentów usuwa białe znaki wyłącznie z początku i końca napisu. Nie usuwa spacji pomiędzy słowami.
+
+Metoda lower() zwraca wersję tekstu z małymi literami. Możesz łączyć wywołania metod w łańcuch: name.strip().lower() najpierw czyści brzegi, a potem przekształca wynik.
+
+Obie metody zwracają napisy i nie zmieniają pierwotnego tekstu. Takie porządkowanie bywa przydatne przed porównywaniem nazw, ale powinno wynikać z wymagań — czasami wielkość liter lub końcowe spacje są istotne.`,
+
+    `raw_name = "   ANNA  MARIA   "
+
+trimmed = raw_name.strip()
+normalized = trimmed.lower()
+
+print(repr(raw_name))    # '   ANNA  MARIA   '
+print(repr(trimmed))     # 'ANNA  MARIA'
+print(repr(normalized))  # 'anna  maria'
+
+# To samo można zapisać w jednej instrukcji.
+print(repr(raw_name.strip().lower()))
+# 'anna  maria'
+
+# strip usuwa również tabulatory i znaki nowej linii.
+another_name = "\\tJAN\\n"
+print(repr(another_name.strip().lower()))  # 'jan'
+
+print(repr("   ".strip()))  # ''`,
+
+    `Wyrażenie name.strip().lower() realizuje oba wymagane kroki. Wewnętrzne odstępy zostają zachowane, nawet jeśli między słowami są dwie spacje.
+
+Nie używaj tutaj split() i join(), ponieważ takie rozwiązanie mogłoby zmienić wewnętrzne odstępy, a zadanie tego nie wymaga.`
+  ],
+
+  // 11. Length
+  [
+    `Funkcja len() zwraca liczbę elementów kolekcji. Dla listy liczy elementy, a dla napisu liczy punkty kodowe Unicode. W zwykłym tekście często odpowiada to liczbie znaków, ale pojedynczy widoczny symbol może czasami składać się z kilku takich punktów.
+
+Spacje, znaki interpunkcyjne i znaki nowej linii również zwiększają długość napisu. Sekwencja zapisana w kodzie jako \\n reprezentuje jeden znak nowej linii, a nie dwa oddzielne znaki tekstu.
+
+Długość pustego napisu i pustej listy wynosi zero. len() nie przekształca danych i nie usuwa żadnych znaków — jedynie zwraca ich liczbę.`,
+
+    `text = "Ala ma kota."
+
+print(len(text))  # 12
+print(len(""))   # 0
+print(len(" "))  # 1
+
+multiline = "A\\nB"
+print(multiline)
+# A
+# B
+
+print(len(multiline))  # 3
+
+words = ["Ala", "ma", "kota"]
+print(len(words))     # 3
+print(len(words[0]))  # 3
+
+print(len("12345"))  # 5`,
+
+    `W tym zadaniu wystarczy return len(text). Nie trzeba tworzyć pętli ani usuwać spacji.
+
+Zwróć uwagę na różnicę między długością tekstu a liczbą słów. character_count("a b!") ma zwrócić 4, ponieważ spacja i wykrzyknik również są liczone.`
+  ],
+
+  // 12. Indexing
+  [
+    `Indeksowanie pozwala odczytać pojedynczy element sekwencji. Pierwszy element ma indeks 0, drugi indeks 1 i tak dalej. Python obsługuje też indeksy ujemne: -1 oznacza ostatni element, a -2 przedostatni.
+
+Odczyt elementu spoza zakresu powoduje IndexError. Dotyczy to również próby użycia items[-1] na pustej liście, dlatego wcześniej należy sprawdzić, czy lista zawiera jakiekolwiek elementy.
+
+Pusta lista jest traktowana w warunku jako fałsz. Instrukcja if not items sprawdza więc, czy kolekcja jest pusta. Nie należy mylić pustej listy z listą zawierającą wartość False, 0 lub None — taka lista nadal ma element.`,
+
+    `colors = ["red", "green", "blue"]
+
+print(colors[0])   # red
+print(colors[1])   # green
+print(colors[-1])  # blue
+print(colors[-2])  # green
+
+def first_or_none(items):
+    if not items:
+        return None
+    return items[0]
+
+print(first_or_none(colors))   # red
+print(first_or_none([]))       # None
+print(first_or_none([False]))  # False
+print(first_or_none([0]))      # 0`,
+
+    `Najpierw sprawdzamy pustą listę i zwracamy None. W pozostałych przypadkach items[-1] bezpiecznie odczytuje ostatni element.
+
+Warunek dotyczy całej listy, a nie jej ostatniej wartości. Dzięki temu lista [False] poprawnie daje wynik False zamiast zostać potraktowana jako brak danych.`
+  ],
+
+  // 13. Slicing
+  [
+    `Wycinek, czyli slice, wybiera fragment sekwencji. Ogólna postać to sequence[start:stop:step]. Początek jest uwzględniany, a pozycja stop jest pomijana. Poszczególne części można opuścić.
+
+Dodatni krok przechodzi przez sekwencję do przodu. Krok ujemny przechodzi w przeciwnym kierunku. Zapis text[::-1] wybiera cały napis od końca do początku.
+
+W przeciwieństwie do pojedynczego indeksowania wycinki dobrze radzą sobie z granicami wykraczającymi poza długość sekwencji. Pusty napis również można odwrócić — wynikiem pozostaje pusty napis. Wycinek listy tworzy nową listę, ale nie wykonuje głębokiego kopiowania jej elementów.`,
+
+    `text = "Python"
+
+print(text[0:2])  # Py
+print(text[:3])   # Pyt
+print(text[3:])   # hon
+print(text[::2])  # Pto
+print(text[::-1]) # nohtyP
+
+numbers = [10, 20, 30, 40, 50]
+
+print(numbers[1:4])   # [20, 30, 40]
+print(numbers[::-1])  # [50, 40, 30, 20, 10]
+print(numbers[:100])  # [10, 20, 30, 40, 50]
+
+print(repr(""[::-1]))  # ''`,
+
+    `W text[::-1] pominięte granice pozwalają objąć cały napis, a krok -1 odwraca kierunek odczytu.
+
+Nie trzeba ręcznie obsługiwać pustego tekstu ani pojedynczej litery. Warto pamiętać, że dla złożonych symboli Unicode odwracane są punkty kodowe, nie zawsze całe widoczne symbole.`
+  ],
+
+  // 14. Membership
+  [
+    `Operator in sprawdza przynależność. Dla listy pyta, czy istnieje element równy szukanej wartości. Dla napisu sprawdza, czy występuje w nim wskazany ciąg znaków.
+
+Wyszukiwanie podnapisu nie jest tym samym co wyszukiwanie całego słowa. Napis "python" występuje także w "pythonic". Wielkość liter domyślnie ma znaczenie, dlatego przed porównaniem można użyć lower().
+
+W słowniku operator in sprawdza klucze, a nie wartości. Wynikiem sprawdzenia przynależności jest True albo False, więc można go bezpośrednio zwrócić z funkcji.`,
+
+    `languages = ["Python", "Java", "Go"]
+
+print("Python" in languages)  # True
+print("python" in languages)  # False
+
+message = "I enjoy PYTHON programming"
+
+print("python" in message)          # False
+print("python" in message.lower())  # True
+
+print("python" in "pythonic")  # True
+print("python" in "py thon")   # False
+
+profile = {"name": "Ola"}
+print("name" in profile)  # True
+print("Ola" in profile)   # False`,
+
+    `Najpierw text.lower() sprowadza litery do małych, a potem "python" in ... sprawdza obecność ciągłego fragmentu.
+
+Nie dziel tekstu na słowa, ponieważ zadanie wymaga rozpoznawania także napisów takich jak "pythonic". Rozdzielone "py thon" nie powinno dać dopasowania.`
+  ],
+
+  // 15. If, Elif, Else
+  [
+    `Instrukcje warunkowe wybierają fragment kodu na podstawie wartości logicznych. Python najpierw sprawdza if, potem kolejne elif, a gdy żaden warunek nie jest spełniony, wykonuje else.
+
+W jednym łańcuchu if–elif–else wykonywana jest tylko pierwsza pasująca gałąź. Kolejność warunków ma więc znaczenie. Przy progach liczbowych wygodnie jest zaczynać od najwyższej wartości.
+
+Wcięcia wyznaczają, które instrukcje należą do danej gałęzi. W funkcjach return może od razu zakończyć wykonanie po rozpoznaniu przypadku. Przy sprawdzaniu rozwiązania szczególnie ważne są wartości dokładnie na granicach przedziałów.`,
+
+    `def shipping_cost(order_total):
+    if order_total >= 200:
+        return 0
+    elif order_total >= 100:
+        return 10
+    else:
+        return 15
+
+print(shipping_cost(250))  # 0
+print(shipping_cost(200))  # 0
+print(shipping_cost(150))  # 10
+print(shipping_cost(100))  # 10
+print(shipping_cost(99))   # 15
+
+# Dla 250 spełnione byłyby oba porównania,
+# ale pierwsza pasująca gałąź kończy funkcję.`,
+
+    `Najpierw sprawdzamy score >= 90, potem >= 80, a następnie >= 70. Jeśli wykonanie dotarło do drugiego warunku, wiemy już, że wynik jest mniejszy niż 90.
+
+Dzięki temu nie trzeba osobno wpisywać górnej granicy każdego przedziału. else obejmuje wszystkie pozostałe wyniki, czyli te poniżej 70.`
+  ],
+
+  // 16. Combining Conditions With And
+  [
+    `Operator and łączy warunki tak, aby cały warunek był spełniony tylko wtedy, gdy spełnione są oba jego człony. Przy sprawdzaniu przedziału liczba musi być jednocześnie nie mniejsza od dolnej granicy i nie większa od górnej.
+
+Python stosuje krótkie spięcie: jeśli pierwszy człon jest fałszywy, drugiego już nie oblicza. Pozwala to na przykład najpierw sprawdzić, czy dzielnik jest różny od zera, a dopiero potem wykonać dzielenie.
+
+Dla porównań liczbowych istnieje też czytelny zapis łańcuchowy: low <= number <= high. Sam operator and może zwracać operand zamiast bool, ale połączenie dwóch porównań daje tutaj wartość logiczną.`,
+
+    `age = 25
+has_ticket = True
+
+can_enter = age >= 18 and has_ticket
+print(can_enter)  # True
+
+temperature = 21
+print(18 <= temperature <= 24)  # True
+
+print(18 <= 18 <= 24)  # True
+print(18 <= 25 <= 24)  # False
+
+# Drugi człon nie wykona dzielenia przez zero.
+divisor = 0
+result = divisor != 0 and 10 / divisor > 2
+
+print(result)  # False`,
+
+    `Wyrażenie number >= low and number <= high obejmuje oba końce przedziału. Zastosowanie > lub < zamiast >= i <= błędnie wykluczyłoby granice.
+
+Równoważnym rozwiązaniem jest return low <= number <= high. Gdy low i high są równe, tylko ta konkretna wartość należy do przedziału.`
+  ],
+
+  // 17. Combining Conditions With Or
+  [
+    `Operator or oznacza, że wystarczy spełnienie przynajmniej jednego warunku. Jeśli pierwszy człon jest prawdziwy, Python nie musi obliczać drugiego.
+
+Częstym błędem jest zapis day == "Saturday" or "Sunday". Nie porównuje on day z obiema nazwami: niepusty napis "Sunday" sam jest traktowany jako prawda. Poprawny zapis musi zawierać dwa porównania albo sprawdzenie przynależności do kolekcji.
+
+Jeśli zadanie ma ignorować wielkość liter i odstępy na brzegach, najpierw przygotuj oczyszczony tekst. Jednorazowa normalizacja ułatwia późniejsze porównania i ogranicza powtarzanie kodu.`,
+
+    `def is_supported_answer(text):
+    cleaned = text.strip().lower()
+    return cleaned == "yes" or cleaned == "y"
+
+print(is_supported_answer("YES"))    # True
+print(is_supported_answer(" y "))    # True
+print(is_supported_answer("no"))     # False
+print(is_supported_answer(""))       # False
+
+# Przy większej liczbie możliwości wygodne jest in.
+color = "blue"
+print(color in ("red", "green", "blue"))  # True
+
+# Każda strona or jest osobnym wyrażeniem.
+number = 10
+print(number < 0 or number > 100)  # False`,
+
+    `W funkcji is_weekend najpierw usuń otaczające białe znaki i zamień litery na małe. Potem porównaj wynik z "saturday" oraz "sunday".
+
+Możesz również użyć cleaned in ("saturday", "sunday"). Nie zamieniaj tych nazw na polskie, ponieważ zadanie i testy oczekują angielskich nazw dni.`
+  ],
+
+  // 18. Default Parameters
+  [
+    `Parametr domyślny otrzymuje ustaloną wartość, jeśli wywołujący nie przekaże własnej. Zapis def welcome(name="friend") pozwala wywołać zarówno welcome(), jak i welcome("Ola").
+
+Argument można przekazać pozycyjnie albo przez nazwę. W zwykłej definicji parametry wymagane umieszczamy przed parametrami domyślnymi.
+
+Wartości domyślne są obliczane podczas wykonywania definicji funkcji, a nie przy każdym późniejszym wywołaniu. Dlatego należy uważać na mutowalne wartości domyślne, takie jak listy i słowniki. Liczba 2 używana w tym ćwiczeniu jest niemutowalna i nie powoduje tego problemu.`,
+
+    `def final_price(price, discount=0):
+    return price - discount
+
+# Bez drugiego argumentu discount wynosi 0.
+print(final_price(100))  # 100
+
+# Argument pozycyjny zastępuje wartość domyślną.
+print(final_price(100, 15))  # 85
+
+# Można jawnie wskazać nazwę parametru.
+print(final_price(100, discount=20))  # 80
+
+# Jawnie podane zero nadal jest argumentem.
+print(final_price(100, discount=0))  # 100
+
+print(final_price(price=50, discount=5))  # 45`,
+
+    `W definicji multiply(number, factor=2) parametr number pozostaje wymagany, a factor jest opcjonalny.
+
+Nie sprawdzaj if not factor, aby ustawiać domyślne 2. Użytkownik może celowo przekazać factor=0 i wtedy poprawnym wynikiem mnożenia jest zero.`
+  ],
+
+  // 19. Returning Tuples
+  [
+    `Krotka, czyli tuple, jest uporządkowaną sekwencją, której elementów nie można podmieniać w miejscu. Dobrze nadaje się do zwracania kilku powiązanych wyników, na przykład minimum i maksimum.
+
+To przecinek tworzy krotkę, a nie same nawiasy. Zapis return smallest, largest zwraca jedną wartość będącą dwuelementową krotką. Dla krotki jednoelementowej potrzebny jest końcowy przecinek, na przykład (5,).
+
+Funkcje min() i max() wybierają odpowiednio najmniejszą i największą wartość. Bez wartości domyślnej zgłoszą błąd dla pustej kolekcji. W tym zadaniu lista ma być niepusta, więc nie trzeba wymyślać dodatkowego zachowania dla pustego wejścia.`,
+
+    `def summarize_numbers(numbers):
+    smallest = min(numbers)
+    largest = max(numbers)
+    return smallest, largest
+
+result = summarize_numbers([8, 3, 12, -1])
+
+print(result)      # (-1, 12)
+print(result[0])   # -1
+print(result[1])   # 12
+print(type(result).__name__)  # tuple
+
+single_value_tuple = (5,)
+ordinary_number = (5)
+
+print(type(single_value_tuple).__name__)  # tuple
+print(type(ordinary_number).__name__)      # int`,
+
+    `return min(numbers), max(numbers) zwraca dwuelementową krotkę w wymaganej kolejności: najpierw minimum, potem maksimum.
+
+Dla listy z jednym elementem obie wartości są identyczne. Lista [-4, -9, -1] ma minimum -9 i maksimum -1 — trzeba uwzględnić zwykły porządek liczb ujemnych.`
+  ],
+
+  // 20. Tuple Unpacking
+  [
+    `Rozpakowanie przypisuje elementy sekwencji do oddzielnych nazw. Dla point = (4, 7) zapis x, y = point przypisze 4 do x i 7 do y.
+
+W zwykłym rozpakowaniu liczba nazw musi odpowiadać liczbie elementów. Zbyt mało lub zbyt dużo elementów spowoduje ValueError. W tym ćwiczeniu wejście zawsze zawiera dokładnie dwa elementy.
+
+Rozpakowanie pozwala pisać czytelniejszy kod niż wielokrotne używanie indeksów. Można też zamienić wartości dwóch zmiennych przez a, b = b, a: prawa strona jest obliczana przed wykonaniem przypisań po lewej stronie.`,
+
+    `point = (4, 7)
+x, y = point
+
+print(x)  # 4
+print(y)  # 7
+
+name, score = ("Ola", 95)
+print(f"{name}: {score}")  # Ola: 95
+
+left = "A"
+right = "B"
+
+left, right = right, left
+print(left, right)  # B A
+
+def reverse_coordinates(point):
+    x, y = point
+    return y, x
+
+print(reverse_coordinates((10, 20)))  # (20, 10)`,
+
+    `Instrukcja first, second = pair nadaje nazwy obu elementom. Następnie return second, first tworzy krotkę w odwrotnej kolejności.
+
+Rozwiązanie nie wymaga znajomości typów elementów. Zadziała dla liczb, napisów, None oraz innych wartości, ponieważ nie wykonuje na nich obliczeń.`
+  ],
+
+  // 21. While Loops
+  [
+    `Pętla while powtarza instrukcje tak długo, jak długo jej warunek jest prawdziwy. Warunek jest sprawdzany przed każdą iteracją, więc ciało pętli może nie wykonać się ani razu.
+
+W odróżnieniu od for nie musi korzystać z gotowej kolekcji. Nadaje się do sytuacji, w których kolejne kroki zależą od zmieniającego się stanu programu.
+
+Trzeba zadbać o możliwość zakończenia pętli. Jeśli warunek zależy od n, ale n nigdy się nie zmienia, możesz otrzymać nieskończoną pętlę. W tej aplikacji takie wykonanie można przerwać przyciskiem Stop; zadziała też limit czasu.`,
+
+    `remaining = 4
+history = []
+
+while remaining > 0:
+    history.append(remaining)
+    print(f"Pozostało: {remaining}")
+    remaining -= 1
+
+print(history)    # [4, 3, 2, 1]
+print(remaining)  # 0
+
+# Warunek jest fałszywy już przed pierwszym krokiem.
+number = 0
+
+while number > 0:
+    print("Ta instrukcja się nie wykona.")
+
+print("Koniec odliczania")`,
+
+    `W każdej iteracji najpierw dopisz aktualne n do listy, a potem zmniejsz n o jeden. Dzięki tej kolejności wynik zaczyna się od wartości wejściowej i kończy na 1.
+
+Dla n = 0 warunek n > 0 od początku jest fałszywy, więc zwrócona zostaje pusta lista. return powinno znajdować się po pętli.`
+  ],
+
+  // 22. Stopping With Break
+  [
+    `Instrukcja break natychmiast kończy najbliższą otaczającą ją pętlę. Kod znajdujący się po pętli nadal może zostać wykonany.
+
+To przydatne podczas wyszukiwania pierwszego pasującego elementu. Gdy go znajdziesz, nie ma potrzeby analizować pozostałych danych. Zatrzymanie pętli zapobiega też zastąpieniu pierwszego wyniku kolejnym dopasowaniem.
+
+break nie jest tym samym co return. break wychodzi z pętli, a return z całej funkcji. W zagnieżdżonych pętlach pojedynczy break kończy tylko najbardziej wewnętrzną pętlę, w której został wykonany.`,
+
+    `temperatures = [18, 21, 29, 31, 25]
+first_hot = None
+
+for temperature in temperatures:
+    print("Sprawdzam:", temperature)
+
+    if temperature >= 28:
+        first_hot = temperature
+        break
+
+print("Pierwsza wysoka temperatura:", first_hot)
+
+# Sprawdzam: 18
+# Sprawdzam: 21
+# Sprawdzam: 29
+# Pierwsza wysoka temperatura: 29
+#
+# Wartości 31 i 25 nie zostały już sprawdzone.`,
+
+    `Zmienna result zaczyna od None, co oznacza brak dopasowania. Po znalezieniu number < 0 zapisujemy liczbę i przerywamy pętlę.
+
+Dzięki break późniejsza liczba ujemna nie nadpisze pierwszej. Alternatywnie można od razu zwrócić znalezioną liczbę przez return number.`
+  ],
+
+  // 23. Skipping With Continue
+  [
+    `Instrukcja continue pomija pozostałą część bieżącej iteracji i przechodzi do kolejnego kroku pętli. W przeciwieństwie do break nie kończy całej pętli.
+
+Ten mechanizm jest przydatny podczas filtrowania danych. Na początku iteracji można rozpoznać elementy niepasujące do wymagań, pominąć je, a resztę kodu poświęcić poprawnym wartościom.
+
+W pętli while trzeba uważać, aby continue nie omijało aktualizacji zmiennej sterującej. W pętli for przejście do następnego elementu następuje automatycznie. Aby nie zmieniać listy wejściowej, wyniki filtrowania zbieramy w nowej liście.`,
+
+    `measurements = [12, -1, 15, -3, 0, 18]
+accepted = []
+
+for measurement in measurements:
+    # Pomijamy niepoprawne pomiary.
+    if measurement < 0:
+        continue
+
+    accepted.append(measurement)
+
+print(accepted)      # [12, 15, 0, 18]
+print(measurements)  # [12, -1, 15, -3, 0, 18]
+
+# Zero zostało zachowane, ponieważ filtr odrzucał
+# tylko wartości mniejsze od zera.`,
+
+    `W zadaniu pomijamy wyłącznie elementy równe zero. Gdy number == 0, wykonujemy continue; pozostałe elementy trafiają do listy wynikowej.
+
+Nie stosuj warunku number <= 0, ponieważ usunąłby również liczby ujemne, które powinny pozostać w wyniku.`
+  ],
+
+  // 24. Enumerate
+  [
+    `Funkcja enumerate() pozwala jednocześnie otrzymywać numer kolejnego kroku i odpowiadający mu element. Każda para jest zwykle od razu rozpakowywana w nagłówku pętli.
+
+Domyślne numerowanie zaczyna się od 0. Parametr start=1 przydaje się przy tworzeniu list przeznaczonych dla użytkownika, numerowanych od jedynki.
+
+Zmiana start nie pomija elementów i nie zmienia indeksów oryginalnej listy. Dotyczy wyłącznie generowanego licznika. Dzięki enumerate() nie trzeba ręcznie zwiększać osobnej zmiennej z numerem pozycji.`,
+
+    `tasks = ["Read theory", "Write code", "Run tests"]
+
+for position, task in enumerate(tasks, start=1):
+    print(f"{position}. {task}")
+
+# 1. Read theory
+# 2. Write code
+# 3. Run tests
+
+print(list(enumerate(["a", "b"])))
+# [(0, 'a'), (1, 'b')]
+
+print(list(enumerate(["a", "b"], start=10)))
+# [(10, 'a'), (11, 'b')]
+
+print(list(enumerate([], start=1)))  # []`,
+
+    `enumerate(items, start=1) dostarcza wymaganą numerację. F-string f"{position}. {item}" tworzy napis zawierający numer, kropkę, spację i element.
+
+Każdy napis dopisujemy do nowej listy. Pusty element nadal otrzymuje numer i spację, na przykład "1. ".`
+  ],
+
+  // 25. Zip
+  [
+    `Funkcja zip() łączy elementy z kilku iterowalnych obiektów według ich pozycji. Z dwóch list tworzy kolejne pary: pierwszy element pierwszej listy z pierwszym elementem drugiej, potem drugie elementy i tak dalej.
+
+Domyślnie zip() kończy działanie po wyczerpaniu najkrótszego wejścia. Nadmiarowe elementy dłuższej listy nie pojawią się w wyniku.
+
+Wynikiem zip() jest iterator, a nie gotowa lista. Można przejść po nim pętlą albo zebrać jego elementy przez list(). Iterator jest zużywany podczas odczytu, więc ponowne odczytanie już wyczerpanego iteratora nie zwróci tych samych par.`,
+
+    `names = ["Ola", "Jan", "Ewa"]
+scores = [95, 80]
+
+pairs = list(zip(names, scores))
+print(pairs)
+# [('Ola', 95), ('Jan', 80)]
+
+for name, score in pairs:
+    print(f"{name}: {score}")
+
+# Ola: 95
+# Jan: 80
+
+iterator = zip([1, 2], ["a", "b"])
+
+print(list(iterator))  # [(1, 'a'), (2, 'b')]
+print(list(iterator))  # []
+
+print(list(zip([], [10, 20])))  # []`,
+
+    `zip(left, right) tworzy pary w wymaganej kolejności i automatycznie zatrzymuje się na krótszym wejściu.
+
+Ponieważ funkcja ma zwrócić listę, potrzebne jest opakowanie wyniku w list(). Samo return zip(left, right) zwróciłoby iterator i nie spełniłoby wymaganego formatu.`
+  ],
+
+  // 26. List Comprehensions
+  [
+    `Wyrażenie listowe pozwala zbudować nową listę za pomocą zwartego zapisu. Podstawowa forma to [expression for item in collection]. Wyrażenie z początku jest obliczane dla każdego elementu.
+
+Opcjonalny warunek if na końcu filtruje dane: do wyniku trafiają tylko elementy, które go spełniają. Najłatwiej czytać taki zapis od części for, następnie if, a na końcu spojrzeć na wyrażenie umieszczane w wyniku.
+
+Wyrażenie listowe zachowuje kolejność przetwarzania i nie usuwa duplikatów. Tworzy nową listę, ale podobnie jak zwykła pętla wymaga ostrożności, jeśli samo wyrażenie modyfikuje obiekty. Złożone wieloetapowe operacje często czytelniej zapisać zwykłą pętlą.`,
+
+    `numbers = [-3, -2, 0, 1, 4]
+
+# Przekształcenie wszystkich elementów.
+doubled = [number * 2 for number in numbers]
+print(doubled)  # [-6, -4, 0, 2, 8]
+
+# Samo filtrowanie.
+positive = [number for number in numbers if number > 0]
+print(positive)  # [1, 4]
+
+# Filtrowanie i przekształcenie.
+positive_squares = [
+    number ** 2
+    for number in numbers
+    if number > 0
+]
+
+print(positive_squares)  # [1, 16]
+print(numbers)          # [-3, -2, 0, 1, 4]`,
+
+    `W wyniku umieszczamy samo number, ponieważ nie chcemy zmieniać wartości, tylko je filtrować. Warunek number % 2 == 0 zachowuje liczby parzyste.
+
+Zero oraz ujemne liczby parzyste również pasują. Powtarzające się wartości pozostają powtórzone, zgodnie z kolejnością wejścia.`
+  ],
+
+  // 27. Dictionary Comprehensions
+  [
+    `Wyrażenie słownikowe tworzy słownik na podstawie kolejnych elementów kolekcji. Ma postać {key_expression: value_expression for item in collection}.
+
+Dla każdego elementu obliczany jest klucz i odpowiadająca mu wartość. Klucze muszą być hashowalne — nadają się do tego między innymi liczby całkowite i napisy, ale zwykłe listy nie.
+
+Ponieważ słownik nie może mieć dwóch identycznych kluczy, powtarzający się klucz zostanie zapisany ponownie. Jeśli kolejne wartości dla tego klucza różnią się, pozostanie ostatnia przypisana wartość. Można też dodać końcowy warunek if do filtrowania elementów.`,
+
+    `words = ["cat", "elephant", "dog", "cat"]
+
+lengths = {word: len(word) for word in words}
+print(lengths)
+# {'cat': 3, 'elephant': 8, 'dog': 3}
+
+numbers = [-2, 0, 3]
+
+doubles = {number: number * 2 for number in numbers}
+print(doubles)
+# {-2: -4, 0: 0, 3: 6}
+
+positive_doubles = {
+    number: number * 2
+    for number in numbers
+    if number > 0
+}
+
+print(positive_doubles)  # {3: 6}`,
+
+    `W square_map kluczem jest liczba wejściowa, a wartością jej kwadrat: number: number ** 2.
+
+Powtórzenia nie wymagają dodatkowego sprawdzania. Każde wystąpienie tej samej liczby zapisuje ten sam kwadrat pod tym samym kluczem.`
+  ],
+
+  // 28. Sets
+  [
+    `Zbiór, czyli set, przechowuje unikalne elementy. Utworzenie set(items) usuwa powtórzenia według zasad równości i hashowania Pythona.
+
+Zbiory nie oferują indeksowania i nie należy opierać działania programu na kolejności ich iteracji. Są przydatne do sprawdzania przynależności, zliczania różnych wartości i wykonywania operacji takich jak część wspólna.
+
+Pusty zbiór tworzymy przez set(), ponieważ {} tworzy pusty słownik. Elementy zbioru muszą być hashowalne; zwykłej listy nie można bezpośrednio umieścić w zbiorze. Napisy rozróżniają wielkość liter, więc "A" i "a" są różnymi elementami.`,
+
+    `items = ["apple", "pear", "apple", "banana"]
+unique_items = set(items)
+
+print(len(items))         # 4
+print(len(unique_items))  # 3
+print("pear" in unique_items)  # True
+
+# Sortujemy tylko po to, żeby wynik był przewidywalny.
+print(sorted(unique_items))
+# ['apple', 'banana', 'pear']
+
+first = {1, 2, 3}
+second = {3, 4}
+
+print(sorted(first & second))  # [3]
+print(sorted(first | second))  # [1, 2, 3, 4]
+print(len(set()))              # 0`,
+
+    `set(items) zachowuje każdą różną wartość tylko raz. Następnie len() zwraca liczbę elementów tak utworzonego zbioru.
+
+Nie trzeba sortować zbioru, ponieważ zadanie pyta wyłącznie o liczbę różnych elementów, a nie ich kolejność.`
+  ],
+
+  // 29. Sorting
+  [
+    `Funkcja sorted() tworzy nową posortowaną listę z przekazanego obiektu iterowalnego. Domyślnie porządkuje elementy rosnąco.
+
+To inna operacja niż list.sort(), która zmienia istniejącą listę w miejscu i zwraca None. Jeśli oryginalne dane mają zostać zachowane, sorted() jest wygodnym wyborem.
+
+Aby jednocześnie usunąć powtórzenia i ustalić kolejność, można połączyć set() z sorted(). Najpierw zbiór redukuje dane do wartości unikalnych, a potem sortowanie nadaje im przewidywalny porządek. Sortowane elementy muszą dać się ze sobą porównywać.`,
+
+    `numbers = [5, 2, 5, -1, 2]
+
+ascending = sorted(numbers)
+descending = sorted(numbers, reverse=True)
+unique_sorted = sorted(set(numbers))
+
+print(ascending)      # [-1, 2, 2, 5, 5]
+print(descending)     # [5, 5, 2, 2, -1]
+print(unique_sorted) # [-1, 2, 5]
+print(numbers)       # [5, 2, 5, -1, 2]
+
+# sort zmienia listę i zwraca None.
+copy_of_numbers = numbers.copy()
+returned_value = copy_of_numbers.sort()
+
+print(copy_of_numbers)  # [-1, 2, 2, 5, 5]
+print(returned_value)   # None`,
+
+    `W sorted(set(numbers)) wewnętrzne set() usuwa duplikaty, a zewnętrzne sorted() zwraca listę w kolejności rosnącej.
+
+Nie używaj numbers.sort(), jeśli masz zachować oryginalną listę. Puste wejście naturalnie daje pustą listę wynikową.`
+  ],
+
+  // 30. Sorting With a Key
+  [
+    `Parametr key określa funkcję, której wynik będzie używany do porównywania elementów podczas sortowania. Same elementy pozostają w wyniku — klucz służy tylko do ustalenia ich kolejności.
+
+Dla napisów key=len oznacza sortowanie według długości, a nie alfabetycznie. Przekazujemy funkcję len bez nawiasów, aby sorted() mogło wywołać ją osobno dla każdego elementu.
+
+Sortowanie Pythona jest stabilne. Elementy o równych kluczach zachowują swoją wcześniejszą kolejność. Jest to ważne, gdy zadanie wymaga zachowania porządku słów o identycznej długości.`,
+
+    `words = ["pear", "fig", "plum", "kiwi", "a"]
+
+alphabetical = sorted(words)
+by_length = sorted(words, key=len)
+
+print(alphabetical)
+# ['a', 'fig', 'kiwi', 'pear', 'plum']
+
+print(by_length)
+# ['a', 'fig', 'pear', 'plum', 'kiwi']
+
+# pear, plum i kiwi mają długość 4.
+# Zachowują wzajemną kolejność z wejścia.
+
+print(words)
+# ['pear', 'fig', 'plum', 'kiwi', 'a']
+
+print(sorted(["bb", "aa", "c"], key=len))
+# ['c', 'bb', 'aa']`,
+
+    `sorted(words, key=len) tworzy nową listę uporządkowaną według długości. Stabilność sortowania automatycznie rozwiązuje przypadek remisów.
+
+Nie dodawaj dodatkowego klucza alfabetycznego, ponieważ zmieniłby kolejność słów o takiej samej długości i naruszył wymagania.`
+  ],
+
+  // 31. Sum and Average
+  [
+    `Średnia arytmetyczna to suma wartości podzielona przez ich liczbę. W Pythonie sum(numbers) oblicza sumę, a len(numbers) podaje liczbę elementów.
+
+Operator / wykonuje zwykłe dzielenie i dla liczb całkowitych również może zwrócić wynik ułamkowy. Operator // oznacza dzielenie z zaokrągleniem w dół i nie nadaje się do ogólnego obliczania średniej.
+
+Pusta lista wymaga osobnej obsługi, ponieważ jej długość wynosi zero. Matematycznie średnia pustego zbioru danych nie jest określona, ale w tym ćwiczeniu przyjmujemy umowny wynik 0. Nie należy samodzielnie zaokrąglać wyniku, jeśli zadanie tego nie wymaga.`,
+
+    `def mean_or_zero(values):
+    if not values:
+        return 0
+
+    total = sum(values)
+    count = len(values)
+    return total / count
+
+print(mean_or_zero([2, 4, 6]))  # 4.0
+print(mean_or_zero([1, 2]))     # 1.5
+print(mean_or_zero([-5, 5]))    # 0.0
+print(mean_or_zero([7]))        # 7.0
+print(mean_or_zero([]))         # 0
+
+print(3 / 2)   # 1.5
+print(3 // 2)  # 1`,
+
+    `Wczesny return 0 obsługuje puste wejście i chroni przed dzieleniem przez zero. Dla niepustej listy zwracamy sum(numbers) / len(numbers).
+
+Nie dziel przez stałą liczbę, ponieważ długość listy zależy od argumentu. Nie używaj też //, gdyż utraciłoby część ułamkową.`
+  ],
+
+  // 32. Max With a Key
+  [
+    `Funkcja max() wybiera największy element według porządku porównywania. Parametr key pozwala wskazać inne kryterium, na przykład długość napisu.
+
+max(words, key=len) zwraca najdłuższe słowo, a nie jego długość. Długość jest tylko pomocniczą wartością używaną przy porównywaniu.
+
+Przy równych kluczach max() zwraca pierwszy napotkany element. Parametr default określa wynik dla pustego obiektu iterowalnego; bez niego puste wejście powodowałoby ValueError. Dzięki temu wyszukanie najdłuższego słowa wraz z obsługą braku danych mieści się w jednym wyrażeniu.`,
+
+    `words = ["cat", "horse", "tiger", "ox"]
+
+longest = max(words, key=len, default="")
+print(longest)       # horse
+print(len(longest))  # 5
+
+# horse i tiger mają tę samą długość,
+# więc wygrywa wcześniejsze horse.
+
+print(max(["aa", "bb"], key=len, default=""))
+# aa
+
+print(repr(max([], key=len, default="")))
+# ''
+
+print(max([4, 9, 2]))  # 9`,
+
+    `key=len ustawia porównywanie długości, a default="" daje wymagany wynik dla pustej listy.
+
+Nie sortuj dodatkowo remisujących słów alfabetycznie. Zadanie wymaga pierwszego najdłuższego słowa w oryginalnej kolejności.`
+  ],
+
+  // 33. Any
+  [
+    `Funkcja any() odpowiada na pytanie: czy przynajmniej jeden element jest prawdziwy? Można przekazać jej gotową kolekcję wartości logicznych albo generator kolejnych warunków.
+
+Wyrażenie generatorowe wygląda podobnie do wyrażenia listowego, ale nie tworzy z góry całej listy. W połączeniu z any() warunki mogą być obliczane tylko tak długo, jak to potrzebne.
+
+Gdy any() napotka pierwszą wartość prawdziwą, kończy sprawdzanie. Dla pustego wejścia zwraca False, ponieważ nie znalazło żadnego elementu spełniającego warunek. Sama funkcja zawsze zwraca bool.`,
+
+    `prices = [20, 150, 40]
+
+has_expensive_product = any(
+    price > 100
+    for price in prices
+)
+
+print(has_expensive_product)  # True
+
+print(any(number > 10 for number in [1, 2, 3]))
+# False
+
+print(any(number > 10 for number in []))
+# False
+
+print(any([False, False, True]))  # True
+print(any([0, "", None]))         # False`,
+
+    `Generator number < 0 for number in numbers dostarcza kolejne odpowiedzi na pytanie, czy liczba jest ujemna.
+
+any() zwróci True po pierwszej liczbie poniżej zera. Zero nie jest ujemne, a pusta lista daje False bez dodatkowej instrukcji if.`
+  ],
+
+  // 34. All
+  [
+    `Funkcja all() sprawdza, czy wszystkie przekazane elementy są prawdziwe. Często łączymy ją z generatorem porównań dotyczących kolejnych danych.
+
+Sprawdzanie kończy się natychmiast po napotkaniu fałszywego warunku, ponieważ już wtedy wiadomo, że wymaganie „wszystkie” nie zostało spełnione.
+
+Dla pustego wejścia all() zwraca True. Można to rozumieć jako brak elementu naruszającego warunek. Jeśli wymaganie biznesowe dodatkowo żąda niepustej kolekcji, trzeba sprawdzić to osobno, ale w tym ćwiczeniu puste wejście ma zostać zaakceptowane.`,
+
+    `scores = [70, 80, 95]
+
+everyone_passed = all(score >= 60 for score in scores)
+print(everyone_passed)  # True
+
+print(all(score >= 60 for score in [70, 40, 95]))
+# False
+
+print(all(number > 0 for number in [1, 2, 3]))
+# True
+
+print(all(number > 0 for number in [1, 0, 3]))
+# False
+
+print(all(number > 0 for number in []))
+# True`,
+
+    `Warunek number > 0 oznacza ścisłą dodatniość. Zapis >= 0 byłby niepoprawny, ponieważ zaakceptowałby zero.
+
+Nie dodawaj warunku wymagającego niepustej listy. Zgodnie z treścią zadania all_positive([]) ma zwracać True.`
+  ],
+
+  // 35. Safe Dictionary Lookups
+  [
+    `Odczyt dictionary[key] zakłada, że klucz istnieje. Jeśli go brakuje, Python zgłasza KeyError. Metoda get(key, default) pozwala zamiast tego otrzymać ustaloną wartość zastępczą.
+
+Wartość domyślna jest używana wyłącznie wtedy, gdy klucza nie ma. Jeśli klucz istnieje i przechowuje 0, False albo None, get() zwróci właśnie tę wartość.
+
+Samo get() nie zmienia słownika. Różni się więc od operacji, które dodają brakujący wpis. Jest przydatne przy odczytywaniu opcjonalnych danych bez konieczności poprzedzania każdego odczytu instrukcją if.`,
+
+    `stock = {"apple": 5, "pear": 0}
+
+print(stock["apple"])        # 5
+print(stock.get("apple", 0)) # 5
+print(stock.get("pear", 0))  # 0
+print(stock.get("plum", 0))  # 0
+
+print(stock)
+# {'apple': 5, 'pear': 0}
+
+print("plum" in stock)  # False
+
+settings = {"theme": None}
+
+print(settings.get("theme", "dark"))   # None
+print(settings.get("language", "en")) # en`,
+
+    `return stock.get(item, 0) odczytuje ilość produktu albo zwraca zero dla brakującego klucza.
+
+Nie dopisuj brakujących produktów do stock. Funkcja ma wyłącznie odczytywać dane, a testy sprawdzają, czy słownik pozostał niezmieniony.`
+  ],
+
+  // 36. Dictionary Values
+  [
+    `Bezpośrednia pętla po słowniku przechodzi przez jego klucze. Metoda values() udostępnia wartości, a items() pary klucz–wartość.
+
+Te metody zwracają widoki danych słownika, a nie niezależne listy. Do zwykłego sumowania wartości nie trzeba jednak tworzyć listy — sum() potrafi korzystać bezpośrednio z widoku.
+
+Dobór właściwej metody ma znaczenie: sum(stock) próbowałoby sumować klucze, a nie ilości. Dla pustego wejścia sum() zwraca domyślnie zero, więc nie wymaga dodatkowej obsługi.`,
+
+    `stock = {"apple": 5, "pear": 3, "banana": 2}
+
+print(list(stock))
+# ['apple', 'pear', 'banana']
+
+print(list(stock.values()))
+# [5, 3, 2]
+
+for product, quantity in stock.items():
+    print(f"{product}: {quantity}")
+
+# apple: 5
+# pear: 3
+# banana: 2
+
+print(sum(stock.values()))  # 10
+print(sum({}.values()))     # 0`,
+
+    `stock.values() dostarcza wszystkie ilości, a sum() oblicza ich łączną wartość.
+
+Nie używaj len(stock), ponieważ zwraca ono liczbę kluczy, czyli rodzajów produktów, a nie łączną liczbę sztuk.`
+  ],
+
+  // 37. Nested Dictionaries
+  [
+    `Wartością słownika może być kolejny słownik. Tak zapisuje się dane o obiektach mających kilka pól, na przykład ucznia z oceną i wiekiem.
+
+Zagnieżdżone dane odczytujemy poziom po poziomie. Jeśli użytkownik lub jego pole mogą nie istnieć, każdy z tych poziomów wymaga właściwej wartości domyślnej.
+
+W students.get(name, {}) pusty słownik pozwala bezpiecznie wykonać kolejne get(). Nie jest to jednak uniwersalne rozwiązanie dla dowolnych uszkodzonych danych: gdy istniejący wpis zawiera None zamiast słownika, wywołanie na nim get() nadal byłoby błędem. W tym zadaniu typ wpisów jest zagwarantowany.`,
+
+    `students = {
+    "Ola": {"score": 95, "age": 20},
+    "Jan": {"age": 21},
+    "Ewa": {"score": 0}
+}
+
+ola = students.get("Ola", {})
+print(ola.get("score", 0))  # 95
+
+jan = students.get("Jan", {})
+print(jan.get("score", 0))  # 0
+
+missing = students.get("Adam", {})
+print(missing.get("score", 0))  # 0
+
+print(students["Ewa"].get("score", 0))  # 0
+print("Adam" in students)              # False`,
+
+    `Pierwszy odczyt pobiera słownik ucznia lub pusty słownik. Drugi odczyt pobiera pole "score" lub zero.
+
+Oba wywołania get() są tylko odczytami, więc nie tworzą brakującego ucznia ani brakującego pola. Istniejący wynik równy zero zostaje zachowany.`
+  ],
+
+  // 38. Nested Loops
+  [
+    `Zagnieżdżona pętla to pętla znajdująca się wewnątrz innej pętli. Dla listy wierszy pętla zewnętrzna wybiera wiersz, a wewnętrzna przechodzi przez jego elementy.
+
+Przy spłaszczaniu o jeden poziom elementy każdego wiersza są dopisywane do jednej listy wynikowej. Puste wiersze nie dodają niczego, a różne długości wierszy nie stanowią problemu.
+
+Jednopoziomowe spłaszczanie nie jest rekurencyjne. Jeśli elementem wiersza jest kolejna lista, zostanie ona zachowana jako pojedynczy element wyniku. Nowa lista wynikowa nie oznacza automatycznie głębokiej kopii wszystkich zagnieżdżonych obiektów.`,
+
+    `rows = [[1, 2], [], [3, 4, 5]]
+flat = []
+
+for row in rows:
+    for item in row:
+        flat.append(item)
+
+print(flat)  # [1, 2, 3, 4, 5]
+print(rows)  # [[1, 2], [], [3, 4, 5]]
+
+nested_rows = [[[10]], [20]]
+one_level = []
+
+for row in nested_rows:
+    for item in row:
+        one_level.append(item)
+
+print(one_level)  # [[10], 20]`,
+
+    `Zewnętrzna pętla zachowuje kolejność wierszy, a wewnętrzna kolejność elementów w każdym wierszu. append(item) dodaje element bez dalszego analizowania jego wnętrza.
+
+Dlatego [[[1]], [2]] daje [[1], 2], a nie [1, 2]. Nie usuwaj elementów z wierszy wejściowych.`
+  ],
+
+  // 39. Split and Join
+  [
+    `Metoda split() bez argumentów dzieli tekst według białych znaków. Traktuje kolejne spacje, tabulatory i znaki nowej linii jako separatory oraz pomija białe znaki na brzegach.
+
+To różni się od split(" "), które dzieli wyłącznie po zwykłej spacji i może tworzyć puste fragmenty między sąsiadującymi separatorami.
+
+Metoda join() jest wywoływana na separatorze. Zapis " ".join(parts) łączy napisy, umieszczając między nimi pojedynczą spację. Separator nie pojawia się przed pierwszym ani po ostatnim elemencie. Łączone elementy muszą być napisami.`,
+
+    `text = "  Ala\\tma   kota\\n"
+
+parts = text.split()
+print(parts)
+# ['Ala', 'ma', 'kota']
+
+normalized = " ".join(parts)
+print(repr(normalized))
+# 'Ala ma kota'
+
+print("-".join(parts))
+# Ala-ma-kota
+
+print("a  b".split(" "))
+# ['a', '', 'b']
+
+print("a  b".split())
+# ['a', 'b']
+
+print(repr(" ".join([])))  # ''`,
+
+    `text.split() usuwa znaczenie liczby i rodzaju odstępów, pozostawiając same fragmenty tekstu. " ".join(...) odtwarza tekst z jednym zwykłym odstępem między fragmentami.
+
+Dla pustego napisu lub samych białych znaków split() daje pustą listę, a join() zwraca pusty napis.`
+  ],
+
+  // 40. Checking String Endings
+  [
+    `Metoda endswith() sprawdza dokładną końcówkę napisu. Podobna metoda startswith() sprawdza jego początek. Obie zwracają wartości logiczne.
+
+Sprawdzenie końcówki różni się od operatora in. Plik "main.py.txt" zawiera fragment ".py", ale nie kończy się nim. Przy rozpoznawaniu rozszerzenia potrzebne jest właśnie sprawdzenie końcówki.
+
+Metody domyślnie rozróżniają wielkość liter. lower() pozwala zignorować tę różnicę dla rozszerzenia ".py". Nie należy jednak automatycznie stosować strip(), jeśli zadanie wymaga uwzględnienia końcowych spacji. Samo rozszerzenie nie potwierdza zawartości ani bezpieczeństwa pliku.`,
+
+    `filenames = [
+    "main.py",
+    "SCRIPT.PY",
+    "main.py.txt",
+    "main.py "
+]
+
+for filename in filenames:
+    result = filename.lower().endswith(".py")
+    print(repr(filename), result)
+
+# 'main.py' True
+# 'SCRIPT.PY' True
+# 'main.py.txt' False
+# 'main.py ' False
+
+address = "https://example.com"
+print(address.startswith("https://"))  # True
+
+print(".py" in "main.py.txt")  # True`,
+
+    `filename.lower().endswith(".py") ignoruje wielkość liter, ale nadal wymaga, aby ".py" było rzeczywistą końcówką.
+
+Nie wywołuj strip(): wejście "main.py " ma zwrócić False. Zadanie dotyczy operacji na napisie, a nie sprawdzania istnienia pliku.`
+  ],
+
+  // 41. Handling Exceptions
+  [
+    `Wyjątek sygnalizuje, że operacja nie mogła zostać wykonana w zwykły sposób. Blok try zawiera kod, który może zgłosić wyjątek, a except określa obsługę wybranego rodzaju błędu.
+
+Konwersja int(text) potrafi odczytać napis z liczbą całkowitą, również ze znakiem i otaczającymi białymi znakami. Dla niepoprawnego zapisu, na przykład "3.5" albo "hello", zgłasza ValueError.
+
+Warto przechwytywać konkretne wyjątki zamiast wszystkich możliwych błędów. Dzięki temu przypadkowe usterki programu nie zostaną ukryte pod pozorem poprawnie obsłużonych danych wejściowych.`,
+
+    `def parse_integer(text):
+    try:
+        number = int(text)
+    except ValueError:
+        return None
+    else:
+        return number
+
+samples = ["42", "-7", " 12 ", "3.5", "hello", ""]
+
+for sample in samples:
+    print(repr(sample), "->", parse_integer(sample))
+
+# '42' -> 42
+# '-7' -> -7
+# ' 12 ' -> 12
+# '3.5' -> None
+# 'hello' -> None
+# '' -> None`,
+
+    `Umieść return int(text) w bloku try, a return None w except ValueError. Gdy konwersja się powiedzie, funkcja od razu zwróci liczbę.
+
+Nie używaj int(float(text)), ponieważ zaakceptowałoby to zapis "3.5" i zmieniło wymagane zachowanie. Zadanie gwarantuje argument tekstowy, więc nie trzeba dodatkowo obsługiwać TypeError.`
+  ],
+
+  // 42. Raising Exceptions
+  [
+    `Instrukcja raise pozwala samodzielnie zgłosić wyjątek, gdy argument nie spełnia wymagań funkcji. ValueError jest odpowiedni wtedy, gdy typ danych jest właściwy, ale ich wartość jest niedopuszczalna.
+
+Po zgłoszeniu wyjątku zwykłe wykonywanie funkcji zostaje przerwane. Kod wywołujący może przechwycić błąd przez try i except oraz zdecydować, jak na niego zareagować.
+
+Zgłoszenie wyjątku nie jest tym samym co zwrócenie napisu z komunikatem. Napis pozostaje zwykłym wynikiem funkcji, natomiast wyjątek zmienia przepływ sterowania. Jeśli zadanie podaje dokładny komunikat błędu, trzeba zachować jego pisownię.`,
+
+    `def require_nonempty(text):
+    if text == "":
+        raise ValueError("Text cannot be empty")
+    return text
+
+print(require_nonempty("Python"))  # Python
+
+try:
+    result = require_nonempty("")
+    print("Ta linia nie zostanie wykonana.")
+except ValueError as error:
+    print("Odrzucono dane:", error)
+
+# Odrzucono dane: Text cannot be empty
+
+print("Program działa dalej.")`,
+
+    `Liczby mniejsze lub równe zero są niedozwolone, dlatego warunek błędu to number <= 0. Zgłoś ValueError z dokładnym komunikatem "number must be positive".
+
+Dla liczby dodatniej zwróć oryginalny argument. Nie drukuj komunikatu zamiast zgłaszania wyjątku.`
+  ],
+
+  // 43. Variable Positional Arguments
+  [
+    `Parametr poprzedzony pojedynczą gwiazdką zbiera dowolną liczbę argumentów pozycyjnych do krotki. Nazwa args jest tylko konwencją; można użyć bardziej opisowej nazwy, na przykład numbers.
+
+Funkcja z takim parametrem może otrzymać zero, jeden lub wiele argumentów. Przy braku argumentów zebrana krotka jest pusta.
+
+Gwiazdka działa też w drugą stronę podczas wywołania: function(*values) rozpakowuje elementy kolekcji na oddzielne argumenty pozycyjne. To przydatne, gdy dane są już zapisane w liście lub krotce.`,
+
+    `def collect_items(*items):
+    return items
+
+print(collect_items())
+# ()
+
+print(collect_items("a"))
+# ('a',)
+
+print(collect_items("a", "b", "c"))
+# ('a', 'b', 'c')
+
+def total_price(*prices):
+    return sum(prices)
+
+print(total_price(10, 20, 5))  # 35
+
+prices = [3, 4, 5]
+print(total_price(*prices))  # 12`,
+
+    `W add_all(*numbers) zmienna numbers jest krotką wszystkich przekazanych argumentów. sum(numbers) dodaje jej elementy.
+
+Nie trzeba osobno obsługiwać braku argumentów, ponieważ sum() dla pustej krotki zwraca zero. Wywołanie add_all(1, 2, 3) różni się od przekazania jednej listy add_all([1, 2, 3]).`
+  ],
+
+  // 44. Variable Keyword Arguments
+  [
+    `Parametr poprzedzony dwiema gwiazdkami zbiera dodatkowe argumenty nazwane do słownika. Przy wywołaniu collect(city="Paris", age=20) powstają klucze "city" i "age" z odpowiadającymi im wartościami.
+
+Metoda update() przenosi pary klucz–wartość do istniejącego słownika. Klucze obecne po obu stronach otrzymują nowe wartości, a pozostałe są dopisywane.
+
+Przy budowaniu konfiguracji lub profilu najpierw można utworzyć słownik wartości domyślnych, a potem nałożyć dane użytkownika. Ważne, aby nowe wywołanie funkcji tworzyło nowy słownik, zamiast przypadkowo współdzielić mutowalny wynik z poprzednimi wywołaniami.`,
+
+    `def build_settings(**options):
+    settings = {
+        "theme": "dark",
+        "notifications": True
+    }
+    settings.update(options)
+    return settings
+
+first = build_settings(theme="light")
+second = build_settings(notifications=False, language="pl")
+
+print(first)
+# {'theme': 'light', 'notifications': True}
+
+print(second)
+# {'theme': 'dark', 'notifications': False, 'language': 'pl'}
+
+first["theme"] = "custom"
+
+print(build_settings())
+# {'theme': 'dark', 'notifications': True}`,
+
+    `Każde wywołanie tworzy nowy słownik z domyślnymi polami name i active. profile.update(details) nadpisuje przekazane pola i dodaje nowe.
+
+Nie pomijaj wartości False: active=False jest celowym nadpisaniem domyślnego True. Świeży słownik wynikowy nie oznacza głębokiego kopiowania ewentualnych zagnieżdżonych wartości argumentów.`
+  ],
+
+  // 45. Recursion
+  [
+    `Rekurencja polega na tym, że funkcja wywołuje samą siebie dla mniejszego lub prostszego problemu. Każde wywołanie ma własne parametry i oczekuje na wynik kolejnego wywołania.
+
+Potrzebne są dwa elementy: przypadek bazowy, który daje wynik bez dalszego wywołania, oraz krok rekurencyjny, który zbliża problem do tego przypadku. Bez nich funkcja może wywoływać się aż do przekroczenia limitu rekurencji.
+
+Silnia liczby n spełnia zależność n! = n × (n − 1)!, a 0! = 1. Rekurencja dobrze obrazuje tę definicję, ale w Pythonie nie jest automatycznie wydajniejsza od pętli i ma ograniczoną głębokość.`,
+
+    `def sum_down(n):
+    if n == 0:
+        return 0
+
+    smaller_result = sum_down(n - 1)
+    return n + smaller_result
+
+print(sum_down(4))  # 10
+print(sum_down(0))  # 0
+
+# Rozwinięcie wywołań:
+# sum_down(4)
+# = 4 + sum_down(3)
+# = 4 + 3 + sum_down(2)
+# = 4 + 3 + 2 + sum_down(1)
+# = 4 + 3 + 2 + 1 + sum_down(0)
+# = 4 + 3 + 2 + 1 + 0
+# = 10`,
+
+    `Dla n równego 0 lub 1 funkcja zwraca 1. Dla większych wartości oblicza n * factorial(n - 1).
+
+W każdym kroku argument maleje, więc dla założonych nieujemnych liczb całkowitych wykonanie zbliża się do przypadku bazowego. Pamiętaj o return przed wywołaniem rekurencyjnym, aby przekazywać wyniki z powrotem.`
+  ],
+
+  // 46. Lambda Functions
+  [
+    `Lambda to krótka funkcja anonimowa zapisana w postaci lambda argument: expression. Wynik wyrażenia jest automatycznie zwracany; nie zapisujemy osobnego return.
+
+Lambdy są przydatne tam, gdzie potrzebna jest prosta funkcja pomocnicza używana w jednym miejscu. Typowy przykład to wydobycie pola ze słownika podczas sortowania.
+
+Parametr reverse=True ustawia porządek malejący. Sortowanie nadal jest stabilne, więc elementy z równym kluczem zachowują wzajemną kolejność. sorted() tworzy nową listę, ale znajdujące się w niej słowniki są nadal tymi samymi obiektami co na wejściu.`,
+
+    `products = [
+    {"name": "Notebook", "price": 15},
+    {"name": "Pen", "price": 5},
+    {"name": "Marker", "price": 5}
+]
+
+by_price = sorted(
+    products,
+    key=lambda product: product["price"]
+)
+
+print([product["name"] for product in by_price])
+# ['Pen', 'Marker', 'Notebook']
+
+most_expensive_first = sorted(
+    products,
+    key=lambda product: product["price"],
+    reverse=True
+)
+
+print([p["name"] for p in most_expensive_first])
+# ['Notebook', 'Pen', 'Marker']`,
+
+    `Lambda student: student["score"] wybiera wynik ucznia jako klucz porównywania. reverse=True umieszcza najwyższe wyniki na początku.
+
+Nie odwracaj ręcznie listy posortowanej rosnąco, ponieważ odwróciłoby to także kolejność remisów. sorted(..., reverse=True) zachowuje wymaganą stabilność.`
+  ],
+
+  // 47. Importing Modules
+  [
+    `Moduły udostępniają gotowe funkcje, klasy i stałe. Instrukcja import math pozwala korzystać z narzędzi matematycznych przez zapis math.nazwa.
+
+math.sqrt(x) oblicza pierwiastek kwadratowy, a math.hypot(x, y) długość przeciwprostokątnej dla podanych składowych. Ta sama wartość opisuje odległość punktu (x, y) od początku układu współrzędnych.
+
+Obliczenia zmiennoprzecinkowe mogą zawierać niewielkie niedokładności wynikające z reprezentacji liczb. Dlatego wyniki takich działań często porównuje się przez math.isclose(), a nie wymagając idealnej równości. Importy zwykle umieszcza się na początku pliku, choć import wewnątrz funkcji również jest poprawny.`,
+
+    `import math
+
+print(math.sqrt(81))    # 9.0
+print(math.hypot(3, 4)) # 5.0
+
+x = -5
+y = 12
+
+distance_from_origin = math.hypot(x, y)
+print(distance_from_origin)  # 13.0
+
+diagonal = math.hypot(1, 1)
+print(round(diagonal, 4))  # 1.4142
+
+print(math.isclose(diagonal, math.sqrt(2)))
+# True
+
+print(math.isclose(0.1 + 0.2, 0.3))
+# True`,
+
+    `math.hypot(x, y) oblicza odległość zgodnie ze wzorem pierwiastek z x² + y². Ujemne współrzędne nie oznaczają ujemnej odległości.
+
+Nie zaokrąglaj wyniku w funkcji. Testy dopuszczają małe różnice numeryczne, ale oczekują możliwie dokładnej wartości.`
+  ],
+
+  // 48. Reading JSON
+  [
+    `JSON jest tekstowym formatem wymiany danych. Obiekt JSON przypomina słownik, ale jego zapis podlega własnym regułom: nazwy pól i napisy używają podwójnych cudzysłowów, a wartości logiczne zapisuje się jako true i false.
+
+Funkcja json.loads() parsuje tekst i tworzy odpowiednie obiekty Pythona. Obiekt JSON staje się słownikiem, tablica listą, true wartością True, a null wartością None.
+
+Dopiero po parsowaniu można odczytywać pola przez indeksowanie lub get(). Nie używaj eval() do odczytu JSON — interpretuje kod Pythona zamiast danych JSON i może wykonywać niebezpieczne instrukcje. W tym zadaniu poprawność wejściowego JSON jest zagwarantowana.`,
+
+    `import json
+
+json_text = """
+{
+    "name": "Ola",
+    "active": true,
+    "skills": ["Python", "HTML"],
+    "nickname": null
+}
+"""
+
+data = json.loads(json_text)
+
+print(data["name"])        # Ola
+print(data["active"])      # True
+print(data["skills"][0])   # Python
+print(data["nickname"])    # None
+print(type(data).__name__) # dict
+
+print(data.get("city", "Unknown"))  # Unknown`,
+
+    `Najpierw json.loads(json_text) przekształca napis w słownik. Następnie data.get("name", "Unknown") odczytuje imię lub zwraca wartość zastępczą.
+
+Pusty napis w istniejącym polu "name" nie oznacza braku pola. Dlatego nie należy używać data.get("name") or "Unknown", bo zmieniłoby to pustą nazwę na "Unknown".`
+  ],
+
+  // 49. Your First Class
+  [
+    `Klasa opisuje obiekty posiadające dane i zachowania. Dane zapisujemy w atrybutach, a zachowania definiujemy jako metody. Utworzenie obiektu przez nazwę klasy powoduje jego inicjalizację.
+
+Metoda __init__ ustawia początkowy stan instancji. Parametr self odnosi się do konkretnego obiektu, na którym metoda pracuje. Wywołując object.method(), nie przekazujemy self ręcznie — Python robi to automatycznie.
+
+Atrybut self.value należy do danej instancji. Dzięki temu dwa obiekty mogą mieć różny stan. Trzeba odróżniać atrybuty instancji od atrybutów klasy, szczególnie przy współdzielonych mutowalnych danych, takich jak listy.`,
+
+    `class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+        return self.balance
+
+first = BankAccount("Ola", 100)
+second = BankAccount("Jan")
+
+print(first.deposit(50))  # 150
+print(second.deposit(20)) # 20
+
+print(first.owner, first.balance)    # Ola 150
+print(second.owner, second.balance)  # Jan 20
+
+# Zmiana jednego konta nie zmieniła salda drugiego.`,
+
+    `W Counter.__init__ przypisz start do self.value, a parametrowi start ustaw domyślną wartość 0. W increment() najpierw zwiększ self.value, a potem zwróć już zaktualizowaną wartość.
+
+Samo obliczenie self.value + 1 nie zapisuje zmiany. Potrzebne jest przypisanie, na przykład self.value += 1. Każda instancja powinna przechowywać własny licznik.`
+  ],
+
+  // 50. Final Project: Expense Summary
+  [
+    `Projekt końcowy łączy przetwarzanie listy rekordów, odczyt słowników i aktualizowanie akumulatorów. Każdy rekord opisuje pojedynczy wydatek, a wynik ma zawierać sumę wszystkich kwot, sumy według kategorii i liczbę rekordów.
+
+Podczas jednego przejścia przez dane aktualizujemy total oraz odpowiedni wpis w by_category. Metoda get(category, 0) pozwala obsłużyć pierwsze wystąpienie kategorii bez oddzielnego tworzenia jej licznika.
+
+Kwoty zapisujemy w najmniejszych jednostkach waluty jako liczby całkowite. Dzięki temu samo sumowanie nie wprowadza typowych problemów zmiennoprzecinkowych. Formatowanie kwot do wyświetlenia jest osobnym krokiem.
+
+Funkcja powinna tylko odczytywać rekordy wejściowe i za każdym razem tworzyć nowe podsumowanie. Kategoria z kwotą zero nadal istnieje i musi pojawić się w wyniku. Wielkość liter w nazwach kategorii pozostaje znacząca.`,
+
+    `expenses = [
+    {"category": "food", "amount": 1200},
+    {"category": "travel", "amount": 800},
+    {"category": "food", "amount": 350},
+    {"category": "free", "amount": 0}
+]
+
+total = 0
+by_category = {}
+
+for expense in expenses:
+    category = expense["category"]
+    amount = expense["amount"]
+
+    total += amount
+    previous_amount = by_category.get(category, 0)
+    by_category[category] = previous_amount + amount
+
+    print(
+        f"{category}: +{amount}; "
+        f"kategoria={by_category[category]}; suma={total}"
+    )
+
+# food: +1200; kategoria=1200; suma=1200
+# travel: +800; kategoria=800; suma=2000
+# food: +350; kategoria=1550; suma=2350
+# free: +0; kategoria=0; suma=2350
+
+summary = {
+    "total": total,
+    "by_category": by_category,
+    "count": len(expenses)
+}
+
+print(summary)
+# {'total': 2350,
+#  'by_category': {'food': 1550, 'travel': 800, 'free': 0},
+#  'count': 4}
+
+# Prezentacja kwoty bez używania liczb zmiennoprzecinkowych:
+whole_units, cents = divmod(total, 100)
+print(f"Razem: {whole_units}.{cents:02d}")  # Razem: 23.50`,
+
+    `Na początku funkcji utwórz total = 0 i nowy słownik by_category. Dla każdego wydatku odczytaj kategorię oraz kwotę, zwiększ total i dodaj kwotę do sumy kategorii.
+
+Instrukcja przypisująca sumę kategorii powinna wykonać się również dla kwoty zero. Nie pomijaj takich rekordów i nie zmieniaj wielkości liter nazw.
+
+Po zakończeniu pętli zwróć nowy słownik z dokładnie wymaganymi polami. count to liczba wydatków, czyli len(expenses), a nie liczba kategorii. Dla pustego wejścia początkowe wartości od razu tworzą prawidłowy wynik.
+
+Algorytm przechodzi przez dane jeden raz. Przy standardowym założeniu przeciętnie stałego kosztu operacji słownikowych jego czas działania jest liniowy względem liczby wydatków, a dodatkowa pamięć zależy od liczby różnych kategorii.`
+  ]
+];
+
+/* ============================================================
+   ZASTOSOWANIE ROZSZERZEŃ
+
+   Nie zmieniamy:
+   - kolejności i tytułów lekcji,
+   - treści zadań,
+   - rozwiązań referencyjnych,
+   - testów,
+   - kodu startowego,
+   - identyfikatorów zapisanych postępów.
+   ============================================================ */
+
+if (extendedLessonContent.length !== lessons.length) {
+  throw new Error(
+    "Liczba rozszerzeń musi odpowiadać liczbie lekcji. " +
+    `Rozszerzenia: ${extendedLessonContent.length}, ` +
+    `lekcje: ${lessons.length}.`
+  );
+}
+
+extendedLessonContent.forEach(
+  ([tutorial, example, explanation], index) => {
+    Object.assign(lessons[index], {
+      tutorial: tutorial.trim(),
+      example: example.trim(),
+      explanation: explanation.trim()
+    });
+  }
+);
 
 /* ============================================================
    SAVED STATE
