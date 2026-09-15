@@ -200,185 +200,188 @@
 
 <script>
 const lessons = [
-  {
-    title: "1. Hello, Python",
-    tutorial:
-      "print() displays text. Put text inside matching quotation marks. " +
-      "Python runs your instructions from top to bottom.",
-    example: 'print("I am learning Python!")',
-    assignment:
-      'Print exactly Hello, Python! on one line. Do not add extra messages.',
-    starter: "# Write your first print statement below\n",
-    solution: 'print("Hello, Python!")',
-    explanation:
-      "print() writes the text followed by a newline. The quotation marks " +
-      "define the text but are not printed.",
-    tests: `
+ // Creates a lesson and generates starter code for function assignments.
+function makeLesson(
+  title,
+  tutorial,
+  example,
+  assignment,
+  solution,
+  tests,
+  explanation
+) {
+  const firstLine = solution.split("\n")[0];
+
+  const starter = firstLine.startsWith("def ")
+    ? `${firstLine}\n    # Write your code here\n    pass\n`
+    : "# Write your solution below\n";
+
+  return {
+    title,
+    tutorial,
+    example,
+    assignment,
+    starter,
+    solution,
+    tests,
+    explanation
+  };
+}
+
+const lessons = [
+
+  // ─── FOUNDATIONS: 1–10 ───────────────────────────────────────
+
+  makeLesson(
+    "Hello, Python",
+    "print() displays text. Put text inside matching quotation marks.",
+    `print("I am learning Python!")`,
+    "Print exactly Hello, Python! on one line. Do not add extra messages.",
+    `print("Hello, Python!")`,
+    `
 assert __output__.strip() == "Hello, Python!", (
     "Print exactly: Hello, Python!"
 )
-`
-  },
-  {
-    title: "2. Variables",
-    tutorial:
-      "Variables give names to values. Use = to assign a value. " +
-      "Text values are strings; whole-number values are integers.",
-    example: 'name = "Alex"\npoints = 10\nprint(name, points)',
-    assignment:
-      'Create a variable language containing the string "Python" and ' +
-      'a variable year containing the integer 1991.',
-    starter: "# Create language and year\n",
-    solution: 'language = "Python"\nyear = 1991',
-    explanation:
-      'Python stores "Python" as a string and 1991 as an integer. ' +
-      "Numbers in quotation marks would be strings instead.",
-    tests: `
+`,
+    "The quotation marks define the string. They are not part of the printed text."
+  ),
+
+  makeLesson(
+    "Variables",
+    "Variables give names to values. Use = for assignment. Text is a string; a whole number is an integer.",
+    `name = "Alex"
+points = 10
+print(name, points)`,
+    'Create language containing the string "Python" and year containing the integer 1991.',
+    `language = "Python"
+year = 1991`,
+    `
 assert language == "Python", 'language should contain "Python".'
 assert type(year) is int and year == 1991, (
-    "year should contain the integer 1991, not a string."
+    "year should be the integer 1991."
 )
-`
-  },
-  {
-    title: "3. Your First Function",
-    tutorial:
-      "A function is reusable code. Define it with def, put its inputs " +
-      "in parentheses, and indent its body by four spaces. " +
-      "return sends a result back to the caller.",
-    example: "def double(number):\n    return number * 2\n\nprint(double(4))",
-    assignment:
-      "Write a function add(a, b) that returns the sum of a and b. " +
-      "Return the result rather than only printing it.",
-    starter: "def add(a, b):\    \n    # Return their sum\n    pass\n",
-    solution: "def add(a, b):\n    return a + b",
-    explanation:
-      "The + operator adds the inputs. Returning the result lets other " +
-      "code use the answer.",
-    tests: `
+`,
+    "Use quotes for text, but not for the integer 1991."
+  ),
+
+  makeLesson(
+    "Your First Function",
+    "Define reusable code with def. Indent its body by four spaces. return sends a result back to the caller.",
+    `def double(number):
+    return number * 2
+
+print(double(4))`,
+    "Write add(a, b) that returns the sum of a and b. Return the answer rather than only printing it.",
+    `def add(a, b):
+    return a + b`,
+    `
 for a, b in [(2, 3), (-4, 7), (0, 0), (1.5, 2.25), (-8, -2)]:
-    assert add(a, b) == a + b, f"add({a}, {b}) should return {a + b}."
-`
-  },
-  {
-    title: "4. Strings",
-    tutorial:
-      "An f-string inserts values into text. Prefix the string with f " +
-      "and place variable names or expressions inside curly braces.",
-    example: 'name = "Sam"\nprint(f"Welcome, {name}!")',
-    assignment:
-      'Write greet(name) that returns "Hello, NAME!" with NAME replaced ' +
-      'by the supplied name. Example: greet("Mia") returns "Hello, Mia!".',
-    starter: "def greet(name):\n    pass\n",
-    solution: 'def greet(name):\n    return f"Hello, {name}!"',
-    explanation:
-      "The f-string replaces {name} with the supplied value while " +
-      "preserving the space, comma, and exclamation mark.",
-    tests: `
+    assert add(a, b) == a + b, (
+        f"add({a}, {b}) should return {a + b}."
+    )
+`,
+    "The + operator adds the inputs. return makes the answer available to other code."
+  ),
+
+  makeLesson(
+    "Strings and F-Strings",
+    "An f-string inserts values into text. Add f before the opening quote and put expressions inside curly braces.",
+    `name = "Sam"
+print(f"Welcome, {name}!")`,
+    'Write greet(name) that returns "Hello, NAME!" with NAME replaced by the supplied name.',
+    `def greet(name):
+    return f"Hello, {name}!"`,
+    `
 for name in ["Mia", "Alex", "Mary Jane", "Zoë", ""]:
     expected = f"Hello, {name}!"
-    assert greet(name) == expected, f"greet({name!r}) should return {expected!r}."
-`
-  },
-  {
-    title: "5. Conditions",
-    tutorial:
-      "Conditions let code make decisions. == compares two values. " +
-      "% gives the remainder after division. An even integer has a " +
-      "remainder of zero when divided by two.",
-    example:
-      'number = 9\nif number % 3 == 0:\n    print("Divisible by three")',
-    assignment:
-      "Write is_even(number) that returns the Boolean True for even " +
-      "integers and False for odd integers.",
-    starter: "def is_even(number):\n    pass\n",
-    solution: "def is_even(number):\n    return number % 2 == 0",
-    explanation:
-      "The comparison already produces True or False, so you can " +
-      "return it directly. Zero and negative even integers work too.",
-    tests: `
+    assert greet(name) == expected, (
+        f"greet({name!r}) should return {expected!r}."
+    )
+`,
+    "The f-string substitutes name while preserving the punctuation and space."
+  ),
+
+  makeLesson(
+    "Even or Odd",
+    "The % operator returns a division remainder. == compares values and produces True or False.",
+    `print(7 % 2)
+print(8 % 2 == 0)`,
+    "Write is_even(number) that returns Boolean True for even integers and False for odd integers.",
+    `def is_even(number):
+    return number % 2 == 0`,
+    `
 for number in [0, 1, 2, 7, 12, -3, -8, 101]:
     expected = number % 2 == 0
     assert is_even(number) is expected, (
-        f"is_even({number}) should return {expected} as a Boolean."
+        f"is_even({number}) should return {expected}."
     )
-`
-  },
-  {
-    title: "6. Loops",
-    tutorial:
-      "A for loop repeats code for each item in a sequence. " +
-      "range(start, stop) includes start but excludes stop. " +
-      "Use an accumulator variable to build a total.",
-    example:
-      "total = 0\nfor number in range(1, 4):\n    total += number\nprint(total)",
-    assignment:
-      "Write sum_to(n) that returns the total of the integers from 1 " +
-      "through n, including n. Assume n is a non-negative integer. " +
-      "For n = 0, return 0. Try using a loop.",
-    starter: "def sum_to(n):\n    pass\n",
-    solution:
-      "def sum_to(n):\n    total = 0\n    for number in range(1, n + 1):\n" +
-      "        total += number\n    return total",
-    explanation:
-      "n + 1 makes the range include n. When n is zero, the loop " +
-      "does not run, so the total remains zero.",
-    tests: `
+`,
+    "Even integers have a remainder of zero when divided by two. This also works for zero and negative integers."
+  ),
+
+  makeLesson(
+    "For Loops",
+    "A for loop repeats instructions. range(start, stop) includes start but excludes stop. An accumulator stores a running total.",
+    `total = 0
+for number in range(1, 4):
+    total += number
+print(total)`,
+    "Write sum_to(n) that returns the sum from 1 through n. Assume n is a non-negative integer. Return 0 for n = 0. Try using a loop.",
+    `def sum_to(n):
+    total = 0
+    for number in range(1, n + 1):
+        total += number
+    return total`,
+    `
 for n in [0, 1, 2, 5, 10, 100]:
     expected = n * (n + 1) // 2
-    assert sum_to(n) == expected, f"sum_to({n}) should return {expected}."
-`
-  },
-  {
-    title: "7. Lists",
-    tutorial:
-      "A list stores multiple values. Start with [] for an empty list. " +
-      "Loop through a list and use append() to add items to a new list.",
-    example:
-      "doubled = []\nfor number in [1, 2, 3]:\n" +
-      "    doubled.append(number * 2)\nprint(doubled)",
-    assignment:
-      "Write squares(numbers) that returns a new list containing the " +
-      "square of each number in the same order. Leave the input list unchanged.",
-    starter: "def squares(numbers):\n    pass\n",
-    solution:
-      "def squares(numbers):\n    result = []\n    for number in numbers:\n" +
-      "        result.append(number ** 2)\n    return result",
-    explanation:
-      "** is exponentiation. number ** 2 squares the number. Creating " +
-      "a separate list keeps the original input unchanged.",
-    tests: `
+    assert sum_to(n) == expected, (
+        f"sum_to({n}) should return {expected}."
+    )
+`,
+    "Using n + 1 includes n in the range. For n = 0, the loop is empty and total stays zero."
+  ),
+
+  makeLesson(
+    "Lists",
+    "Lists contain multiple values. [] creates an empty list, and append() adds an item. ** raises a number to a power.",
+    `doubled = []
+for number in [1, 2, 3]:
+    doubled.append(number * 2)`,
+    "Write squares(numbers) that returns a new list of squared numbers in the same order. Do not change the input list.",
+    `def squares(numbers):
+    result = []
+    for number in numbers:
+        result.append(number ** 2)
+    return result`,
+    `
 for original in [[], [2], [1, 2, 3], [-3, 0, 4], [2, 2]]:
     values = original.copy()
     result = squares(values)
-    expected = [number ** 2 for number in original]
+    expected = [n ** 2 for n in original]
     assert isinstance(result, list), "Return a list."
-    assert result == expected, f"squares({original}) should return {expected}."
+    assert result == expected, (
+        f"squares({original}) should return {expected}."
+    )
     assert values == original, "Do not change the input list."
     assert result is not values, "Return a new list."
-`
-  },
-  {
-    title: "8. Dictionaries",
-    tutorial:
-      "A dictionary stores key-value pairs. Use {} for an empty dictionary. " +
-      "dictionary.get(key, default) returns a value or the default if " +
-      "the key is missing.",
-    example:
-      'scores = {"Alex": 3}\nprint(scores.get("Alex", 0))\n' +
-      'print(scores.get("Mia", 0))',
-    assignment:
-      "Write count_words(words) that returns a dictionary mapping each " +
-      "word to how often it appears in the supplied list. Treat uppercase " +
-      "and lowercase as different. Leave the input list unchanged.",
-    starter: "def count_words(words):\n    pass\n",
-    solution:
-      "def count_words(words):\n    counts = {}\n    for word in words:\n" +
-      "        counts[word] = counts.get(word, 0) + 1\n    return counts",
-    explanation:
-      "A new word starts with a count of zero. Each occurrence increases " +
-      "its count by one. An empty input produces an empty dictionary.",
-    tests: `
+`,
+    "The function builds a separate list. number ** 2 squares each input."
+  ),
+
+  makeLesson(
+    "Dictionaries",
+    "A dictionary stores key-value pairs. get(key, default) returns the stored value or the default when a key is missing.",
+    `scores = {"Alex": 3}
+print(scores.get("Alex", 0))
+print(scores.get("Mia", 0))`,
+    "Write count_words(words) that returns each word's frequency as a dictionary. Uppercase and lowercase are different. Do not change the input list.",
+    `def count_words(words):
+    counts = {}
+    for word in words:
+        counts[word] = counts.get(word, 0) + 1
+    return counts`,
+    `
 cases = [
     ([], {}),
     (["cat"], {"cat": 1}),
@@ -390,12 +393,1213 @@ for words, expected in cases:
     values = words.copy()
     result = count_words(values)
     assert isinstance(result, dict), "Return a dictionary."
-    assert result == expected, f"count_words({words}) should return {expected}."
+    assert result == expected, (
+        f"count_words({words}) should return {expected}."
+    )
     assert values == words, "Do not change the input list."
-`
-  }
-];
+`,
+    "Each occurrence increases a word's count by one. Missing words start at zero."
+  ),
 
+  makeLesson(
+    "String Methods",
+    "Strings have methods that return transformed text. upper() converts letters to uppercase without changing the original string.",
+    `message = "hello"
+print(message.upper())`,
+    "Write shout(text) that returns the uppercase version of text followed by one additional exclamation mark.",
+    `def shout(text):
+    return text.upper() + "!"`,
+    `
+for text, expected in [
+    ("hello", "HELLO!"),
+    ("Python", "PYTHON!"),
+    ("", "!"),
+    ("wow!", "WOW!!"),
+    ("hello world", "HELLO WORLD!"),
+]:
+    assert shout(text) == expected, (
+        f"shout({text!r}) should return {expected!r}."
+    )
+`,
+    "upper() transforms the text. + joins the transformed string with an exclamation mark."
+  ),
+
+  makeLesson(
+    "Cleaning Text",
+    "strip() removes whitespace from the beginning and end. lower() converts letters to lowercase. Methods can be chained.",
+    `text = "  HELLO  "
+print(text.strip().lower())`,
+    "Write clean_name(name) that removes leading and trailing whitespace and converts the result to lowercase. Preserve internal spaces.",
+    `def clean_name(name):
+    return name.strip().lower()`,
+    `
+for name, expected in [
+    ("  ALICE  ", "alice"),
+    ("Bob", "bob"),
+    ("  Mary Jane ", "mary jane"),
+    ("\\tSAM\\n", "sam"),
+    ("   ", ""),
+    ("", ""),
+]:
+    assert clean_name(name) == expected, (
+        f"clean_name({name!r}) should return {expected!r}."
+    )
+`,
+    "strip() affects only the ends. Spaces between words remain unchanged."
+  ),
+
+  // ─── DECISIONS AND SEQUENCES: 11–20 ──────────────────────────
+
+  makeLesson(
+    "Length",
+    "len() returns the number of items in a collection or the number of characters in a string.",
+    `print(len("Python"))
+print(len([10, 20, 30]))`,
+    "Write character_count(text) that returns the number of characters in text, including spaces and punctuation.",
+    `def character_count(text):
+    return len(text)`,
+    `
+for text, expected in [
+    ("Python", 6),
+    ("", 0),
+    ("a b!", 4),
+    ("12345", 5),
+    ("hello\\n", 6),
+]:
+    assert character_count(text) == expected, (
+        f"character_count({text!r}) should return {expected}."
+    )
+`,
+    "len() counts spaces, punctuation, and newline characters too."
+  ),
+
+  makeLesson(
+    "Indexing",
+    "Sequence indexes start at zero. Index 0 is the first item. Index -1 is the last item. Indexing an empty list raises an error.",
+    `colors = ["red", "green", "blue"]
+print(colors[0])
+print(colors[-1])`,
+    "Write last_item(items) that returns the last item of a list, or None if the list is empty.",
+    `def last_item(items):
+    if len(items) == 0:
+        return None
+    return items[-1]`,
+    `
+for items, expected in [
+    ([], None),
+    ([7], 7),
+    ([1, 2, 3], 3),
+    (["a", "b"], "b"),
+    ([False], False),
+]:
+    assert last_item(items) == expected, (
+        f"last_item({items}) should return {expected!r}."
+    )
+`,
+    "Check for an empty list before using [-1]. None represents the absence of a result."
+  ),
+
+  makeLesson(
+    "Slicing",
+    "A slice selects part of a sequence: sequence[start:stop:step]. Leaving start and stop blank selects across the sequence.",
+    `text = "Python"
+print(text[:3])
+print(text[::2])`,
+    "Write reverse_text(text) that returns text in reverse order. Try using a slice with a step of -1.",
+    `def reverse_text(text):
+    return text[::-1]`,
+    `
+for text, expected in [
+    ("Python", "nohtyP"),
+    ("", ""),
+    ("a", "a"),
+    ("ab cd", "dc ba"),
+    ("123", "321"),
+]:
+    assert reverse_text(text) == expected, (
+        f"reverse_text({text!r}) should return {expected!r}."
+    )
+`,
+    "A step of -1 traverses the string backward and creates the reversed string."
+  ),
+
+  makeLesson(
+    "Membership",
+    "The in operator checks whether an item exists in a collection. For strings, it checks for a substring.",
+    `print("cat" in ["cat", "dog"])
+print("Py" in "Python")`,
+    "Write contains_python(text) that returns True if text contains 'python', ignoring uppercase and lowercase. Otherwise return False.",
+    `def contains_python(text):
+    return "python" in text.lower()`,
+    `
+for text, expected in [
+    ("I love Python", True),
+    ("PYTHON!", True),
+    ("pythonic", True),
+    ("Java", False),
+    ("py thon", False),
+    ("", False),
+]:
+    assert contains_python(text) is expected, (
+        f"contains_python({text!r}) should return {expected}."
+    )
+`,
+    "Lowercasing first makes the substring check case-insensitive."
+  ),
+
+  makeLesson(
+    "If, Elif, Else",
+    "Use if for the first condition, elif for another condition, and else for the fallback. Only the first matching branch runs.",
+    `temperature = 18
+if temperature >= 25:
+    print("hot")
+elif temperature >= 15:
+    print("mild")
+else:
+    print("cold")`,
+    'Write grade(score). Return "A" for 90–100, "B" for 80–89, "C" for 70–79, and "F" below 70. Assume an integer score from 0 to 100.',
+    `def grade(score):
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    else:
+        return "F"`,
+    `
+for score, expected in [
+    (100, "A"), (90, "A"), (89, "B"), (80, "B"),
+    (79, "C"), (70, "C"), (69, "F"), (0, "F"),
+]:
+    assert grade(score) == expected, (
+        f"grade({score}) should return {expected!r}."
+    )
+`,
+    "Checking the highest threshold first prevents high scores from matching a lower grade."
+  ),
+
+  makeLesson(
+    "Combining Conditions With And",
+    "and requires both conditions to be true. Python also supports chained comparisons such as 1 <= number <= 10.",
+    `age = 20
+print(age >= 18 and age <= 65)`,
+    "Write in_range(number, low, high) that returns True when number is between low and high, including both boundaries. Assume low <= high.",
+    `def in_range(number, low, high):
+    return number >= low and number <= high`,
+    `
+for number, low, high, expected in [
+    (5, 1, 10, True),
+    (1, 1, 10, True),
+    (10, 1, 10, True),
+    (0, 1, 10, False),
+    (11, 1, 10, False),
+    (-3, -5, -1, True),
+    (4, 4, 4, True),
+]:
+    assert in_range(number, low, high) is expected, (
+        f"in_range({number}, {low}, {high}) should return {expected}."
+    )
+`,
+    "Both boundary comparisons must pass. The shorter expression low <= number <= high also works."
+  ),
+
+  makeLesson(
+    "Combining Conditions With Or",
+    "or is true when at least one condition is true. not reverses a Boolean value.",
+    `day = "Sunday"
+print(day == "Saturday" or day == "Sunday")`,
+    "Write is_weekend(day) that returns True for Saturday or Sunday, ignoring case and surrounding whitespace. Return False for anything else.",
+    `def is_weekend(day):
+    cleaned = day.strip().lower()
+    return cleaned == "saturday" or cleaned == "sunday"`,
+    `
+for day, expected in [
+    ("Saturday", True),
+    ("SUNDAY", True),
+    (" sunday ", True),
+    ("Monday", False),
+    ("Friday", False),
+    ("", False),
+]:
+    assert is_weekend(day) is expected, (
+        f"is_weekend({day!r}) should return {expected}."
+    )
+`,
+    "Normalize the text once, then compare it against both weekend day names."
+  ),
+
+  makeLesson(
+    "Default Parameters",
+    "A parameter can have a default value. The caller may omit that argument or provide a replacement.",
+    `def welcome(name="friend"):
+    return f"Hi, {name}!"
+
+print(welcome())
+print(welcome("Alex"))`,
+    "Write multiply(number, factor=2) that returns number multiplied by factor. The default factor must be 2.",
+    `def multiply(number, factor=2):
+    return number * factor`,
+    `
+assert multiply(5) == 10, "multiply(5) should use factor 2."
+assert multiply(-3) == -6, "Handle negative numbers."
+assert multiply(5, 3) == 15, "Allow a supplied factor."
+assert multiply(5, factor=4) == 20, "Allow a keyword argument."
+assert multiply(8, 0) == 0, "A factor of zero must work."
+`,
+    "factor=2 supplies a fallback. An explicit positional or keyword argument overrides it."
+  ),
+
+  makeLesson(
+    "Returning Tuples",
+    "A tuple groups values together. Returning values separated by commas returns a tuple. min() and max() find the smallest and largest values.",
+    `def endpoints():
+    return 1, 10
+
+print(endpoints())`,
+    "Write bounds(numbers) that returns a tuple containing the minimum and maximum of a non-empty numeric list.",
+    `def bounds(numbers):
+    return min(numbers), max(numbers)`,
+    `
+for numbers, expected in [
+    ([3, 1, 8], (1, 8)),
+    ([5], (5, 5)),
+    ([-4, -9, -1], (-9, -1)),
+    ([0, 0], (0, 0)),
+]:
+    result = bounds(numbers)
+    assert isinstance(result, tuple), "Return a tuple."
+    assert result == expected, (
+        f"bounds({numbers}) should return {expected}."
+    )
+`,
+    "The comma creates the tuple. The assignment guarantees the input is not empty."
+  ),
+
+  makeLesson(
+    "Tuple Unpacking",
+    "Unpacking assigns each item in a sequence to a separate variable. The number of variables must match the number of items.",
+    `point = (4, 7)
+x, y = point
+print(x)
+print(y)`,
+    "Write swap_pair(pair) that accepts a two-item tuple and returns a tuple with its items reversed. Try unpacking.",
+    `def swap_pair(pair):
+    first, second = pair
+    return second, first`,
+    `
+for pair, expected in [
+    ((1, 2), (2, 1)),
+    (("a", "b"), ("b", "a")),
+    ((None, 5), (5, None)),
+    ((3, 3), (3, 3)),
+]:
+    result = swap_pair(pair)
+    assert isinstance(result, tuple), "Return a tuple."
+    assert result == expected, (
+        f"swap_pair({pair!r}) should return {expected!r}."
+    )
+`,
+    "Unpacking gives each value a name. Returning them in the opposite order creates the swapped tuple."
+  ),
+
+  // ─── LOOP AND COLLECTION TOOLS: 21–30 ────────────────────────
+
+  makeLesson(
+    "While Loops",
+    "A while loop repeats while its condition is true. Update the value controlling the condition so the loop eventually stops.",
+    `number = 3
+while number > 0:
+    print(number)
+    number -= 1`,
+    "Write countdown(n) that returns a list counting from n down to 1. Return [] for n = 0. Assume n is a non-negative integer. Try a while loop.",
+    `def countdown(n):
+    result = []
+    while n > 0:
+        result.append(n)
+        n -= 1
+    return result`,
+    `
+for n, expected in [
+    (0, []),
+    (1, [1]),
+    (3, [3, 2, 1]),
+    (5, [5, 4, 3, 2, 1]),
+]:
+    assert countdown(n) == expected, (
+        f"countdown({n}) should return {expected}."
+    )
+`,
+    "Decreasing n on every iteration eventually makes n > 0 false."
+  ),
+
+  makeLesson(
+    "Stopping a Loop With Break",
+    "break stops the nearest enclosing loop immediately. It is useful when you have already found what you need.",
+    `for number in [2, 4, 7, 8]:
+    if number % 2 == 1:
+        print(number)
+        break`,
+    "Write first_negative(numbers) that returns the first negative number, or None if there are no negative numbers. Try using break.",
+    `def first_negative(numbers):
+    result = None
+    for number in numbers:
+        if number < 0:
+            result = number
+            break
+    return result`,
+    `
+for numbers, expected in [
+    ([3, -2, -5], -2),
+    ([-7, 1], -7),
+    ([0, 1, 2], None),
+    ([], None),
+    ([0, -1], -1),
+]:
+    assert first_negative(numbers) == expected, (
+        f"first_negative({numbers}) should return {expected!r}."
+    )
+`,
+    "Once the first negative number is found, break prevents later values from replacing it."
+  ),
+
+  makeLesson(
+    "Skipping With Continue",
+    "continue skips the rest of the current loop iteration and moves to the next item.",
+    `for number in [1, -2, 3]:
+    if number < 0:
+        continue
+    print(number)`,
+    "Write remove_zeros(numbers) that returns a new list containing all nonzero values in their original order. Do not modify the input. Try continue.",
+    `def remove_zeros(numbers):
+    result = []
+    for number in numbers:
+        if number == 0:
+            continue
+        result.append(number)
+    return result`,
+    `
+for original, expected in [
+    ([0, 1, 0, 2], [1, 2]),
+    ([0, 0], []),
+    ([-1, 0, 3], [-1, 3]),
+    ([], []),
+]:
+    values = original.copy()
+    result = remove_zeros(values)
+    assert result == expected, (
+        f"remove_zeros({original}) should return {expected}."
+    )
+    assert values == original, "Do not modify the input."
+    assert result is not values, "Return a new list."
+`,
+    "Zeros trigger continue, so only nonzero values reach append()."
+  ),
+
+  makeLesson(
+    "Enumerate",
+    "enumerate() supplies both a counter and an item. Its start argument controls the first counter value.",
+    `for position, color in enumerate(["red", "blue"], start=1):
+    print(position, color)`,
+    'Write number_items(items) that returns strings numbered from 1, such as ["1. apple", "2. pear"]. Assume items contains strings.',
+    `def number_items(items):
+    result = []
+    for position, item in enumerate(items, start=1):
+        result.append(f"{position}. {item}")
+    return result`,
+    `
+for items, expected in [
+    ([], []),
+    (["apple"], ["1. apple"]),
+    (["apple", "pear"], ["1. apple", "2. pear"]),
+    (["", "x"], ["1. ", "2. x"]),
+]:
+    assert number_items(items) == expected, (
+        f"number_items({items}) should return {expected}."
+    )
+`,
+    "enumerate(..., start=1) handles the numbering while the f-string formats each label."
+  ),
+
+  makeLesson(
+    "Zip",
+    "zip() pairs corresponding items from multiple sequences. By default, it stops when the shortest sequence runs out.",
+    `names = ["Alex", "Mia"]
+scores = [8, 9]
+print(list(zip(names, scores)))`,
+    "Write pair_lists(left, right) that returns a list of two-item tuples pairing corresponding items. Stop at the shorter list.",
+    `def pair_lists(left, right):
+    return list(zip(left, right))`,
+    `
+for left, right, expected in [
+    ([1, 2], ["a", "b"], [(1, "a"), (2, "b")]),
+    ([1, 2, 3], ["x"], [(1, "x")]),
+    ([], [1], []),
+    ([1], [], []),
+]:
+    result = pair_lists(left, right)
+    assert isinstance(result, list), "Return a list."
+    assert result == expected, (
+        f"pair_lists({left}, {right}) should return {expected}."
+    )
+`,
+    "zip() creates an iterator of pairs. list() collects those pairs into a list."
+  ),
+
+  makeLesson(
+    "List Comprehensions",
+    "A list comprehension creates a list in one expression. An optional if clause filters which items are included.",
+    `numbers = [1, 2, 3, 4]
+doubled = [n * 2 for n in numbers if n > 2]
+print(doubled)`,
+    "Write even_numbers(numbers) that returns a new list of only the even integers, preserving order. Try a list comprehension.",
+    `def even_numbers(numbers):
+    return [number for number in numbers if number % 2 == 0]`,
+    `
+for numbers, expected in [
+    ([1, 2, 3, 4], [2, 4]),
+    ([-4, -3, 0, 7], [-4, 0]),
+    ([1, 3], []),
+    ([], []),
+    ([2, 2], [2, 2]),
+]:
+    values = numbers.copy()
+    result = even_numbers(values)
+    assert result == expected, (
+        f"even_numbers({numbers}) should return {expected}."
+    )
+    assert values == numbers, "Do not modify the input."
+    assert result is not values, "Return a new list."
+`,
+    "The if clause keeps only numbers whose remainder after division by two is zero."
+  ),
+
+  makeLesson(
+    "Dictionary Comprehensions",
+    "A dictionary comprehension creates key-value pairs with the form {key: value for item in collection}.",
+    `lengths = {word: len(word) for word in ["cat", "horse"]}
+print(lengths)`,
+    "Write square_map(numbers) that returns a dictionary mapping each input integer to its square. Repeated numbers should have a single key.",
+    `def square_map(numbers):
+    return {number: number ** 2 for number in numbers}`,
+    `
+for numbers, expected in [
+    ([1, 2, 3], {1: 1, 2: 4, 3: 9}),
+    ([-2, 0], {-2: 4, 0: 0}),
+    ([2, 2], {2: 4}),
+    ([], {}),
+]:
+    result = square_map(numbers)
+    assert isinstance(result, dict), "Return a dictionary."
+    assert result == expected, (
+        f"square_map({numbers}) should return {expected}."
+    )
+`,
+    "Dictionary keys are unique. Repeated numbers write the same squared value under the same key."
+  ),
+
+  makeLesson(
+    "Sets",
+    "A set stores unique values. set(collection) removes duplicates. Do not rely on a set's iteration order.",
+    `colors = ["red", "blue", "red"]
+print(len(set(colors)))`,
+    "Write unique_count(items) that returns the number of distinct items. Assume all items are strings or integers.",
+    `def unique_count(items):
+    return len(set(items))`,
+    `
+for items, expected in [
+    ([], 0),
+    ([1, 1, 2, 3], 3),
+    (["cat", "cat", "dog"], 2),
+    (["A", "a"], 2),
+    ([7, 7, 7], 1),
+]:
+    assert unique_count(items) == expected, (
+        f"unique_count({items}) should return {expected}."
+    )
+`,
+    "set() keeps one copy of each distinct value. len() counts those values."
+  ),
+
+  makeLesson(
+    "Sorting",
+    "sorted() returns a new sorted list without changing its input. Combine it with set() to sort unique values.",
+    `numbers = [3, 1, 2]
+print(sorted(numbers))
+print(numbers)`,
+    "Write sorted_unique(numbers) that returns the distinct integers in ascending order. Leave the input unchanged.",
+    `def sorted_unique(numbers):
+    return sorted(set(numbers))`,
+    `
+for original, expected in [
+    ([3, 1, 3, 2], [1, 2, 3]),
+    ([-1, -5, 0, -1], [-5, -1, 0]),
+    ([], []),
+    ([4, 4], [4]),
+]:
+    values = original.copy()
+    result = sorted_unique(values)
+    assert result == expected, (
+        f"sorted_unique({original}) should return {expected}."
+    )
+    assert values == original, "Do not modify the input."
+`,
+    "The set removes duplicates; sorted() places the remaining values in ascending order."
+  ),
+
+  makeLesson(
+    "Sorting With a Key",
+    "The key argument tells sorted() what value to compare for each item. Python sorting is stable: tied items keep their original relative order.",
+    `words = ["horse", "ox", "cat"]
+print(sorted(words, key=len))`,
+    "Write sort_by_length(words) that returns a new list ordered from shortest word to longest. Keep original order for words of equal length. Do not modify the input.",
+    `def sort_by_length(words):
+    return sorted(words, key=len)`,
+    `
+for original, expected in [
+    (["horse", "ox", "cat"], ["ox", "cat", "horse"]),
+    (["bb", "aa", "c"], ["c", "bb", "aa"]),
+    (["hello", "", "a"], ["", "a", "hello"]),
+    ([], []),
+]:
+    values = original.copy()
+    result = sort_by_length(values)
+    assert result == expected, (
+        f"sort_by_length({original}) should return {expected}."
+    )
+    assert values == original, "Do not modify the input."
+    assert result is not values, "Return a new list."
+`,
+    "Passing len—not len()—gives sorted() a function to call for each word."
+  ),
+
+  // ─── WORKING WITH DATA: 31–40 ────────────────────────────────
+
+  makeLesson(
+    "Sum and Average",
+    "sum() adds numeric items. Divide a total by len() to calculate an average. Handle an empty list before dividing.",
+    `numbers = [2, 4, 6]
+print(sum(numbers))
+print(sum(numbers) / len(numbers))`,
+    "Write average(numbers) that returns the arithmetic mean. Return 0 for an empty list. Assume numeric inputs.",
+    `def average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)`,
+    `
+for numbers, expected in [
+    ([2, 4, 6], 4),
+    ([1, 2], 1.5),
+    ([-5, 5], 0),
+    ([7], 7),
+    ([], 0),
+]:
+    assert average(numbers) == expected, (
+        f"average({numbers}) should return {expected}."
+    )
+`,
+    "Empty lists are falsy. The early return avoids division by zero."
+  ),
+
+  makeLesson(
+    "Max With a Key",
+    "max() accepts a key function, just like sorted(). A default value handles an empty collection. When values tie, max() returns the first matching item.",
+    `words = ["cat", "elephant", "dog"]
+print(max(words, key=len, default=""))`,
+    'Write longest_word(words) that returns the longest word, or "" for an empty list. If words tie, return the first one.',
+    `def longest_word(words):
+    return max(words, key=len, default="")`,
+    `
+for words, expected in [
+    (["cat", "elephant", "dog"], "elephant"),
+    (["one", "two"], "one"),
+    (["", "a"], "a"),
+    ([], ""),
+    ([""], ""),
+]:
+    assert longest_word(words) == expected, (
+        f"longest_word({words}) should return {expected!r}."
+    )
+`,
+    'key=len compares word lengths. default="" supplies the result when no words exist.'
+  ),
+
+  makeLesson(
+    "Any",
+    "any() returns True if at least one supplied value is truthy. A generator expression can produce conditions without building a list.",
+    `numbers = [1, 7, 3]
+print(any(n > 5 for n in numbers))`,
+    "Write has_negative(numbers) that returns True if any number is below zero. Return False for an empty list.",
+    `def has_negative(numbers):
+    return any(number < 0 for number in numbers)`,
+    `
+for numbers, expected in [
+    ([1, -1, 2], True),
+    ([-5], True),
+    ([0, 1, 2], False),
+    ([], False),
+]:
+    assert has_negative(numbers) is expected, (
+        f"has_negative({numbers}) should return {expected}."
+    )
+`,
+    "any() stops at the first true condition. With no items, there is no true condition, so it returns False."
+  ),
+
+  makeLesson(
+    "All",
+    "all() returns True only when every supplied value is truthy. For an empty collection, it returns True.",
+    `numbers = [2, 4, 6]
+print(all(n % 2 == 0 for n in numbers))`,
+    "Write all_positive(numbers) that returns True when every number is strictly greater than zero. Return True for an empty list.",
+    `def all_positive(numbers):
+    return all(number > 0 for number in numbers)`,
+    `
+for numbers, expected in [
+    ([1, 2, 3], True),
+    ([1, 0, 3], False),
+    ([-1, 2], False),
+    ([], True),
+    ([0.5], True),
+]:
+    assert all_positive(numbers) is expected, (
+        f"all_positive({numbers}) should return {expected}."
+    )
+`,
+    "Zero is not strictly positive. An empty list returns True because there are no items violating the condition."
+  ),
+
+  makeLesson(
+    "Safe Dictionary Lookups",
+    "dictionary[key] raises KeyError when a key is missing. dictionary.get(key, default) provides a safe fallback.",
+    `stock = {"apple": 5}
+print(stock.get("apple", 0))
+print(stock.get("pear", 0))`,
+    "Write stock_count(stock, item) that returns the item's quantity, or 0 if it is missing. Do not modify stock.",
+    `def stock_count(stock, item):
+    return stock.get(item, 0)`,
+    `
+for original, item, expected in [
+    ({"apple": 5}, "apple", 5),
+    ({"apple": 5}, "pear", 0),
+    ({"pear": 0}, "pear", 0),
+    ({}, "apple", 0),
+]:
+    stock = original.copy()
+    assert stock_count(stock, item) == expected, (
+        f"stock_count({original}, {item!r}) should return {expected}."
+    )
+    assert stock == original, "Do not modify the dictionary."
+`,
+    "get() reads the dictionary without inserting a missing item."
+  ),
+
+  makeLesson(
+    "Dictionary Values",
+    "Looping over a dictionary gives its keys. values() gives its values, while items() gives key-value pairs.",
+    `prices = {"apple": 2, "pear": 3}
+for name, price in prices.items():
+    print(name, price)`,
+    "Write total_stock(stock) that returns the sum of all quantities in a dictionary. Return 0 for an empty dictionary.",
+    `def total_stock(stock):
+    return sum(stock.values())`,
+    `
+for stock, expected in [
+    ({"apple": 5, "pear": 3}, 8),
+    ({"apple": 0}, 0),
+    ({}, 0),
+    ({"a": 10, "b": 20, "c": 30}, 60),
+]:
+    assert total_stock(stock) == expected, (
+        f"total_stock({stock}) should return {expected}."
+    )
+`,
+    "values() provides the quantities, and sum() adds them together."
+  ),
+
+  makeLesson(
+    "Nested Dictionaries",
+    "A dictionary can contain other dictionaries. Read nested values one level at a time, using safe defaults when needed.",
+    `users = {"Alex": {"age": 20}}
+print(users["Alex"]["age"])`,
+    'Write student_score(students, name). Each student maps to a dictionary that may contain "score". Return that score, or 0 if the student or score is missing. Do not modify the input.',
+    `def student_score(students, name):
+    student = students.get(name, {})
+    return student.get("score", 0)`,
+    `
+import copy
+
+cases = [
+    ({"Mia": {"score": 95}}, "Mia", 95),
+    ({"Mia": {"score": 95}}, "Alex", 0),
+    ({"Mia": {}}, "Mia", 0),
+    ({"Mia": {"score": 0}}, "Mia", 0),
+    ({}, "Nobody", 0),
+]
+for original, name, expected in cases:
+    students = copy.deepcopy(original)
+    assert student_score(students, name) == expected, (
+        f"student_score({original}, {name!r}) should return {expected}."
+    )
+    assert students == original, "Do not modify the input."
+`,
+    "The first get() supplies an empty dictionary for a missing student. The second supplies zero for a missing score."
+  ),
+
+  makeLesson(
+    "Nested Loops",
+    "A loop inside another loop processes nested collections. The inner loop runs for each item selected by the outer loop.",
+    `rows = [[1, 2], [3, 4]]
+for row in rows:
+    for number in row:
+        print(number)`,
+    "Write flatten(rows) that turns a list of lists into one new list, preserving order. Flatten exactly one level and leave the input unchanged.",
+    `def flatten(rows):
+    result = []
+    for row in rows:
+        for item in row:
+            result.append(item)
+    return result`,
+    `
+import copy
+
+for original, expected in [
+    ([[1, 2], [3, 4]], [1, 2, 3, 4]),
+    ([[], [1], []], [1]),
+    ([], []),
+    ([["a"], ["b", "c"]], ["a", "b", "c"]),
+    ([[[1]], [2]], [[1], 2]),
+]:
+    rows = copy.deepcopy(original)
+    result = flatten(rows)
+    assert result == expected, (
+        f"flatten({original}) should return {expected}."
+    )
+    assert rows == original, "Do not modify the input."
+    assert result is not rows, "Return a new list."
+`,
+    "The outer loop selects each row. The inner loop copies its items into the result without recursively flattening them."
+  ),
+
+  makeLesson(
+    "Split and Join",
+    "split() without arguments separates text on whitespace and ignores extra whitespace. separator.join(parts) combines strings.",
+    `words = "  hello   world ".split()
+print(words)
+print("-".join(words))`,
+    "Write normalize_spaces(text) that removes surrounding whitespace and replaces every run of whitespace with one regular space.",
+    `def normalize_spaces(text):
+    return " ".join(text.split())`,
+    `
+for text, expected in [
+    ("  hello   world  ", "hello world"),
+    ("a\\tb\\nc", "a b c"),
+    ("already fine", "already fine"),
+    ("   ", ""),
+    ("", ""),
+]:
+    assert normalize_spaces(text) == expected, (
+        f"normalize_spaces({text!r}) should return {expected!r}."
+    )
+`,
+    "split() extracts words regardless of spaces, tabs, or newlines. join() puts one space between each pair."
+  ),
+
+  makeLesson(
+    "Checking String Endings",
+    "endswith() checks a suffix. startswith() checks a prefix. Normalize case first when you want case-insensitive matching.",
+    `print("notes.txt".endswith(".txt"))
+print("https://example.com".startswith("https://"))`,
+    'Write is_python_file(filename) that returns True when filename ends in ".py", ignoring case. Do not strip whitespace.',
+    `def is_python_file(filename):
+    return filename.lower().endswith(".py")`,
+    `
+for filename, expected in [
+    ("main.py", True),
+    ("SCRIPT.PY", True),
+    ("main.py.txt", False),
+    ("python", False),
+    ("main.py ", False),
+    ("", False),
+]:
+    assert is_python_file(filename) is expected, (
+        f"is_python_file({filename!r}) should return {expected}."
+    )
+`,
+    "endswith() checks the actual ending, so a file named main.py.txt does not match."
+  ),
+
+  // ─── ERRORS, ADVANCED FUNCTIONS, AND PROJECTS: 41–50 ─────────
+
+  makeLesson(
+    "Handling Exceptions",
+    "try runs code that might fail. except handles a specific exception. int() raises ValueError when a string is not a valid integer.",
+    `try:
+    number = int("hello")
+except ValueError:
+    print("That is not an integer.")`,
+    "Write safe_int(text) that converts a string to an integer. Return None if int(text) raises ValueError. Assume the input is always a string.",
+    `def safe_int(text):
+    try:
+        return int(text)
+    except ValueError:
+        return None`,
+    `
+for text, expected in [
+    ("42", 42),
+    ("-7", -7),
+    (" 12 ", 12),
+    ("0", 0),
+    ("3.5", None),
+    ("hello", None),
+    ("", None),
+]:
+    result = safe_int(text)
+    if expected is None:
+        assert result is None, (
+            f"safe_int({text!r}) should return None."
+        )
+    else:
+        assert type(result) is int and result == expected, (
+            f"safe_int({text!r}) should return integer {expected}."
+        )
+`,
+    "Catch ValueError specifically. Valid integer strings are converted, while invalid ones return None."
+  ),
+
+  makeLesson(
+    "Raising Exceptions",
+    "raise signals an error to the caller. ValueError is appropriate when an argument has the right type but an unacceptable value.",
+    `def require_nonempty(text):
+    if text == "":
+        raise ValueError("Text cannot be empty")
+    return text`,
+    'Write require_positive(number) that returns number if it is greater than zero. Otherwise raise ValueError with exactly "number must be positive". Assume a numeric input.',
+    `def require_positive(number):
+    if number <= 0:
+        raise ValueError("number must be positive")
+    return number`,
+    `
+for number in [1, 10, 0.5]:
+    assert require_positive(number) == number, (
+        "Return the original positive number."
+    )
+
+for number in [0, -1, -2.5]:
+    try:
+        require_positive(number)
+    except ValueError as error:
+        assert str(error) == "number must be positive", (
+            "Use the required error message."
+        )
+    else:
+        raise AssertionError(
+            f"require_positive({number}) should raise ValueError."
+        )
+`,
+    "Returning an error string is not the same as raising an exception. raise lets the caller handle the failure with try/except."
+  ),
+
+  makeLesson(
+    "Variable Positional Arguments",
+    "*args collects any number of positional arguments into a tuple. The name after * can be something descriptive.",
+    `def show_items(*items):
+    return list(items)
+
+print(show_items("a", "b", "c"))`,
+    "Write add_all(*numbers) that returns the sum of any number of numeric arguments. Return 0 when called without arguments.",
+    `def add_all(*numbers):
+    return sum(numbers)`,
+    `
+assert add_all() == 0, "No arguments should return 0."
+assert add_all(5) == 5, "Handle a single argument."
+assert add_all(1, 2, 3) == 6, "Add all supplied numbers."
+assert add_all(-2, 2, 4) == 4, "Handle negative numbers."
+assert add_all(1.5, 2.5) == 4, "Handle decimal numbers."
+`,
+    "*numbers gathers the arguments into a tuple. sum() works on that tuple, including an empty one."
+  ),
+
+  makeLesson(
+    "Variable Keyword Arguments",
+    "**kwargs collects extra keyword arguments into a dictionary. update() copies key-value pairs into another dictionary.",
+    `def collect(**details):
+    return details
+
+print(collect(city="Paris", age=20))`,
+    'Write make_profile(**details) that returns a dictionary with default values {"name": "Anonymous", "active": True}, overridden or extended by the supplied keyword arguments.',
+    `def make_profile(**details):
+    profile = {"name": "Anonymous", "active": True}
+    profile.update(details)
+    return profile`,
+    `
+assert make_profile() == {"name": "Anonymous", "active": True}, (
+    "Provide both default values."
+)
+assert make_profile(name="Mia") == {"name": "Mia", "active": True}, (
+    "Allow the name to be overridden."
+)
+assert make_profile(active=False, city="Paris") == {
+    "name": "Anonymous", "active": False, "city": "Paris"
+}, "Override defaults and preserve extra fields."
+
+first = make_profile()
+first["name"] = "Changed"
+assert make_profile()["name"] == "Anonymous", (
+    "Return a fresh dictionary for each call."
+)
+`,
+    "Start with a new defaults dictionary on every call, then apply the caller's values."
+  ),
+
+  makeLesson(
+    "Recursion",
+    "A recursive function calls itself with a smaller problem. A base case stops the recursion. Without one, the calls continue until Python raises an error.",
+    `def sum_down(n):
+    if n == 0:
+        return 0
+    return n + sum_down(n - 1)`,
+    "Write factorial(n) for non-negative integers. Factorial multiplies 1 through n. factorial(0) is 1. Try recursion.",
+    `def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)`,
+    `
+for n, expected in [
+    (0, 1),
+    (1, 1),
+    (2, 2),
+    (5, 120),
+    (7, 5040),
+    (10, 3628800),
+]:
+    assert factorial(n) == expected, (
+        f"factorial({n}) should return {expected}."
+    )
+`,
+    "The base cases return 1. Each other call multiplies n by the factorial of n - 1."
+  ),
+
+  makeLesson(
+    "Lambda Functions",
+    "A lambda is a small anonymous function containing one expression. It is useful as a sorting key.",
+    `people = [{"name": "Alex", "age": 30}, {"name": "Mia", "age": 20}]
+print(sorted(people, key=lambda person: person["age"]))`,
+    'Write sort_students(students) that returns a new list sorted by "score", highest first. Each item is a dictionary containing "name" and "score". Preserve input order for tied scores and do not modify the input.',
+    `def sort_students(students):
+    return sorted(
+        students,
+        key=lambda student: student["score"],
+        reverse=True
+    )`,
+    `
+import copy
+
+original = [
+    {"name": "Alex", "score": 70},
+    {"name": "Mia", "score": 95},
+    {"name": "Sam", "score": 95},
+]
+students = copy.deepcopy(original)
+result = sort_students(students)
+assert result == [original[1], original[2], original[0]], (
+    "Sort highest score first and preserve the order of ties."
+)
+assert students == original, "Do not modify the input."
+assert result is not students, "Return a new list."
+assert sort_students([]) == [], "Handle an empty list."
+
+assert sort_students([
+    {"name": "A", "score": -5},
+    {"name": "B", "score": 0},
+]) == [
+    {"name": "B", "score": 0},
+    {"name": "A", "score": -5},
+], "Compare numeric scores."
+`,
+    "The lambda extracts each score. reverse=True sorts descending, while stable sorting preserves ties."
+  ),
+
+  makeLesson(
+    "Importing Modules",
+    "Modules provide reusable tools. import math loads mathematical functions. math.hypot(x, y) calculates the square root of x squared plus y squared.",
+    `import math
+print(math.sqrt(16))
+print(math.hypot(3, 4))`,
+    "Write distance(x, y) that returns the straight-line distance from (0, 0) to (x, y). Try the math module. Assume numeric coordinates.",
+    `def distance(x, y):
+    import math
+    return math.hypot(x, y)`,
+    `
+import math
+
+for x, y, expected in [
+    (3, 4, 5),
+    (0, 0, 0),
+    (-3, -4, 5),
+    (1, 1, math.sqrt(2)),
+    (5, 12, 13),
+]:
+    assert math.isclose(
+        distance(x, y), expected, rel_tol=1e-9, abs_tol=1e-9
+    ), f"distance({x}, {y}) should be approximately {expected}."
+`,
+    "math.hypot() implements the distance formula. The checks allow tiny floating-point differences."
+  ),
+
+  makeLesson(
+    "Reading JSON",
+    "JSON is a common text format for exchanging data. json.loads() turns JSON text into Python objects, such as dictionaries and lists.",
+    `import json
+data = json.loads('{"name": "Mia", "active": true}')
+print(data["name"])
+print(data["active"])`,
+    'Write read_name(json_text) that parses a valid JSON object and returns its "name" value, or "Unknown" if that key is missing. Assume valid JSON representing a dictionary; any name value will be a string.',
+    `def read_name(json_text):
+    import json
+    data = json.loads(json_text)
+    return data.get("name", "Unknown")`,
+    `
+for text, expected in [
+    ('{"name": "Mia"}', "Mia"),
+    ('{"name": "Alex", "age": 20}', "Alex"),
+    ('{"age": 20}', "Unknown"),
+    ('{}', "Unknown"),
+    ('{"name": ""}', ""),
+]:
+    assert read_name(text) == expected, (
+        f"read_name({text!r}) should return {expected!r}."
+    )
+`,
+    "Parse first, then perform a dictionary lookup. A present but empty name stays empty; only a missing key uses the fallback."
+  ),
+
+  makeLesson(
+    "Your First Class",
+    "A class defines objects with their own data and methods. __init__ initializes an object. self refers to the current instance.",
+    `class Dog:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        return f"{self.name} says woof"
+
+dog = Dog("Luna")
+print(dog.speak())`,
+    "Create a class Counter. Counter() starts with value = 0; Counter(start) starts at start. Its increment() method adds 1 to value and returns the new value. Each instance must keep its own value.",
+    `class Counter:
+    def __init__(self, start=0):
+        self.value = start
+
+    def increment(self):
+        self.value += 1
+        return self.value`,
+    `
+first = Counter()
+assert first.value == 0, "Counter() should start at zero."
+assert first.increment() == 1, "increment() should return the new value."
+assert first.increment() == 2, "Increment on every call."
+assert first.value == 2, "Store the updated value."
+
+second = Counter(10)
+assert second.value == 10, "Accept a custom starting value."
+assert second.increment() == 11, "Increment from the custom start."
+assert first.value == 2, "Instances must not share their value."
+
+third = Counter(start=-1)
+assert third.increment() == 0, "Allow start as a keyword argument."
+`,
+    "self.value belongs to the individual object. Updating it changes that instance without affecting other counters."
+  ),
+
+  makeLesson(
+    "Final Project: Expense Summary",
+    "Combine functions, loops, dictionaries, and accumulators. Build a summary by processing each record once and updating totals.",
+    `expenses = [
+    {"category": "food", "amount": 12},
+    {"category": "travel", "amount": 8}
+]
+
+for expense in expenses:
+    print(expense["category"], expense["amount"])`,
+    'Write summarize_expenses(expenses). Each expense is a dictionary with a string "category" and a non-negative integer "amount" in cents. Return {"total": total_amount, "by_category": category_totals, "count": number_of_expenses}. Categories are case-sensitive. Include categories whose total is zero. For empty input, return {"total": 0, "by_category": {}, "count": 0}. Do not modify the input.',
+    `def summarize_expenses(expenses):
+    total = 0
+    by_category = {}
+
+    for expense in expenses:
+        category = expense["category"]
+        amount = expense["amount"]
+
+        total += amount
+        by_category[category] = by_category.get(category, 0) + amount
+
+    return {
+        "total": total,
+        "by_category": by_category,
+        "count": len(expenses)
+    }`,
+    `
+import copy
+
+cases = [
+    (
+        [],
+        {"total": 0, "by_category": {}, "count": 0}
+    ),
+    (
+        [{"category": "food", "amount": 1200}],
+        {"total": 1200, "by_category": {"food": 1200}, "count": 1}
+    ),
+    (
+        [
+            {"category": "food", "amount": 1200},
+            {"category": "travel", "amount": 800},
+            {"category": "food", "amount": 300},
+        ],
+        {
+            "total": 2300,
+            "by_category": {"food": 1500, "travel": 800},
+            "count": 3
+        }
+    ),
+    (
+        [
+            {"category": "Food", "amount": 100},
+            {"category": "food", "amount": 200},
+            {"category": "free", "amount": 0},
+        ],
+        {
+            "total": 300,
+            "by_category": {"Food": 100, "food": 200, "free": 0},
+            "count": 3
+        }
+    ),
+]
+
+for original, expected in cases:
+    expenses = copy.deepcopy(original)
+    result = summarize_expenses(expenses)
+    assert isinstance(result, dict), "Return a dictionary."
+    assert result == expected, (
+        f"For {original}, expected {expected}, but received {result!r}."
+    )
+    assert expenses == original, "Do not modify the input."
+
+first = summarize_expenses([])
+first["by_category"]["extra"] = 99
+assert summarize_expenses([]) == {
+    "total": 0, "by_category": {}, "count": 0
+}, "Create a fresh summary for each call."
+`,
+    "The loop maintains an overall total and a separate total per category. Integer cents avoid floating-point rounding issues for this project. len(expenses) supplies the record count."
+  )
+
+].map((lesson, index) => ({
+  ...lesson,
+  title: `${index + 1}. ${lesson.title}`
+}));
+  
 // Normalize the starter for the first function lesson.
 lessons[2].starter = "def add(a, b):\n    # Return their sum\n    pass\n";
 
