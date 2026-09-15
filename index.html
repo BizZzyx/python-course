@@ -3,53 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Python Practice</title>
+  <title>Python Practice — 50 Lessons</title>
+
   <style>
     :root {
       color-scheme: dark;
-      --bg: #0b1120;
+      --background: #0b1120;
       --panel: #141e32;
       --border: #2c3a54;
       --text: #eef2ff;
       --muted: #b1bdd3;
       --accent: #93c5fd;
+      --green: #86efac;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      background: var(--bg);
+      background: var(--background);
       color: var(--text);
       font: 16px/1.6 system-ui, sans-serif;
     }
 
     main {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: auto;
       padding: 28px 18px;
     }
 
-    h1, h2, h3 { line-height: 1.25; }
-    h1 { margin-bottom: 8px; }
-    h2 { font-size: 1.3rem; }
-    h3 { font-size: 1rem; }
-    p { color: var(--muted); }
-
-    .topbar, .buttons {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+    h1, h2, h3 {
+      line-height: 1.3;
     }
 
-    .topbar { justify-content: space-between; }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin-top: 0;
+    }
+
+    h3 {
+      font-size: 1rem;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .header p {
+      margin: 0;
+    }
+
+    .progress-box {
+      min-width: 200px;
+    }
+
+    #progressText {
+      color: var(--green);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    progress {
+      width: 100%;
+      height: 12px;
+      accent-color: var(--green);
+    }
 
     .grid {
       display: grid;
       grid-template-columns: 1fr 1.2fr;
       gap: 20px;
       margin-top: 20px;
+      align-items: start;
     }
 
     .panel {
@@ -62,20 +103,20 @@
 
     select, button, textarea {
       font: inherit;
-      border-radius: 8px;
       border: 1px solid var(--border);
+      border-radius: 8px;
     }
 
     select {
       width: 100%;
       padding: 12px;
-      background: var(--bg);
-      color: var(--text);
       margin-top: 6px;
+      background: var(--panel);
+      color: var(--text);
     }
 
     button {
-      padding: 10px 15px;
+      padding: 10px 14px;
       cursor: pointer;
       background: #233451;
       color: var(--text);
@@ -87,71 +128,136 @@
       color: #071426;
     }
 
-    button:hover { filter: brightness(1.12); }
-    button:disabled { opacity: .5; cursor: not-allowed; }
+    button:hover:not(:disabled) {
+      filter: brightness(1.12);
+    }
 
-    button:focus-visible, select:focus-visible,
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button:focus-visible,
+    select:focus-visible,
     textarea:focus-visible {
       outline: 3px solid var(--accent);
       outline-offset: 3px;
     }
 
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
     textarea {
       display: block;
       width: 100%;
-      min-height: 300px;
+      min-height: 340px;
       margin: 10px 0 16px;
       padding: 16px;
       background: #080e1b;
       color: #dbeafe;
-      font: 14px/1.65 ui-monospace, monospace;
+      font: 14px/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
       resize: vertical;
       tab-size: 4;
+      white-space: pre;
     }
 
     pre {
+      padding: 16px;
       overflow-wrap: anywhere;
       white-space: pre-wrap;
       background: #080e1b;
       border-radius: 10px;
-      padding: 16px;
-      font: 14px/1.6 ui-monospace, monospace;
+      font: 14px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
     }
 
-    #output { min-height: 90px; }
-    #progress { color: #86efac; }
-    .small { font-size: .85rem; }
-    .assignment { border-left: 3px solid var(--accent); padding-left: 14px; }
-    [hidden] { display: none !important; }
+    #output {
+      min-height: 110px;
+      max-height: 460px;
+      overflow: auto;
+    }
 
-    @media (max-width: 780px) {
-      .grid { grid-template-columns: 1fr; }
+    .assignment {
+      border-left: 3px solid var(--accent);
+      padding-left: 14px;
+      color: var(--text);
+    }
+
+    .small {
+      font-size: 0.85rem;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    #saveStatus {
+      min-height: 1.4em;
+    }
+
+    #answerPanel {
+      margin-top: 18px;
+    }
+
+    footer {
+      margin-top: 24px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 800px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .panel {
+        padding: 18px;
+      }
     }
   </style>
 </head>
+
 <body>
 <main>
-  <header class="topbar">
+  <header class="header">
     <div>
       <h1>🐍 Python Practice</h1>
-      <p>Learn a little. Write some code. Check your work.</p>
+      <p>50 lessons. Learn a little, then write some code.</p>
     </div>
-    <strong id="progress"></strong>
+
+    <div class="progress-box">
+      <strong id="progressText">0 / 50 completed</strong>
+      <progress id="progressBar" max="50" value="0"
+                aria-label="Course progress"></progress>
+    </div>
   </header>
 
-  <label for="lesson">Choose a lesson</label>
-  <select id="lesson"></select>
+  <label for="lessonSelect">Choose a lesson</label>
+  <select id="lessonSelect"></select>
 
   <div class="grid">
     <section class="panel" aria-labelledby="lessonTitle">
       <h2 id="lessonTitle"></h2>
+
+      <h3>Quick tutorial</h3>
       <p id="tutorial"></p>
+
+      <h3>Example</h3>
       <pre id="example"></pre>
 
       <h3>Your assignment</h3>
       <p id="assignment" class="assignment"></p>
 
-      <button id="answerButton" aria-expanded="false"
+      <button id="answerButton"
+              aria-expanded="false"
               aria-controls="answerPanel">
         Show Correct Answer
       </button>
@@ -161,47 +267,70 @@
         <pre id="solution"></pre>
         <p id="explanation"></p>
         <p class="small">
-          This is one correct solution. Your code can look different
-          and still pass the checks.
+          This is one correct solution. Other solutions can also pass.
         </p>
       </div>
     </section>
 
     <section class="panel" aria-labelledby="editorTitle">
       <h2 id="editorTitle">Your Python code</h2>
-      <label for="editor" class="small">
-        Edit below. Tab inserts four spaces. Ctrl/Cmd + Enter runs your code.
+
+      <label for="editor" class="small muted">
+        Tab inserts four spaces. Ctrl/Cmd + Enter runs your code.
       </label>
-      <textarea id="editor" spellcheck="false"
-                autocapitalize="off" autocomplete="off"
-                aria-label="Python code editor"></textarea>
+
+      <textarea
+        id="editor"
+        spellcheck="false"
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        aria-label="Python code editor"
+      ></textarea>
 
       <div class="buttons">
         <button id="runButton" class="primary">▶ Run & Check</button>
+        <button id="stopButton" disabled>Stop</button>
         <button id="resetButton">Reset Code</button>
-        <button id="nextButton">Next Lesson →</button>
       </div>
+
+      <p id="saveStatus" class="small muted"></p>
 
       <h3>Results</h3>
       <pre id="output" role="status" aria-live="polite">Ready when you are.</pre>
-      <p class="small">
-        Code runs in your browser, not on a Python server.
-        First run requires an internet connection to load Python.
-        Avoid entering secrets or running untrusted code.
-      </p>
+
+      <div class="buttons">
+        <button id="previousButton">← Previous</button>
+        <button id="nextButton">Next Lesson →</button>
+      </div>
     </section>
   </div>
 
-  <p class="small">
-    Code and completed lessons are saved in this browser when local storage
-    is available. They do not sync to your GitHub account.
-  </p>
+  <footer>
+    <p class="small">
+      Your code and completed lessons are saved in this browser when local
+      storage is available. They do not sync to GitHub or other devices.
+    </p>
+    <p class="small">
+      Python runs in your browser using Pyodide. Loading Python requires an
+      internet connection. Avoid entering secrets or running untrusted code.
+      Checks test expected behavior, not whether you used a particular technique.
+    </p>
+  </footer>
+
+  <noscript>
+    <p>Please enable JavaScript to use this app.</p>
+  </noscript>
 </main>
 
 <script>
-const lessons = [
- // Creates a lesson and generates starter code for function assignments.
-function makeLesson(
+"use strict";
+
+/* ============================================================
+   LESSON HELPERS
+   ============================================================ */
+
+function lesson(
   title,
   tutorial,
   example,
@@ -212,43 +341,59 @@ function makeLesson(
 ) {
   const firstLine = solution.split("\n")[0];
 
-  const starter = firstLine.startsWith("def ")
-    ? `${firstLine}\n    # Write your code here\n    pass\n`
-    : "# Write your solution below\n";
+  let starter = "# Write your solution below\n";
+
+  if (firstLine.startsWith("def ")) {
+    starter = firstLine + "\n    # Write your code here\n    pass\n";
+  } else if (firstLine.startsWith("class ")) {
+    starter = firstLine + "\n    # Write your class here\n    pass\n";
+  }
 
   return {
     title,
     tutorial,
     example,
     assignment,
-    starter,
     solution,
     tests,
-    explanation
+    explanation,
+    starter
   };
 }
 
+// cases must be a Python list of (argument_tuple, expected_result) pairs.
+// The generated checks provide a useful message when an answer is wrong.
+function checks(functionName, cases) {
+  return `
+for __args, __expected in ${cases}:
+    __actual = ${functionName}(*__args)
+    assert __actual == __expected, (
+        f"${functionName}{__args!r}: expected {__expected!r}, "
+        f"but received {__actual!r}"
+    )
+    if isinstance(__expected, bool):
+        assert type(__actual) is bool, "Return True or False as a Boolean."
+`;
+}
+
+/* ============================================================
+   ALL 50 LESSONS
+   ============================================================ */
+
 const lessons = [
-
-  // ─── FOUNDATIONS: 1–10 ───────────────────────────────────────
-
-  makeLesson(
+  lesson(
     "Hello, Python",
-    "print() displays text. Put text inside matching quotation marks.",
+    "print() displays text. Put text inside matching quotation marks. Python runs instructions from top to bottom.",
     `print("I am learning Python!")`,
     "Print exactly Hello, Python! on one line. Do not add extra messages.",
     `print("Hello, Python!")`,
-    `
-assert __output__.strip() == "Hello, Python!", (
-    "Print exactly: Hello, Python!"
-)
-`,
-    "The quotation marks define the string. They are not part of the printed text."
+    `assert __output__.strip() == "Hello, Python!", "Print exactly: Hello, Python!"`,
+    "The quotation marks define the string but are not printed."
   ),
 
-  makeLesson(
+  lesson(
     "Variables",
-    "Variables give names to values. Use = for assignment. Text is a string; a whole number is an integer.",
+    "Variables give names to values. Use = to assign a value. Text is a string; a whole number is an integer.",
     `name = "Alex"
 points = 10
 print(name, points)`,
@@ -257,71 +402,72 @@ print(name, points)`,
 year = 1991`,
     `
 assert language == "Python", 'language should contain "Python".'
-assert type(year) is int and year == 1991, (
-    "year should be the integer 1991."
-)
+assert type(year) is int and year == 1991, "year must be the integer 1991."
 `,
-    "Use quotes for text, but not for the integer 1991."
+    "Strings use quotation marks. The integer 1991 must not be in quotation marks."
   ),
 
-  makeLesson(
+  lesson(
     "Your First Function",
-    "Define reusable code with def. Indent its body by four spaces. return sends a result back to the caller.",
+    "Define a function with def. Put inputs inside parentheses, indent the body, and use return to send back a result.",
     `def double(number):
     return number * 2
 
 print(double(4))`,
-    "Write add(a, b) that returns the sum of a and b. Return the answer rather than only printing it.",
+    "Write add(a, b) that returns the sum of a and b. Return the result rather than only printing it.",
     `def add(a, b):
     return a + b`,
-    `
-for a, b in [(2, 3), (-4, 7), (0, 0), (1.5, 2.25), (-8, -2)]:
-    assert add(a, b) == a + b, (
-        f"add({a}, {b}) should return {a + b}."
-    )
-`,
-    "The + operator adds the inputs. return makes the answer available to other code."
+    checks("add", `[
+      ((2, 3), 5),
+      ((-4, 7), 3),
+      ((0, 0), 0),
+      ((1.5, 2.25), 3.75),
+      ((-8, -2), -10)
+    ]`),
+    "The + operator adds the inputs. return makes the answer available to the caller."
   ),
 
-  makeLesson(
+  lesson(
     "Strings and F-Strings",
-    "An f-string inserts values into text. Add f before the opening quote and put expressions inside curly braces.",
+    "An f-string inserts values into text. Add f before the string and put variable names inside curly braces.",
     `name = "Sam"
 print(f"Welcome, {name}!")`,
     'Write greet(name) that returns "Hello, NAME!" with NAME replaced by the supplied name.',
     `def greet(name):
     return f"Hello, {name}!"`,
-    `
-for name in ["Mia", "Alex", "Mary Jane", "Zoë", ""]:
-    expected = f"Hello, {name}!"
-    assert greet(name) == expected, (
-        f"greet({name!r}) should return {expected!r}."
-    )
-`,
-    "The f-string substitutes name while preserving the punctuation and space."
+    checks("greet", `[
+      (("Mia",), "Hello, Mia!"),
+      (("Alex",), "Hello, Alex!"),
+      (("Mary Jane",), "Hello, Mary Jane!"),
+      (("Zoë",), "Hello, Zoë!"),
+      (("",), "Hello, !")
+    ]`),
+    "The f-string substitutes the name while preserving the comma, space, and exclamation mark."
   ),
 
-  makeLesson(
+  lesson(
     "Even or Odd",
-    "The % operator returns a division remainder. == compares values and produces True or False.",
+    "% gives the remainder after division. == compares two values and produces True or False. Even integers have a remainder of zero when divided by two.",
     `print(7 % 2)
 print(8 % 2 == 0)`,
     "Write is_even(number) that returns Boolean True for even integers and False for odd integers.",
     `def is_even(number):
     return number % 2 == 0`,
-    `
-for number in [0, 1, 2, 7, 12, -3, -8, 101]:
-    expected = number % 2 == 0
-    assert is_even(number) is expected, (
-        f"is_even({number}) should return {expected}."
-    )
-`,
-    "Even integers have a remainder of zero when divided by two. This also works for zero and negative integers."
+    checks("is_even", `[
+      ((0,), True),
+      ((1,), False),
+      ((2,), True),
+      ((7,), False),
+      ((12,), True),
+      ((-3,), False),
+      ((-8,), True)
+    ]`),
+    "The comparison already returns a Boolean. Zero and negative even integers work too."
   ),
 
-  makeLesson(
+  lesson(
     "For Loops",
-    "A for loop repeats instructions. range(start, stop) includes start but excludes stop. An accumulator stores a running total.",
+    "A for loop repeats code. range(start, stop) includes start but excludes stop. An accumulator stores a running total.",
     `total = 0
 for number in range(1, 4):
     total += number
@@ -332,224 +478,185 @@ print(total)`,
     for number in range(1, n + 1):
         total += number
     return total`,
-    `
-for n in [0, 1, 2, 5, 10, 100]:
-    expected = n * (n + 1) // 2
-    assert sum_to(n) == expected, (
-        f"sum_to({n}) should return {expected}."
-    )
-`,
-    "Using n + 1 includes n in the range. For n = 0, the loop is empty and total stays zero."
+    checks("sum_to", `[
+      ((0,), 0),
+      ((1,), 1),
+      ((2,), 3),
+      ((5,), 15),
+      ((10,), 55),
+      ((100,), 5050)
+    ]`),
+    "n + 1 makes the range include n. For n = 0, the loop is empty and total stays zero."
   ),
 
-  makeLesson(
+  lesson(
     "Lists",
-    "Lists contain multiple values. [] creates an empty list, and append() adds an item. ** raises a number to a power.",
+    "A list stores multiple values. [] creates an empty list. append() adds an item. ** raises a number to a power.",
     `doubled = []
 for number in [1, 2, 3]:
-    doubled.append(number * 2)`,
-    "Write squares(numbers) that returns a new list of squared numbers in the same order. Do not change the input list.",
+    doubled.append(number * 2)
+print(doubled)`,
+    "Write squares(numbers) that returns a new list containing the square of each number in the same order. Do not change the input list.",
     `def squares(numbers):
     result = []
     for number in numbers:
         result.append(number ** 2)
     return result`,
     `
-for original in [[], [2], [1, 2, 3], [-3, 0, 4], [2, 2]]:
-    values = original.copy()
-    result = squares(values)
-    expected = [n ** 2 for n in original]
-    assert isinstance(result, list), "Return a list."
-    assert result == expected, (
-        f"squares({original}) should return {expected}."
-    )
-    assert values == original, "Do not change the input list."
-    assert result is not values, "Return a new list."
+for __original in [[], [2], [1, 2, 3], [-3, 0, 4], [2, 2]]:
+    __values = __original.copy()
+    __result = squares(__values)
+    __expected = [n ** 2 for n in __original]
+    assert isinstance(__result, list), "Return a list."
+    assert __result == __expected, f"Expected {__expected}, received {__result!r}."
+    assert __values == __original, "Do not change the input list."
+    assert __result is not __values, "Return a new list."
 `,
-    "The function builds a separate list. number ** 2 squares each input."
+    "A separate result list leaves the original unchanged. number ** 2 squares each value."
   ),
 
-  makeLesson(
+  lesson(
     "Dictionaries",
-    "A dictionary stores key-value pairs. get(key, default) returns the stored value or the default when a key is missing.",
+    "A dictionary stores key-value pairs. get(key, default) returns a stored value, or the default when the key is missing.",
     `scores = {"Alex": 3}
 print(scores.get("Alex", 0))
 print(scores.get("Mia", 0))`,
-    "Write count_words(words) that returns each word's frequency as a dictionary. Uppercase and lowercase are different. Do not change the input list.",
+    "Write count_words(words) that returns a dictionary mapping each word to its frequency. Uppercase and lowercase are different. Do not change the input list.",
     `def count_words(words):
     counts = {}
     for word in words:
         counts[word] = counts.get(word, 0) + 1
     return counts`,
-    `
-cases = [
-    ([], {}),
-    (["cat"], {"cat": 1}),
-    (["cat", "dog", "cat"], {"cat": 2, "dog": 1}),
-    (["Python", "python", "Python"], {"Python": 2, "python": 1}),
-    (["a", "b", "b", "a", "c"], {"a": 2, "b": 2, "c": 1}),
-]
-for words, expected in cases:
-    values = words.copy()
-    result = count_words(values)
-    assert isinstance(result, dict), "Return a dictionary."
-    assert result == expected, (
-        f"count_words({words}) should return {expected}."
-    )
-    assert values == words, "Do not change the input list."
+    checks("count_words", `[
+      (([],), {}),
+      ((["cat"],), {"cat": 1}),
+      ((["cat", "dog", "cat"],), {"cat": 2, "dog": 1}),
+      ((["Python", "python", "Python"],), {"Python": 2, "python": 1})
+    ]`) + `
+__words = ["a", "b", "a"]
+count_words(__words)
+assert __words == ["a", "b", "a"], "Do not change the input list."
 `,
-    "Each occurrence increases a word's count by one. Missing words start at zero."
+    "Each occurrence increases its word's count by one. A missing word starts with a count of zero."
   ),
 
-  makeLesson(
+  lesson(
     "String Methods",
-    "Strings have methods that return transformed text. upper() converts letters to uppercase without changing the original string.",
+    "Strings provide methods that return transformed text. upper() converts letters to uppercase. + joins strings.",
     `message = "hello"
 print(message.upper())`,
     "Write shout(text) that returns the uppercase version of text followed by one additional exclamation mark.",
     `def shout(text):
     return text.upper() + "!"`,
-    `
-for text, expected in [
-    ("hello", "HELLO!"),
-    ("Python", "PYTHON!"),
-    ("", "!"),
-    ("wow!", "WOW!!"),
-    ("hello world", "HELLO WORLD!"),
-]:
-    assert shout(text) == expected, (
-        f"shout({text!r}) should return {expected!r}."
-    )
-`,
-    "upper() transforms the text. + joins the transformed string with an exclamation mark."
+    checks("shout", `[
+      (("hello",), "HELLO!"),
+      (("Python",), "PYTHON!"),
+      (("",), "!"),
+      (("wow!",), "WOW!!"),
+      (("hello world",), "HELLO WORLD!")
+    ]`),
+    "upper() transforms the letters, then + adds an exclamation mark."
   ),
 
-  makeLesson(
+  lesson(
     "Cleaning Text",
-    "strip() removes whitespace from the beginning and end. lower() converts letters to lowercase. Methods can be chained.",
+    "strip() removes whitespace from the beginning and end. lower() converts letters to lowercase. You can chain methods.",
     `text = "  HELLO  "
 print(text.strip().lower())`,
-    "Write clean_name(name) that removes leading and trailing whitespace and converts the result to lowercase. Preserve internal spaces.",
+    "Write clean_name(name) that removes surrounding whitespace and converts the result to lowercase. Preserve internal spaces.",
     `def clean_name(name):
     return name.strip().lower()`,
-    `
-for name, expected in [
-    ("  ALICE  ", "alice"),
-    ("Bob", "bob"),
-    ("  Mary Jane ", "mary jane"),
-    ("\\tSAM\\n", "sam"),
-    ("   ", ""),
-    ("", ""),
-]:
-    assert clean_name(name) == expected, (
-        f"clean_name({name!r}) should return {expected!r}."
-    )
-`,
-    "strip() affects only the ends. Spaces between words remain unchanged."
+    checks("clean_name", `[
+      (("  ALICE  ",), "alice"),
+      (("Bob",), "bob"),
+      ((" Mary Jane ",), "mary jane"),
+      (("\\tSAM\\n",), "sam"),
+      (("   ",), ""),
+      (("",), "")
+    ]`),
+    "strip() affects only the ends, so spaces between words remain."
   ),
 
-  // ─── DECISIONS AND SEQUENCES: 11–20 ──────────────────────────
-
-  makeLesson(
+  lesson(
     "Length",
-    "len() returns the number of items in a collection or the number of characters in a string.",
+    "len() returns the number of items in a collection or characters in a string. Spaces and punctuation count too.",
     `print(len("Python"))
 print(len([10, 20, 30]))`,
     "Write character_count(text) that returns the number of characters in text, including spaces and punctuation.",
     `def character_count(text):
     return len(text)`,
-    `
-for text, expected in [
-    ("Python", 6),
-    ("", 0),
-    ("a b!", 4),
-    ("12345", 5),
-    ("hello\\n", 6),
-]:
-    assert character_count(text) == expected, (
-        f"character_count({text!r}) should return {expected}."
-    )
-`,
-    "len() counts spaces, punctuation, and newline characters too."
+    checks("character_count", `[
+      (("Python",), 6),
+      (("",), 0),
+      (("a b!",), 4),
+      (("12345",), 5),
+      (("hello\\n",), 6)
+    ]`),
+    "len() counts all characters, including newline characters."
   ),
 
-  makeLesson(
+  lesson(
     "Indexing",
-    "Sequence indexes start at zero. Index 0 is the first item. Index -1 is the last item. Indexing an empty list raises an error.",
+    "Sequence indexes start at zero. Index -1 selects the last item. Indexing an empty list raises an error, so check it first.",
     `colors = ["red", "green", "blue"]
 print(colors[0])
 print(colors[-1])`,
     "Write last_item(items) that returns the last item of a list, or None if the list is empty.",
     `def last_item(items):
-    if len(items) == 0:
+    if not items:
         return None
     return items[-1]`,
-    `
-for items, expected in [
-    ([], None),
-    ([7], 7),
-    ([1, 2, 3], 3),
-    (["a", "b"], "b"),
-    ([False], False),
-]:
-    assert last_item(items) == expected, (
-        f"last_item({items}) should return {expected!r}."
-    )
-`,
-    "Check for an empty list before using [-1]. None represents the absence of a result."
+    checks("last_item", `[
+      (([],), None),
+      (([7],), 7),
+      (([1, 2, 3],), 3),
+      ((["a", "b"],), "b"),
+      (([False],), False)
+    ]`),
+    "An empty list is falsy. The early return avoids indexing it."
   ),
 
-  makeLesson(
+  lesson(
     "Slicing",
-    "A slice selects part of a sequence: sequence[start:stop:step]. Leaving start and stop blank selects across the sequence.",
+    "A slice has the form sequence[start:stop:step]. Leaving start and stop blank selects across the sequence.",
     `text = "Python"
 print(text[:3])
 print(text[::2])`,
-    "Write reverse_text(text) that returns text in reverse order. Try using a slice with a step of -1.",
+    "Write reverse_text(text) that returns text in reverse order. Try a slice with a step of -1.",
     `def reverse_text(text):
     return text[::-1]`,
-    `
-for text, expected in [
-    ("Python", "nohtyP"),
-    ("", ""),
-    ("a", "a"),
-    ("ab cd", "dc ba"),
-    ("123", "321"),
-]:
-    assert reverse_text(text) == expected, (
-        f"reverse_text({text!r}) should return {expected!r}."
-    )
-`,
-    "A step of -1 traverses the string backward and creates the reversed string."
+    checks("reverse_text", `[
+      (("Python",), "nohtyP"),
+      (("",), ""),
+      (("a",), "a"),
+      (("ab cd",), "dc ba"),
+      (("123",), "321")
+    ]`),
+    "A step of -1 traverses the string backward."
   ),
 
-  makeLesson(
+  lesson(
     "Membership",
-    "The in operator checks whether an item exists in a collection. For strings, it checks for a substring.",
+    "in checks whether an item exists in a collection. For strings, it checks for a substring.",
     `print("cat" in ["cat", "dog"])
 print("Py" in "Python")`,
-    "Write contains_python(text) that returns True if text contains 'python', ignoring uppercase and lowercase. Otherwise return False.",
+    "Write contains_python(text) that returns True when text contains 'python', ignoring case. Otherwise return False.",
     `def contains_python(text):
     return "python" in text.lower()`,
-    `
-for text, expected in [
-    ("I love Python", True),
-    ("PYTHON!", True),
-    ("pythonic", True),
-    ("Java", False),
-    ("py thon", False),
-    ("", False),
-]:
-    assert contains_python(text) is expected, (
-        f"contains_python({text!r}) should return {expected}."
-    )
-`,
-    "Lowercasing first makes the substring check case-insensitive."
+    checks("contains_python", `[
+      (("I love Python",), True),
+      (("PYTHON!",), True),
+      (("pythonic",), True),
+      (("Java",), False),
+      (("py thon",), False),
+      (("",), False)
+    ]`),
+    "Converting the text to lowercase makes the substring check case-insensitive."
   ),
 
-  makeLesson(
+  lesson(
     "If, Elif, Else",
-    "Use if for the first condition, elif for another condition, and else for the fallback. Only the first matching branch runs.",
+    "if checks the first condition, elif checks another, and else handles the fallback. Only the first matching branch runs.",
     `temperature = 18
 if temperature >= 25:
     print("hot")
@@ -567,19 +674,16 @@ else:
         return "C"
     else:
         return "F"`,
-    `
-for score, expected in [
-    (100, "A"), (90, "A"), (89, "B"), (80, "B"),
-    (79, "C"), (70, "C"), (69, "F"), (0, "F"),
-]:
-    assert grade(score) == expected, (
-        f"grade({score}) should return {expected!r}."
-    )
-`,
-    "Checking the highest threshold first prevents high scores from matching a lower grade."
+    checks("grade", `[
+      ((100,), "A"), ((90,), "A"),
+      ((89,), "B"), ((80,), "B"),
+      ((79,), "C"), ((70,), "C"),
+      ((69,), "F"), ((0,), "F")
+    ]`),
+    "Checking the highest threshold first prevents a high score from receiving a lower grade."
   ),
 
-  makeLesson(
+  lesson(
     "Combining Conditions With And",
     "and requires both conditions to be true. Python also supports chained comparisons such as 1 <= number <= 10.",
     `age = 20
@@ -587,51 +691,41 @@ print(age >= 18 and age <= 65)`,
     "Write in_range(number, low, high) that returns True when number is between low and high, including both boundaries. Assume low <= high.",
     `def in_range(number, low, high):
     return number >= low and number <= high`,
-    `
-for number, low, high, expected in [
-    (5, 1, 10, True),
-    (1, 1, 10, True),
-    (10, 1, 10, True),
-    (0, 1, 10, False),
-    (11, 1, 10, False),
-    (-3, -5, -1, True),
-    (4, 4, 4, True),
-]:
-    assert in_range(number, low, high) is expected, (
-        f"in_range({number}, {low}, {high}) should return {expected}."
-    )
-`,
-    "Both boundary comparisons must pass. The shorter expression low <= number <= high also works."
+    checks("in_range", `[
+      ((5, 1, 10), True),
+      ((1, 1, 10), True),
+      ((10, 1, 10), True),
+      ((0, 1, 10), False),
+      ((11, 1, 10), False),
+      ((-3, -5, -1), True),
+      ((4, 4, 4), True)
+    ]`),
+    "Both boundary checks must pass. low <= number <= high is another correct solution."
   ),
 
-  makeLesson(
+  lesson(
     "Combining Conditions With Or",
-    "or is true when at least one condition is true. not reverses a Boolean value.",
+    "or is true when at least one condition is true. Normalize text before comparing when case and surrounding spaces should not matter.",
     `day = "Sunday"
 print(day == "Saturday" or day == "Sunday")`,
-    "Write is_weekend(day) that returns True for Saturday or Sunday, ignoring case and surrounding whitespace. Return False for anything else.",
+    "Write is_weekend(day) that returns True for Saturday or Sunday, ignoring case and surrounding whitespace. Return False otherwise.",
     `def is_weekend(day):
     cleaned = day.strip().lower()
     return cleaned == "saturday" or cleaned == "sunday"`,
-    `
-for day, expected in [
-    ("Saturday", True),
-    ("SUNDAY", True),
-    (" sunday ", True),
-    ("Monday", False),
-    ("Friday", False),
-    ("", False),
-]:
-    assert is_weekend(day) is expected, (
-        f"is_weekend({day!r}) should return {expected}."
-    )
-`,
-    "Normalize the text once, then compare it against both weekend day names."
+    checks("is_weekend", `[
+      (("Saturday",), True),
+      (("SUNDAY",), True),
+      ((" sunday ",), True),
+      (("Monday",), False),
+      (("Friday",), False),
+      (("",), False)
+    ]`),
+    "Normalize the text once, then compare it with both weekend names."
   ),
 
-  makeLesson(
+  lesson(
     "Default Parameters",
-    "A parameter can have a default value. The caller may omit that argument or provide a replacement.",
+    "A default parameter supplies a value when the caller leaves an argument out. A supplied argument overrides the default.",
     `def welcome(name="friend"):
     return f"Hi, {name}!"
 
@@ -640,19 +734,20 @@ print(welcome("Alex"))`,
     "Write multiply(number, factor=2) that returns number multiplied by factor. The default factor must be 2.",
     `def multiply(number, factor=2):
     return number * factor`,
-    `
-assert multiply(5) == 10, "multiply(5) should use factor 2."
-assert multiply(-3) == -6, "Handle negative numbers."
-assert multiply(5, 3) == 15, "Allow a supplied factor."
-assert multiply(5, factor=4) == 20, "Allow a keyword argument."
-assert multiply(8, 0) == 0, "A factor of zero must work."
+    checks("multiply", `[
+      ((5,), 10),
+      ((-3,), -6),
+      ((5, 3), 15),
+      ((8, 0), 0)
+    ]`) + `
+assert multiply(5, factor=4) == 20, "Allow factor as a keyword argument."
 `,
-    "factor=2 supplies a fallback. An explicit positional or keyword argument overrides it."
+    "factor=2 is used only when no factor is supplied."
   ),
 
-  makeLesson(
+  lesson(
     "Returning Tuples",
-    "A tuple groups values together. Returning values separated by commas returns a tuple. min() and max() find the smallest and largest values.",
+    "Returning values separated by commas creates a tuple. min() and max() find the smallest and largest values.",
     `def endpoints():
     return 1, 10
 
@@ -660,87 +755,65 @@ print(endpoints())`,
     "Write bounds(numbers) that returns a tuple containing the minimum and maximum of a non-empty numeric list.",
     `def bounds(numbers):
     return min(numbers), max(numbers)`,
-    `
-for numbers, expected in [
-    ([3, 1, 8], (1, 8)),
-    ([5], (5, 5)),
-    ([-4, -9, -1], (-9, -1)),
-    ([0, 0], (0, 0)),
-]:
-    result = bounds(numbers)
-    assert isinstance(result, tuple), "Return a tuple."
-    assert result == expected, (
-        f"bounds({numbers}) should return {expected}."
-    )
-`,
-    "The comma creates the tuple. The assignment guarantees the input is not empty."
+    checks("bounds", `[
+      (([3, 1, 8],), (1, 8)),
+      (([5],), (5, 5)),
+      (([-4, -9, -1],), (-9, -1)),
+      (([0, 0],), (0, 0))
+    ]`),
+    "The comma creates the tuple. The assignment guarantees at least one input number."
   ),
 
-  makeLesson(
+  lesson(
     "Tuple Unpacking",
-    "Unpacking assigns each item in a sequence to a separate variable. The number of variables must match the number of items.",
+    "Unpacking assigns sequence items to separate variables. The number of variables must match the number of items.",
     `point = (4, 7)
 x, y = point
-print(x)
-print(y)`,
+print(x, y)`,
     "Write swap_pair(pair) that accepts a two-item tuple and returns a tuple with its items reversed. Try unpacking.",
     `def swap_pair(pair):
     first, second = pair
     return second, first`,
-    `
-for pair, expected in [
-    ((1, 2), (2, 1)),
-    (("a", "b"), ("b", "a")),
-    ((None, 5), (5, None)),
-    ((3, 3), (3, 3)),
-]:
-    result = swap_pair(pair)
-    assert isinstance(result, tuple), "Return a tuple."
-    assert result == expected, (
-        f"swap_pair({pair!r}) should return {expected!r}."
-    )
-`,
-    "Unpacking gives each value a name. Returning them in the opposite order creates the swapped tuple."
+    checks("swap_pair", `[
+      (((1, 2),), (2, 1)),
+      ((("a", "b"),), ("b", "a")),
+      (((None, 5),), (5, None)),
+      (((3, 3),), (3, 3))
+    ]`),
+    "Unpacking gives the two values names. Returning them in the opposite order swaps them."
   ),
 
-  // ─── LOOP AND COLLECTION TOOLS: 21–30 ────────────────────────
-
-  makeLesson(
+  lesson(
     "While Loops",
-    "A while loop repeats while its condition is true. Update the value controlling the condition so the loop eventually stops.",
+    "A while loop repeats while its condition is true. Update the controlling value so the loop eventually stops.",
     `number = 3
 while number > 0:
     print(number)
     number -= 1`,
-    "Write countdown(n) that returns a list counting from n down to 1. Return [] for n = 0. Assume n is a non-negative integer. Try a while loop.",
+    "Write countdown(n) that returns a list from n down to 1. Return [] for n = 0. Assume n is a non-negative integer. Try a while loop.",
     `def countdown(n):
     result = []
     while n > 0:
         result.append(n)
         n -= 1
     return result`,
-    `
-for n, expected in [
-    (0, []),
-    (1, [1]),
-    (3, [3, 2, 1]),
-    (5, [5, 4, 3, 2, 1]),
-]:
-    assert countdown(n) == expected, (
-        f"countdown({n}) should return {expected}."
-    )
-`,
-    "Decreasing n on every iteration eventually makes n > 0 false."
+    checks("countdown", `[
+      ((0,), []),
+      ((1,), [1]),
+      ((3,), [3, 2, 1]),
+      ((5,), [5, 4, 3, 2, 1])
+    ]`),
+    "Decreasing n makes the condition false eventually, stopping the loop."
   ),
 
-  makeLesson(
-    "Stopping a Loop With Break",
-    "break stops the nearest enclosing loop immediately. It is useful when you have already found what you need.",
+  lesson(
+    "Stopping With Break",
+    "break immediately stops the nearest enclosing loop. Use it when you have already found what you need.",
     `for number in [2, 4, 7, 8]:
     if number % 2 == 1:
         print(number)
         break`,
-    "Write first_negative(numbers) that returns the first negative number, or None if there are no negative numbers. Try using break.",
+    "Write first_negative(numbers) that returns the first negative number, or None when none exists. Try using break.",
     `def first_negative(numbers):
     result = None
     for number in numbers:
@@ -748,29 +821,24 @@ for n, expected in [
             result = number
             break
     return result`,
-    `
-for numbers, expected in [
-    ([3, -2, -5], -2),
-    ([-7, 1], -7),
-    ([0, 1, 2], None),
-    ([], None),
-    ([0, -1], -1),
-]:
-    assert first_negative(numbers) == expected, (
-        f"first_negative({numbers}) should return {expected!r}."
-    )
-`,
-    "Once the first negative number is found, break prevents later values from replacing it."
+    checks("first_negative", `[
+      (([3, -2, -5],), -2),
+      (([-7, 1],), -7),
+      (([0, 1, 2],), None),
+      (([],), None),
+      (([0, -1],), -1)
+    ]`),
+    "break prevents later negative values from replacing the first match."
   ),
 
-  makeLesson(
+  lesson(
     "Skipping With Continue",
-    "continue skips the rest of the current loop iteration and moves to the next item.",
+    "continue skips the rest of the current iteration and moves on to the next item.",
     `for number in [1, -2, 3]:
     if number < 0:
         continue
     print(number)`,
-    "Write remove_zeros(numbers) that returns a new list containing all nonzero values in their original order. Do not modify the input. Try continue.",
+    "Write remove_zeros(numbers) that returns a new list of nonzero values in their original order. Do not modify the input. Try continue.",
     `def remove_zeros(numbers):
     result = []
     for number in numbers:
@@ -778,206 +846,163 @@ for numbers, expected in [
             continue
         result.append(number)
     return result`,
-    `
-for original, expected in [
-    ([0, 1, 0, 2], [1, 2]),
-    ([0, 0], []),
-    ([-1, 0, 3], [-1, 3]),
-    ([], []),
-]:
-    values = original.copy()
-    result = remove_zeros(values)
-    assert result == expected, (
-        f"remove_zeros({original}) should return {expected}."
-    )
-    assert values == original, "Do not modify the input."
-    assert result is not values, "Return a new list."
+    checks("remove_zeros", `[
+      (([0, 1, 0, 2],), [1, 2]),
+      (([0, 0],), []),
+      (([-1, 0, 3],), [-1, 3]),
+      (([],), [])
+    ]`) + `
+__values = [0, 1, 0, 2]
+__result = remove_zeros(__values)
+assert __values == [0, 1, 0, 2], "Do not modify the input."
+assert __result is not __values, "Return a new list."
 `,
     "Zeros trigger continue, so only nonzero values reach append()."
   ),
 
-  makeLesson(
+  lesson(
     "Enumerate",
     "enumerate() supplies both a counter and an item. Its start argument controls the first counter value.",
     `for position, color in enumerate(["red", "blue"], start=1):
     print(position, color)`,
-    'Write number_items(items) that returns strings numbered from 1, such as ["1. apple", "2. pear"]. Assume items contains strings.',
+    'Write number_items(items) that returns numbered strings starting at 1, such as ["1. apple", "2. pear"]. Assume items contains strings.',
     `def number_items(items):
     result = []
     for position, item in enumerate(items, start=1):
         result.append(f"{position}. {item}")
     return result`,
-    `
-for items, expected in [
-    ([], []),
-    (["apple"], ["1. apple"]),
-    (["apple", "pear"], ["1. apple", "2. pear"]),
-    (["", "x"], ["1. ", "2. x"]),
-]:
-    assert number_items(items) == expected, (
-        f"number_items({items}) should return {expected}."
-    )
-`,
-    "enumerate(..., start=1) handles the numbering while the f-string formats each label."
+    checks("number_items", `[
+      (([],), []),
+      ((["apple"],), ["1. apple"]),
+      ((["apple", "pear"],), ["1. apple", "2. pear"]),
+      ((["", "x"],), ["1. ", "2. x"])
+    ]`),
+    "enumerate() handles the counter. The f-string formats each numbered label."
   ),
 
-  makeLesson(
+  lesson(
     "Zip",
-    "zip() pairs corresponding items from multiple sequences. By default, it stops when the shortest sequence runs out.",
+    "zip() pairs corresponding items from sequences. By default, it stops when the shortest sequence runs out.",
     `names = ["Alex", "Mia"]
 scores = [8, 9]
 print(list(zip(names, scores)))`,
     "Write pair_lists(left, right) that returns a list of two-item tuples pairing corresponding items. Stop at the shorter list.",
     `def pair_lists(left, right):
     return list(zip(left, right))`,
-    `
-for left, right, expected in [
-    ([1, 2], ["a", "b"], [(1, "a"), (2, "b")]),
-    ([1, 2, 3], ["x"], [(1, "x")]),
-    ([], [1], []),
-    ([1], [], []),
-]:
-    result = pair_lists(left, right)
-    assert isinstance(result, list), "Return a list."
-    assert result == expected, (
-        f"pair_lists({left}, {right}) should return {expected}."
-    )
-`,
+    checks("pair_lists", `[
+      (([1, 2], ["a", "b"]), [(1, "a"), (2, "b")]),
+      (([1, 2, 3], ["x"]), [(1, "x")]),
+      (([], [1]), []),
+      (([1], []), [])
+    ]`),
     "zip() creates an iterator of pairs. list() collects those pairs into a list."
   ),
 
-  makeLesson(
+  lesson(
     "List Comprehensions",
-    "A list comprehension creates a list in one expression. An optional if clause filters which items are included.",
+    "A list comprehension builds a list in one expression. An optional if clause filters its items.",
     `numbers = [1, 2, 3, 4]
-doubled = [n * 2 for n in numbers if n > 2]
-print(doubled)`,
-    "Write even_numbers(numbers) that returns a new list of only the even integers, preserving order. Try a list comprehension.",
+print([n * 2 for n in numbers if n > 2])`,
+    "Write even_numbers(numbers) that returns a new list containing only even integers, preserving order. Do not modify the input. Try a list comprehension.",
     `def even_numbers(numbers):
     return [number for number in numbers if number % 2 == 0]`,
-    `
-for numbers, expected in [
-    ([1, 2, 3, 4], [2, 4]),
-    ([-4, -3, 0, 7], [-4, 0]),
-    ([1, 3], []),
-    ([], []),
-    ([2, 2], [2, 2]),
-]:
-    values = numbers.copy()
-    result = even_numbers(values)
-    assert result == expected, (
-        f"even_numbers({numbers}) should return {expected}."
-    )
-    assert values == numbers, "Do not modify the input."
-    assert result is not values, "Return a new list."
+    checks("even_numbers", `[
+      (([1, 2, 3, 4],), [2, 4]),
+      (([-4, -3, 0, 7],), [-4, 0]),
+      (([1, 3],), []),
+      (([],), []),
+      (([2, 2],), [2, 2])
+    ]`) + `
+__values = [1, 2, 3, 4]
+__result = even_numbers(__values)
+assert __values == [1, 2, 3, 4], "Do not modify the input."
+assert __result is not __values, "Return a new list."
 `,
-    "The if clause keeps only numbers whose remainder after division by two is zero."
+    "The if clause keeps only numbers divisible by two."
   ),
 
-  makeLesson(
+  lesson(
     "Dictionary Comprehensions",
     "A dictionary comprehension creates key-value pairs with the form {key: value for item in collection}.",
-    `lengths = {word: len(word) for word in ["cat", "horse"]}
-print(lengths)`,
-    "Write square_map(numbers) that returns a dictionary mapping each input integer to its square. Repeated numbers should have a single key.",
+    `words = ["cat", "horse"]
+print({word: len(word) for word in words})`,
+    "Write square_map(numbers) that maps each input integer to its square in a dictionary. Repeated numbers should have a single key.",
     `def square_map(numbers):
     return {number: number ** 2 for number in numbers}`,
-    `
-for numbers, expected in [
-    ([1, 2, 3], {1: 1, 2: 4, 3: 9}),
-    ([-2, 0], {-2: 4, 0: 0}),
-    ([2, 2], {2: 4}),
-    ([], {}),
-]:
-    result = square_map(numbers)
-    assert isinstance(result, dict), "Return a dictionary."
-    assert result == expected, (
-        f"square_map({numbers}) should return {expected}."
-    )
-`,
-    "Dictionary keys are unique. Repeated numbers write the same squared value under the same key."
+    checks("square_map", `[
+      (([1, 2, 3],), {1: 1, 2: 4, 3: 9}),
+      (([-2, 0],), {-2: 4, 0: 0}),
+      (([2, 2],), {2: 4}),
+      (([],), {})
+    ]`),
+    "Dictionary keys are unique. Repeated numbers write the same value under the same key."
   ),
 
-  makeLesson(
+  lesson(
     "Sets",
-    "A set stores unique values. set(collection) removes duplicates. Do not rely on a set's iteration order.",
+    "A set stores unique values. set(collection) removes duplicates. Do not rely on set iteration order.",
     `colors = ["red", "blue", "red"]
 print(len(set(colors)))`,
     "Write unique_count(items) that returns the number of distinct items. Assume all items are strings or integers.",
     `def unique_count(items):
     return len(set(items))`,
-    `
-for items, expected in [
-    ([], 0),
-    ([1, 1, 2, 3], 3),
-    (["cat", "cat", "dog"], 2),
-    (["A", "a"], 2),
-    ([7, 7, 7], 1),
-]:
-    assert unique_count(items) == expected, (
-        f"unique_count({items}) should return {expected}."
-    )
-`,
-    "set() keeps one copy of each distinct value. len() counts those values."
+    checks("unique_count", `[
+      (([],), 0),
+      (([1, 1, 2, 3],), 3),
+      ((["cat", "cat", "dog"],), 2),
+      ((["A", "a"],), 2),
+      (([7, 7, 7],), 1)
+    ]`),
+    "set() keeps each distinct value once, and len() counts them."
   ),
 
-  makeLesson(
+  lesson(
     "Sorting",
     "sorted() returns a new sorted list without changing its input. Combine it with set() to sort unique values.",
     `numbers = [3, 1, 2]
 print(sorted(numbers))
 print(numbers)`,
-    "Write sorted_unique(numbers) that returns the distinct integers in ascending order. Leave the input unchanged.",
+    "Write sorted_unique(numbers) that returns distinct integers in ascending order. Do not modify the input.",
     `def sorted_unique(numbers):
     return sorted(set(numbers))`,
-    `
-for original, expected in [
-    ([3, 1, 3, 2], [1, 2, 3]),
-    ([-1, -5, 0, -1], [-5, -1, 0]),
-    ([], []),
-    ([4, 4], [4]),
-]:
-    values = original.copy()
-    result = sorted_unique(values)
-    assert result == expected, (
-        f"sorted_unique({original}) should return {expected}."
-    )
-    assert values == original, "Do not modify the input."
+    checks("sorted_unique", `[
+      (([3, 1, 3, 2],), [1, 2, 3]),
+      (([-1, -5, 0, -1],), [-5, -1, 0]),
+      (([],), []),
+      (([4, 4],), [4])
+    ]`) + `
+__values = [3, 1, 3, 2]
+sorted_unique(__values)
+assert __values == [3, 1, 3, 2], "Do not modify the input."
 `,
-    "The set removes duplicates; sorted() places the remaining values in ascending order."
+    "set() removes duplicates, and sorted() puts the remaining values in ascending order."
   ),
 
-  makeLesson(
+  lesson(
     "Sorting With a Key",
-    "The key argument tells sorted() what value to compare for each item. Python sorting is stable: tied items keep their original relative order.",
+    "The key argument tells sorted() what to compare. Python sorting is stable: tied items keep their original relative order.",
     `words = ["horse", "ox", "cat"]
 print(sorted(words, key=len))`,
-    "Write sort_by_length(words) that returns a new list ordered from shortest word to longest. Keep original order for words of equal length. Do not modify the input.",
+    "Write sort_by_length(words) that returns a new list from shortest word to longest. Keep original order for equal-length words. Do not modify the input.",
     `def sort_by_length(words):
     return sorted(words, key=len)`,
-    `
-for original, expected in [
-    (["horse", "ox", "cat"], ["ox", "cat", "horse"]),
-    (["bb", "aa", "c"], ["c", "bb", "aa"]),
-    (["hello", "", "a"], ["", "a", "hello"]),
-    ([], []),
-]:
-    values = original.copy()
-    result = sort_by_length(values)
-    assert result == expected, (
-        f"sort_by_length({original}) should return {expected}."
-    )
-    assert values == original, "Do not modify the input."
-    assert result is not values, "Return a new list."
+    checks("sort_by_length", `[
+      ((["horse", "ox", "cat"],), ["ox", "cat", "horse"]),
+      ((["bb", "aa", "c"],), ["c", "bb", "aa"]),
+      ((["hello", "", "a"],), ["", "a", "hello"]),
+      (([],), [])
+    ]`) + `
+__values = ["horse", "ox", "cat"]
+__result = sort_by_length(__values)
+assert __values == ["horse", "ox", "cat"], "Do not modify the input."
+assert __result is not __values, "Return a new list."
 `,
-    "Passing len—not len()—gives sorted() a function to call for each word."
+    "Pass len itself, not len(), so sorted() can call it for each word."
   ),
 
-  // ─── WORKING WITH DATA: 31–40 ────────────────────────────────
-
-  makeLesson(
+  lesson(
     "Sum and Average",
-    "sum() adds numeric items. Divide a total by len() to calculate an average. Handle an empty list before dividing.",
+    "sum() adds numeric items. Divide by len() to find an average. Handle an empty list before dividing.",
     `numbers = [2, 4, 6]
 print(sum(numbers))
 print(sum(numbers) / len(numbers))`,
@@ -986,67 +1011,52 @@ print(sum(numbers) / len(numbers))`,
     if not numbers:
         return 0
     return sum(numbers) / len(numbers)`,
-    `
-for numbers, expected in [
-    ([2, 4, 6], 4),
-    ([1, 2], 1.5),
-    ([-5, 5], 0),
-    ([7], 7),
-    ([], 0),
-]:
-    assert average(numbers) == expected, (
-        f"average({numbers}) should return {expected}."
-    )
-`,
-    "Empty lists are falsy. The early return avoids division by zero."
+    checks("average", `[
+      (([2, 4, 6],), 4),
+      (([1, 2],), 1.5),
+      (([-5, 5],), 0),
+      (([7],), 7),
+      (([],), 0)
+    ]`),
+    "The empty-list check prevents division by zero."
   ),
 
-  makeLesson(
+  lesson(
     "Max With a Key",
-    "max() accepts a key function, just like sorted(). A default value handles an empty collection. When values tie, max() returns the first matching item.",
+    "max() accepts a key function and a default for empty collections. When items tie, it returns the first matching item.",
     `words = ["cat", "elephant", "dog"]
 print(max(words, key=len, default=""))`,
     'Write longest_word(words) that returns the longest word, or "" for an empty list. If words tie, return the first one.',
     `def longest_word(words):
     return max(words, key=len, default="")`,
-    `
-for words, expected in [
-    (["cat", "elephant", "dog"], "elephant"),
-    (["one", "two"], "one"),
-    (["", "a"], "a"),
-    ([], ""),
-    ([""], ""),
-]:
-    assert longest_word(words) == expected, (
-        f"longest_word({words}) should return {expected!r}."
-    )
-`,
-    'key=len compares word lengths. default="" supplies the result when no words exist.'
+    checks("longest_word", `[
+      ((["cat", "elephant", "dog"],), "elephant"),
+      ((["one", "two"],), "one"),
+      ((["", "a"],), "a"),
+      (([],), ""),
+      (([""],), "")
+    ]`),
+    'key=len compares lengths. default="" handles an empty list.'
   ),
 
-  makeLesson(
+  lesson(
     "Any",
-    "any() returns True if at least one supplied value is truthy. A generator expression can produce conditions without building a list.",
+    "any() returns True if at least one supplied value is truthy. A generator expression can supply conditions without building a list.",
     `numbers = [1, 7, 3]
 print(any(n > 5 for n in numbers))`,
     "Write has_negative(numbers) that returns True if any number is below zero. Return False for an empty list.",
     `def has_negative(numbers):
     return any(number < 0 for number in numbers)`,
-    `
-for numbers, expected in [
-    ([1, -1, 2], True),
-    ([-5], True),
-    ([0, 1, 2], False),
-    ([], False),
-]:
-    assert has_negative(numbers) is expected, (
-        f"has_negative({numbers}) should return {expected}."
-    )
-`,
-    "any() stops at the first true condition. With no items, there is no true condition, so it returns False."
+    checks("has_negative", `[
+      (([1, -1, 2],), True),
+      (([-5],), True),
+      (([0, 1, 2],), False),
+      (([],), False)
+    ]`),
+    "any() stops at the first true condition. An empty input returns False."
   ),
 
-  makeLesson(
+  lesson(
     "All",
     "all() returns True only when every supplied value is truthy. For an empty collection, it returns True.",
     `numbers = [2, 4, 6]
@@ -1054,134 +1064,110 @@ print(all(n % 2 == 0 for n in numbers))`,
     "Write all_positive(numbers) that returns True when every number is strictly greater than zero. Return True for an empty list.",
     `def all_positive(numbers):
     return all(number > 0 for number in numbers)`,
-    `
-for numbers, expected in [
-    ([1, 2, 3], True),
-    ([1, 0, 3], False),
-    ([-1, 2], False),
-    ([], True),
-    ([0.5], True),
-]:
-    assert all_positive(numbers) is expected, (
-        f"all_positive({numbers}) should return {expected}."
-    )
-`,
-    "Zero is not strictly positive. An empty list returns True because there are no items violating the condition."
+    checks("all_positive", `[
+      (([1, 2, 3],), True),
+      (([1, 0, 3],), False),
+      (([-1, 2],), False),
+      (([],), True),
+      (([0.5],), True)
+    ]`),
+    "Zero is not strictly positive. Empty input returns True because no item violates the condition."
   ),
 
-  makeLesson(
+  lesson(
     "Safe Dictionary Lookups",
-    "dictionary[key] raises KeyError when a key is missing. dictionary.get(key, default) provides a safe fallback.",
+    "dictionary[key] raises KeyError for a missing key. get(key, default) provides a fallback without adding the missing key.",
     `stock = {"apple": 5}
 print(stock.get("apple", 0))
 print(stock.get("pear", 0))`,
     "Write stock_count(stock, item) that returns the item's quantity, or 0 if it is missing. Do not modify stock.",
     `def stock_count(stock, item):
     return stock.get(item, 0)`,
-    `
-for original, item, expected in [
-    ({"apple": 5}, "apple", 5),
-    ({"apple": 5}, "pear", 0),
-    ({"pear": 0}, "pear", 0),
-    ({}, "apple", 0),
-]:
-    stock = original.copy()
-    assert stock_count(stock, item) == expected, (
-        f"stock_count({original}, {item!r}) should return {expected}."
-    )
-    assert stock == original, "Do not modify the dictionary."
+    checks("stock_count", `[
+      (({"apple": 5}, "apple"), 5),
+      (({"apple": 5}, "pear"), 0),
+      (({"pear": 0}, "pear"), 0),
+      (({}, "apple"), 0)
+    ]`) + `
+__stock = {"apple": 5}
+stock_count(__stock, "pear")
+assert __stock == {"apple": 5}, "Do not modify stock."
 `,
-    "get() reads the dictionary without inserting a missing item."
+    "get() reads an existing quantity or returns zero without changing the dictionary."
   ),
 
-  makeLesson(
+  lesson(
     "Dictionary Values",
-    "Looping over a dictionary gives its keys. values() gives its values, while items() gives key-value pairs.",
+    "Looping over a dictionary gives its keys. values() gives its values, and items() gives key-value pairs.",
     `prices = {"apple": 2, "pear": 3}
 for name, price in prices.items():
     print(name, price)`,
     "Write total_stock(stock) that returns the sum of all quantities in a dictionary. Return 0 for an empty dictionary.",
     `def total_stock(stock):
     return sum(stock.values())`,
-    `
-for stock, expected in [
-    ({"apple": 5, "pear": 3}, 8),
-    ({"apple": 0}, 0),
-    ({}, 0),
-    ({"a": 10, "b": 20, "c": 30}, 60),
-]:
-    assert total_stock(stock) == expected, (
-        f"total_stock({stock}) should return {expected}."
-    )
-`,
-    "values() provides the quantities, and sum() adds them together."
+    checks("total_stock", `[
+      (({"apple": 5, "pear": 3},), 8),
+      (({"apple": 0},), 0),
+      (({},), 0),
+      (({"a": 10, "b": 20, "c": 30},), 60)
+    ]`),
+    "values() supplies the quantities, and sum() adds them."
   ),
 
-  makeLesson(
+  lesson(
     "Nested Dictionaries",
-    "A dictionary can contain other dictionaries. Read nested values one level at a time, using safe defaults when needed.",
+    "Dictionaries can contain other dictionaries. Read nested values one level at a time and use defaults for missing keys.",
     `users = {"Alex": {"age": 20}}
 print(users["Alex"]["age"])`,
     'Write student_score(students, name). Each student maps to a dictionary that may contain "score". Return that score, or 0 if the student or score is missing. Do not modify the input.',
     `def student_score(students, name):
     student = students.get(name, {})
     return student.get("score", 0)`,
-    `
-import copy
-
-cases = [
-    ({"Mia": {"score": 95}}, "Mia", 95),
-    ({"Mia": {"score": 95}}, "Alex", 0),
-    ({"Mia": {}}, "Mia", 0),
-    ({"Mia": {"score": 0}}, "Mia", 0),
-    ({}, "Nobody", 0),
-]
-for original, name, expected in cases:
-    students = copy.deepcopy(original)
-    assert student_score(students, name) == expected, (
-        f"student_score({original}, {name!r}) should return {expected}."
-    )
-    assert students == original, "Do not modify the input."
+    checks("student_score", `[
+      (({"Mia": {"score": 95}}, "Mia"), 95),
+      (({"Mia": {"score": 95}}, "Alex"), 0),
+      (({"Mia": {}}, "Mia"), 0),
+      (({"Mia": {"score": 0}}, "Mia"), 0),
+      (({}, "Nobody"), 0)
+    ]`) + `
+__students = {"Mia": {}}
+student_score(__students, "Mia")
+student_score(__students, "Alex")
+assert __students == {"Mia": {}}, "Do not modify the input."
 `,
     "The first get() supplies an empty dictionary for a missing student. The second supplies zero for a missing score."
   ),
 
-  makeLesson(
+  lesson(
     "Nested Loops",
-    "A loop inside another loop processes nested collections. The inner loop runs for each item selected by the outer loop.",
+    "A loop inside another loop processes nested collections. The inner loop runs for every item selected by the outer loop.",
     `rows = [[1, 2], [3, 4]]
 for row in rows:
     for number in row:
         print(number)`,
-    "Write flatten(rows) that turns a list of lists into one new list, preserving order. Flatten exactly one level and leave the input unchanged.",
+    "Write flatten(rows) that turns a list of lists into one new list. Preserve order, flatten exactly one level, and do not modify the input.",
     `def flatten(rows):
     result = []
     for row in rows:
         for item in row:
             result.append(item)
     return result`,
-    `
-import copy
-
-for original, expected in [
-    ([[1, 2], [3, 4]], [1, 2, 3, 4]),
-    ([[], [1], []], [1]),
-    ([], []),
-    ([["a"], ["b", "c"]], ["a", "b", "c"]),
-    ([[[1]], [2]], [[1], 2]),
-]:
-    rows = copy.deepcopy(original)
-    result = flatten(rows)
-    assert result == expected, (
-        f"flatten({original}) should return {expected}."
-    )
-    assert rows == original, "Do not modify the input."
-    assert result is not rows, "Return a new list."
+    checks("flatten", `[
+      (([[1, 2], [3, 4]],), [1, 2, 3, 4]),
+      (([[], [1], []],), [1]),
+      (([],), []),
+      (([["a"], ["b", "c"]],), ["a", "b", "c"]),
+      (([[[1]], [2]],), [[1], 2])
+    ]`) + `
+__rows = [[1, 2], [3]]
+__result = flatten(__rows)
+assert __rows == [[1, 2], [3]], "Do not modify the input."
+assert __result is not __rows, "Return a new list."
 `,
-    "The outer loop selects each row. The inner loop copies its items into the result without recursively flattening them."
+    "The outer loop selects each row. The inner loop copies its items without recursively flattening them."
   ),
 
-  makeLesson(
+  lesson(
     "Split and Join",
     "split() without arguments separates text on whitespace and ignores extra whitespace. separator.join(parts) combines strings.",
     `words = "  hello   world ".split()
@@ -1190,48 +1176,36 @@ print("-".join(words))`,
     "Write normalize_spaces(text) that removes surrounding whitespace and replaces every run of whitespace with one regular space.",
     `def normalize_spaces(text):
     return " ".join(text.split())`,
-    `
-for text, expected in [
-    ("  hello   world  ", "hello world"),
-    ("a\\tb\\nc", "a b c"),
-    ("already fine", "already fine"),
-    ("   ", ""),
-    ("", ""),
-]:
-    assert normalize_spaces(text) == expected, (
-        f"normalize_spaces({text!r}) should return {expected!r}."
-    )
-`,
-    "split() extracts words regardless of spaces, tabs, or newlines. join() puts one space between each pair."
+    checks("normalize_spaces", `[
+      (("  hello   world  ",), "hello world"),
+      (("a\\tb\\nc",), "a b c"),
+      (("already fine",), "already fine"),
+      (("   ",), ""),
+      (("",), "")
+    ]`),
+    "split() extracts the words. join() places exactly one space between them."
   ),
 
-  makeLesson(
+  lesson(
     "Checking String Endings",
-    "endswith() checks a suffix. startswith() checks a prefix. Normalize case first when you want case-insensitive matching.",
+    "endswith() checks a suffix. startswith() checks a prefix. Normalize case first for case-insensitive matching.",
     `print("notes.txt".endswith(".txt"))
 print("https://example.com".startswith("https://"))`,
     'Write is_python_file(filename) that returns True when filename ends in ".py", ignoring case. Do not strip whitespace.',
     `def is_python_file(filename):
     return filename.lower().endswith(".py")`,
-    `
-for filename, expected in [
-    ("main.py", True),
-    ("SCRIPT.PY", True),
-    ("main.py.txt", False),
-    ("python", False),
-    ("main.py ", False),
-    ("", False),
-]:
-    assert is_python_file(filename) is expected, (
-        f"is_python_file({filename!r}) should return {expected}."
-    )
-`,
-    "endswith() checks the actual ending, so a file named main.py.txt does not match."
+    checks("is_python_file", `[
+      (("main.py",), True),
+      (("SCRIPT.PY",), True),
+      (("main.py.txt",), False),
+      (("python",), False),
+      (("main.py ",), False),
+      (("",), False)
+    ]`),
+    "The actual ending must be .py. A later extension or trailing space prevents a match."
   ),
 
-  // ─── ERRORS, ADVANCED FUNCTIONS, AND PROJECTS: 41–50 ─────────
-
-  makeLesson(
+  lesson(
     "Handling Exceptions",
     "try runs code that might fail. except handles a specific exception. int() raises ValueError when a string is not a valid integer.",
     `try:
@@ -1244,65 +1218,51 @@ except ValueError:
         return int(text)
     except ValueError:
         return None`,
-    `
-for text, expected in [
-    ("42", 42),
-    ("-7", -7),
-    (" 12 ", 12),
-    ("0", 0),
-    ("3.5", None),
-    ("hello", None),
-    ("", None),
-]:
-    result = safe_int(text)
-    if expected is None:
-        assert result is None, (
-            f"safe_int({text!r}) should return None."
-        )
-    else:
-        assert type(result) is int and result == expected, (
-            f"safe_int({text!r}) should return integer {expected}."
-        )
+    checks("safe_int", `[
+      (("42",), 42),
+      (("-7",), -7),
+      ((" 12 ",), 12),
+      (("0",), 0),
+      (("3.5",), None),
+      (("hello",), None),
+      (("",), None)
+    ]`) + `
+assert type(safe_int("42")) is int, "Return an integer for valid input."
 `,
-    "Catch ValueError specifically. Valid integer strings are converted, while invalid ones return None."
+    "Catch ValueError specifically. Valid integer strings convert normally; invalid ones return None."
   ),
 
-  makeLesson(
+  lesson(
     "Raising Exceptions",
-    "raise signals an error to the caller. ValueError is appropriate when an argument has the right type but an unacceptable value.",
+    "raise signals an error to the caller. ValueError is useful when an argument has an unacceptable value.",
     `def require_nonempty(text):
     if text == "":
         raise ValueError("Text cannot be empty")
     return text`,
-    'Write require_positive(number) that returns number if it is greater than zero. Otherwise raise ValueError with exactly "number must be positive". Assume a numeric input.',
+    'Write require_positive(number) that returns number if it is greater than zero. Otherwise raise ValueError with exactly "number must be positive". Assume numeric input.',
     `def require_positive(number):
     if number <= 0:
         raise ValueError("number must be positive")
     return number`,
-    `
-for number in [1, 10, 0.5]:
-    assert require_positive(number) == number, (
-        "Return the original positive number."
-    )
-
-for number in [0, -1, -2.5]:
+    checks("require_positive", `[
+      ((1,), 1),
+      ((10,), 10),
+      ((0.5,), 0.5)
+    ]`) + `
+for __number in [0, -1, -2.5]:
     try:
-        require_positive(number)
-    except ValueError as error:
-        assert str(error) == "number must be positive", (
-            "Use the required error message."
-        )
+        require_positive(__number)
+    except ValueError as __error:
+        assert str(__error) == "number must be positive", "Use the required error message."
     else:
-        raise AssertionError(
-            f"require_positive({number}) should raise ValueError."
-        )
+        raise AssertionError(f"require_positive({__number}) should raise ValueError.")
 `,
-    "Returning an error string is not the same as raising an exception. raise lets the caller handle the failure with try/except."
+    "Raising an exception is different from returning an error string. The caller can catch the exception."
   ),
 
-  makeLesson(
+  lesson(
     "Variable Positional Arguments",
-    "*args collects any number of positional arguments into a tuple. The name after * can be something descriptive.",
+    "*args collects any number of positional arguments into a tuple. You can use a descriptive name after the asterisk.",
     `def show_items(*items):
     return list(items)
 
@@ -1310,51 +1270,44 @@ print(show_items("a", "b", "c"))`,
     "Write add_all(*numbers) that returns the sum of any number of numeric arguments. Return 0 when called without arguments.",
     `def add_all(*numbers):
     return sum(numbers)`,
-    `
-assert add_all() == 0, "No arguments should return 0."
-assert add_all(5) == 5, "Handle a single argument."
-assert add_all(1, 2, 3) == 6, "Add all supplied numbers."
-assert add_all(-2, 2, 4) == 4, "Handle negative numbers."
-assert add_all(1.5, 2.5) == 4, "Handle decimal numbers."
-`,
-    "*numbers gathers the arguments into a tuple. sum() works on that tuple, including an empty one."
+    checks("add_all", `[
+      ((), 0),
+      ((5,), 5),
+      ((1, 2, 3), 6),
+      ((-2, 2, 4), 4),
+      ((1.5, 2.5), 4)
+    ]`),
+    "*numbers gathers the arguments into a tuple. sum() handles the tuple, including an empty one."
   ),
 
-  makeLesson(
+  lesson(
     "Variable Keyword Arguments",
     "**kwargs collects extra keyword arguments into a dictionary. update() copies key-value pairs into another dictionary.",
     `def collect(**details):
     return details
 
 print(collect(city="Paris", age=20))`,
-    'Write make_profile(**details) that returns a dictionary with default values {"name": "Anonymous", "active": True}, overridden or extended by the supplied keyword arguments.',
+    'Write make_profile(**details) that returns a dictionary with defaults {"name": "Anonymous", "active": True}, overridden or extended by the supplied keyword arguments. Return a fresh dictionary each time.',
     `def make_profile(**details):
     profile = {"name": "Anonymous", "active": True}
     profile.update(details)
     return profile`,
     `
-assert make_profile() == {"name": "Anonymous", "active": True}, (
-    "Provide both default values."
-)
-assert make_profile(name="Mia") == {"name": "Mia", "active": True}, (
-    "Allow the name to be overridden."
-)
+assert make_profile() == {"name": "Anonymous", "active": True}, "Provide both defaults."
+assert make_profile(name="Mia") == {"name": "Mia", "active": True}, "Allow the name to be overridden."
 assert make_profile(active=False, city="Paris") == {
     "name": "Anonymous", "active": False, "city": "Paris"
 }, "Override defaults and preserve extra fields."
-
-first = make_profile()
-first["name"] = "Changed"
-assert make_profile()["name"] == "Anonymous", (
-    "Return a fresh dictionary for each call."
-)
+__first = make_profile()
+__first["name"] = "Changed"
+assert make_profile()["name"] == "Anonymous", "Return a fresh dictionary each time."
 `,
     "Start with a new defaults dictionary on every call, then apply the caller's values."
   ),
 
-  makeLesson(
+  lesson(
     "Recursion",
-    "A recursive function calls itself with a smaller problem. A base case stops the recursion. Without one, the calls continue until Python raises an error.",
+    "A recursive function calls itself with a smaller problem. A base case stops the recursion.",
     `def sum_down(n):
     if n == 0:
         return 0
@@ -1364,28 +1317,26 @@ assert make_profile()["name"] == "Anonymous", (
     if n <= 1:
         return 1
     return n * factorial(n - 1)`,
-    `
-for n, expected in [
-    (0, 1),
-    (1, 1),
-    (2, 2),
-    (5, 120),
-    (7, 5040),
-    (10, 3628800),
-]:
-    assert factorial(n) == expected, (
-        f"factorial({n}) should return {expected}."
-    )
-`,
+    checks("factorial", `[
+      ((0,), 1),
+      ((1,), 1),
+      ((2,), 2),
+      ((5,), 120),
+      ((7,), 5040),
+      ((10,), 3628800)
+    ]`),
     "The base cases return 1. Each other call multiplies n by the factorial of n - 1."
   ),
 
-  makeLesson(
+  lesson(
     "Lambda Functions",
-    "A lambda is a small anonymous function containing one expression. It is useful as a sorting key.",
-    `people = [{"name": "Alex", "age": 30}, {"name": "Mia", "age": 20}]
+    "A lambda is a small anonymous function containing one expression. It is useful as a sorting key. reverse=True sorts descending.",
+    `people = [
+    {"name": "Alex", "age": 30},
+    {"name": "Mia", "age": 20}
+]
 print(sorted(people, key=lambda person: person["age"]))`,
-    'Write sort_students(students) that returns a new list sorted by "score", highest first. Each item is a dictionary containing "name" and "score". Preserve input order for tied scores and do not modify the input.',
+    'Write sort_students(students) that returns a new list sorted by "score", highest first. Each item has "name" and "score". Preserve original order for tied scores and do not modify the input.',
     `def sort_students(students):
     return sorted(
         students,
@@ -1394,33 +1345,28 @@ print(sorted(people, key=lambda person: person["age"]))`,
     )`,
     `
 import copy
-
-original = [
+__original = [
     {"name": "Alex", "score": 70},
     {"name": "Mia", "score": 95},
-    {"name": "Sam", "score": 95},
+    {"name": "Sam", "score": 95}
 ]
-students = copy.deepcopy(original)
-result = sort_students(students)
-assert result == [original[1], original[2], original[0]], (
-    "Sort highest score first and preserve the order of ties."
+__students = copy.deepcopy(__original)
+__result = sort_students(__students)
+assert __result == [__original[1], __original[2], __original[0]], (
+    "Sort highest first and preserve the order of ties."
 )
-assert students == original, "Do not modify the input."
-assert result is not students, "Return a new list."
+assert __students == __original, "Do not modify the input."
+assert __result is not __students, "Return a new list."
 assert sort_students([]) == [], "Handle an empty list."
-
 assert sort_students([
     {"name": "A", "score": -5},
-    {"name": "B", "score": 0},
-]) == [
-    {"name": "B", "score": 0},
-    {"name": "A", "score": -5},
-], "Compare numeric scores."
+    {"name": "B", "score": 0}
+])[0]["name"] == "B", "Compare scores numerically."
 `,
-    "The lambda extracts each score. reverse=True sorts descending, while stable sorting preserves ties."
+    "The lambda extracts each score. Stable sorting keeps the original order for tied scores."
   ),
 
-  makeLesson(
+  lesson(
     "Importing Modules",
     "Modules provide reusable tools. import math loads mathematical functions. math.hypot(x, y) calculates the square root of x squared plus y squared.",
     `import math
@@ -1432,49 +1378,44 @@ print(math.hypot(3, 4))`,
     return math.hypot(x, y)`,
     `
 import math
-
-for x, y, expected in [
+for __x, __y, __expected in [
     (3, 4, 5),
     (0, 0, 0),
     (-3, -4, 5),
     (1, 1, math.sqrt(2)),
-    (5, 12, 13),
+    (5, 12, 13)
 ]:
-    assert math.isclose(
-        distance(x, y), expected, rel_tol=1e-9, abs_tol=1e-9
-    ), f"distance({x}, {y}) should be approximately {expected}."
+    __actual = distance(__x, __y)
+    assert math.isclose(__actual, __expected, rel_tol=1e-9, abs_tol=1e-9), (
+        f"distance({__x}, {__y}) should be approximately {__expected}."
+    )
 `,
     "math.hypot() implements the distance formula. The checks allow tiny floating-point differences."
   ),
 
-  makeLesson(
+  lesson(
     "Reading JSON",
-    "JSON is a common text format for exchanging data. json.loads() turns JSON text into Python objects, such as dictionaries and lists.",
+    "JSON is a text format for exchanging data. json.loads() turns JSON text into Python objects such as dictionaries and lists.",
     `import json
 data = json.loads('{"name": "Mia", "active": true}')
 print(data["name"])
 print(data["active"])`,
-    'Write read_name(json_text) that parses a valid JSON object and returns its "name" value, or "Unknown" if that key is missing. Assume valid JSON representing a dictionary; any name value will be a string.',
+    'Write read_name(json_text) that parses a valid JSON object and returns its "name" value, or "Unknown" if the key is missing. Assume JSON representing a dictionary, with any name value being a string.',
     `def read_name(json_text):
     import json
     data = json.loads(json_text)
     return data.get("name", "Unknown")`,
-    `
-for text, expected in [
-    ('{"name": "Mia"}', "Mia"),
-    ('{"name": "Alex", "age": 20}', "Alex"),
-    ('{"age": 20}', "Unknown"),
-    ('{}', "Unknown"),
-    ('{"name": ""}', ""),
-]:
-    assert read_name(text) == expected, (
-        f"read_name({text!r}) should return {expected!r}."
-    )
-`,
-    "Parse first, then perform a dictionary lookup. A present but empty name stays empty; only a missing key uses the fallback."
+    checks("read_name", `[
+      (('{"name": "Mia"}',), "Mia"),
+      (('{"name": "Alex", "age": 20}',), "Alex"),
+      (('{"age": 20}',), "Unknown"),
+      (('{}',), "Unknown"),
+      (('{"name": ""}',), "")
+    ]`),
+    "Parse the JSON first, then look up the name. A present but empty name stays empty."
   ),
 
-  makeLesson(
+  lesson(
     "Your First Class",
     "A class defines objects with their own data and methods. __init__ initializes an object. self refers to the current instance.",
     `class Dog:
@@ -1486,7 +1427,7 @@ for text, expected in [
 
 dog = Dog("Luna")
 print(dog.speak())`,
-    "Create a class Counter. Counter() starts with value = 0; Counter(start) starts at start. Its increment() method adds 1 to value and returns the new value. Each instance must keep its own value.",
+    "Create a class Counter. Counter() starts with value = 0; Counter(start) starts at start. increment() adds 1 to value and returns the new value. Each instance must keep its own value.",
     `class Counter:
     def __init__(self, start=0):
         self.value = start
@@ -1495,34 +1436,34 @@ print(dog.speak())`,
         self.value += 1
         return self.value`,
     `
-first = Counter()
-assert first.value == 0, "Counter() should start at zero."
-assert first.increment() == 1, "increment() should return the new value."
-assert first.increment() == 2, "Increment on every call."
-assert first.value == 2, "Store the updated value."
+__first = Counter()
+assert __first.value == 0, "Counter() should start at zero."
+assert __first.increment() == 1, "increment() should return the new value."
+assert __first.increment() == 2, "Increment on every call."
+assert __first.value == 2, "Store the updated value."
 
-second = Counter(10)
-assert second.value == 10, "Accept a custom starting value."
-assert second.increment() == 11, "Increment from the custom start."
-assert first.value == 2, "Instances must not share their value."
+__second = Counter(10)
+assert __second.value == 10, "Accept a custom starting value."
+assert __second.increment() == 11, "Increment from the supplied start."
+assert __first.value == 2, "Instances must not share their value."
 
-third = Counter(start=-1)
-assert third.increment() == 0, "Allow start as a keyword argument."
+__third = Counter(start=-1)
+assert __third.increment() == 0, "Allow start as a keyword argument."
 `,
-    "self.value belongs to the individual object. Updating it changes that instance without affecting other counters."
+    "self.value belongs to an individual object. Updating one counter does not change another."
   ),
 
-  makeLesson(
+  lesson(
     "Final Project: Expense Summary",
-    "Combine functions, loops, dictionaries, and accumulators. Build a summary by processing each record once and updating totals.",
+    "Combine functions, loops, dictionaries, and accumulators. Process each record once to build overall and per-category totals.",
     `expenses = [
-    {"category": "food", "amount": 12},
-    {"category": "travel", "amount": 8}
+    {"category": "food", "amount": 1200},
+    {"category": "travel", "amount": 800}
 ]
 
 for expense in expenses:
     print(expense["category"], expense["amount"])`,
-    'Write summarize_expenses(expenses). Each expense is a dictionary with a string "category" and a non-negative integer "amount" in cents. Return {"total": total_amount, "by_category": category_totals, "count": number_of_expenses}. Categories are case-sensitive. Include categories whose total is zero. For empty input, return {"total": 0, "by_category": {}, "count": 0}. Do not modify the input.',
+    'Write summarize_expenses(expenses). Each expense has a string "category" and a non-negative integer "amount" in cents. Return {"total": total_amount, "by_category": category_totals, "count": number_of_expenses}. Categories are case-sensitive. Include categories with zero totals. Empty input returns {"total": 0, "by_category": {}, "count": 0}. Do not modify the input; create a fresh summary each time.',
     `def summarize_expenses(expenses):
     total = 0
     by_category = {}
@@ -1542,7 +1483,7 @@ for expense in expenses:
     `
 import copy
 
-cases = [
+__cases = [
     (
         [],
         {"total": 0, "by_category": {}, "count": 0}
@@ -1555,7 +1496,7 @@ cases = [
         [
             {"category": "food", "amount": 1200},
             {"category": "travel", "amount": 800},
-            {"category": "food", "amount": 300},
+            {"category": "food", "amount": 300}
         ],
         {
             "total": 2300,
@@ -1567,194 +1508,264 @@ cases = [
         [
             {"category": "Food", "amount": 100},
             {"category": "food", "amount": 200},
-            {"category": "free", "amount": 0},
+            {"category": "free", "amount": 0}
         ],
         {
             "total": 300,
             "by_category": {"Food": 100, "food": 200, "free": 0},
             "count": 3
         }
-    ),
+    )
 ]
 
-for original, expected in cases:
-    expenses = copy.deepcopy(original)
-    result = summarize_expenses(expenses)
-    assert isinstance(result, dict), "Return a dictionary."
-    assert result == expected, (
-        f"For {original}, expected {expected}, but received {result!r}."
+for __original, __expected in __cases:
+    __expenses = copy.deepcopy(__original)
+    __result = summarize_expenses(__expenses)
+    assert __result == __expected, (
+        f"Expected {__expected!r}, received {__result!r}."
     )
-    assert expenses == original, "Do not modify the input."
+    assert __expenses == __original, "Do not modify the input."
 
-first = summarize_expenses([])
-first["by_category"]["extra"] = 99
+__first = summarize_expenses([])
+__first["by_category"]["extra"] = 99
 assert summarize_expenses([]) == {
     "total": 0, "by_category": {}, "count": 0
-}, "Create a fresh summary for each call."
+}, "Create a fresh summary on every call."
 `,
-    "The loop maintains an overall total and a separate total per category. Integer cents avoid floating-point rounding issues for this project. len(expenses) supplies the record count."
+    "The loop maintains an overall total and a total for each category. Integer cents avoid floating-point rounding issues in this project."
   )
+];
 
-].map((lesson, index) => ({
-  ...lesson,
-  title: `${index + 1}. ${lesson.title}`
-}));
-  
-// Normalize the starter for the first function lesson.
-lessons[2].starter = "def add(a, b):\n    # Return their sum\n    pass\n";
+/* ============================================================
+   SAVED STATE
+   Uses the same storage key as the earlier app.
+   ============================================================ */
 
 const $ = id => document.getElementById(id);
-const storageKey = "python-practice-v1";
-let state = { current: 0, code: {}, completed: [] };
+const STORAGE_KEY = "python-practice-v1";
+
+let state = {
+  current: 0,
+  code: {},
+  completed: []
+};
+
+let busy = false;
+let cancelActiveRun = null;
 
 try {
-  const saved = JSON.parse(localStorage.getItem(storageKey));
-  if (saved && typeof saved === "object") {
-    state.current = Number.isInteger(saved.current) &&
-      saved.current >= 0 && saved.current < lessons.length
-      ? saved.current : 0;
-    state.code = saved.code && typeof saved.code === "object"
-      ? saved.code : {};
-    state.completed = Array.isArray(saved.completed)
-      ? [...new Set(saved.completed.filter(
-          n => Number.isInteger(n) && n >= 0 && n < lessons.length
-        ))]
-      : [];
-  }
-} catch {}
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-function save() {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify(state));
-  } catch {}
+  if (saved && typeof saved === "object") {
+    if (
+      Number.isInteger(saved.current) &&
+      saved.current >= 0 &&
+      saved.current < lessons.length
+    ) {
+      state.current = saved.current;
+    }
+
+    if (
+      saved.code &&
+      typeof saved.code === "object" &&
+      !Array.isArray(saved.code)
+    ) {
+      for (let index = 0; index < lessons.length; index++) {
+        if (typeof saved.code[index] === "string") {
+          state.code[index] = saved.code[index];
+        }
+      }
+    }
+
+    if (Array.isArray(saved.completed)) {
+      state.completed = [...new Set(
+        saved.completed.filter(index =>
+          Number.isInteger(index) &&
+          index >= 0 &&
+          index < lessons.length
+        )
+      )];
+    }
+  }
+} catch {
+  // The app still works when storage is unavailable or invalid.
 }
 
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    $("saveStatus").textContent = "✓ Saved in this browser";
+  } catch {
+    $("saveStatus").textContent =
+      "Saving is unavailable. Your changes may be lost when you close this page.";
+  }
+}
+
+function saveEditor() {
+  state.code[state.current] = $("editor").value;
+  saveState();
+}
+
+/* ============================================================
+   PAGE RENDERING
+   ============================================================ */
+
+lessons.forEach((item, index) => {
+  const option = document.createElement("option");
+  option.value = String(index);
+  option.textContent = `${index + 1}. ${item.title}`;
+  $("lessonSelect").appendChild(option);
+});
+
 function updateProgress() {
-  $("progress").textContent =
+  $("progressText").textContent =
     `${state.completed.length} / ${lessons.length} completed`;
 
-  [...$("lesson").options].forEach((option, index) => {
-    option.textContent =
-      `${state.completed.includes(index) ? "✓ " : ""}${lessons[index].title}`;
+  $("progressBar").max = lessons.length;
+  $("progressBar").value = state.completed.length;
+
+  [...$("lessonSelect").options].forEach((option, index) => {
+    const mark = state.completed.includes(index) ? "✓ " : "";
+    option.textContent = `${mark}${index + 1}. ${lessons[index].title}`;
   });
 }
 
-lessons.forEach((lesson, index) => {
-  const option = document.createElement("option");
-  option.value = index;
-  option.textContent = lesson.title;
-  $("lesson").appendChild(option);
-});
+function updateControls() {
+  $("runButton").disabled = busy;
+  $("stopButton").disabled = !busy;
+  $("resetButton").disabled = busy;
+  $("lessonSelect").disabled = busy;
+  $("editor").readOnly = busy;
 
-function render() {
-  const lesson = lessons[state.current];
-  $("lesson").value = state.current;
-  $("lessonTitle").textContent = lesson.title;
-  $("tutorial").textContent = lesson.tutorial;
-  $("example").textContent = lesson.example;
-  $("assignment").textContent = lesson.assignment;
-  $("solution").textContent = lesson.solution;
-  $("explanation").textContent = lesson.explanation;
-  $("editor").value = typeof state.code[state.current] === "string"
-    ? state.code[state.current] : lesson.starter;
+  $("previousButton").disabled = busy || state.current === 0;
+  $("nextButton").disabled =
+    busy || state.current === lessons.length - 1;
+}
+
+function renderLesson() {
+  const item = lessons[state.current];
+
+  $("lessonSelect").value = String(state.current);
+  $("lessonTitle").textContent = `${state.current + 1}. ${item.title}`;
+  $("tutorial").textContent = item.tutorial;
+  $("example").textContent = item.example;
+  $("assignment").textContent = item.assignment;
+  $("solution").textContent = item.solution;
+  $("explanation").textContent = item.explanation;
+
+  $("editor").value =
+    typeof state.code[state.current] === "string"
+      ? state.code[state.current]
+      : item.starter;
 
   $("answerPanel").hidden = true;
   $("answerButton").textContent = "Show Correct Answer";
   $("answerButton").setAttribute("aria-expanded", "false");
-  $("output").textContent = "Ready when you are.";
-  $("nextButton").disabled = state.current === lessons.length - 1;
+
+  $("output").textContent = state.completed.includes(state.current)
+    ? "You have completed this lesson. You can practice it again."
+    : "Ready when you are.";
+
   updateProgress();
+  updateControls();
 }
 
-$("lesson").addEventListener("change", event => {
-  state.current = Number(event.target.value);
-  save();
-  render();
-});
+function changeLesson(index) {
+  if (busy || index < 0 || index >= lessons.length) return;
 
-$("editor").addEventListener("input", () => {
-  state.code[state.current] = $("editor").value;
-  save();
-});
+  saveEditor();
+  state.current = index;
+  saveState();
+  renderLesson();
+}
 
-$("answerButton").addEventListener("click", () => {
-  const show = $("answerPanel").hidden;
-  $("answerPanel").hidden = !show;
-  $("answerButton").textContent =
-    show ? "Hide Correct Answer" : "Show Correct Answer";
-  $("answerButton").setAttribute("aria-expanded", String(show));
-});
+/* ============================================================
+   PYTHON WORKER
+   A new worker is created for each run.
+   Stop and timeouts terminate the worker, including infinite loops.
+   ============================================================ */
 
-$("resetButton").addEventListener("click", () => {
-  if (!confirm("Replace your code with this lesson's starter code?")) return;
-  state.code[state.current] = lessons[state.current].starter;
-  save();
-  render();
-});
-
-$("nextButton").addEventListener("click", () => {
-  if (state.current < lessons.length - 1) {
-    state.current++;
-    save();
-    render();
-  }
-});
-
-$("editor").addEventListener("keydown", event => {
-  if (event.key === "Tab") {
-    event.preventDefault();
-    const editor = event.target;
-    editor.setRangeText(
-      "    ", editor.selectionStart, editor.selectionEnd, "end"
-    );
-    editor.dispatchEvent(new Event("input"));
-  }
-
-  if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-    event.preventDefault();
-    if (!$("runButton").disabled) runCode();
-  }
-});
-
-// Each run uses a fresh worker so a previous run cannot leave behind
-// Python variables, imports, or an infinite loop.
-function pythonWorker() {
+function pythonWorkerMain() {
   self.onmessage = async event => {
     try {
-      const base = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
+      const base =
+        "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
+
       importScripts(base + "pyodide.js");
-      const pyodide = await loadPyodide({ indexURL: base });
+
+      const pyodide = await loadPyodide({
+        indexURL: base
+      });
 
       self.postMessage({ type: "ready" });
-      pyodide.globals.set("__payload", JSON.stringify(event.data));
 
-      const result = await pyodide.runPythonAsync(`
+      pyodide.globals.set(
+        "__submission_payload",
+        JSON.stringify(event.data)
+      );
+
+      const resultJSON = await pyodide.runPythonAsync(`
 import json
 import io
 import contextlib
 import traceback
 
-def __check_submission(payload):
+class _LimitedOutput(io.TextIOBase):
+    def __init__(self, limit=16000):
+        self.limit = limit
+        self.parts = []
+        self.size = 0
+        self.truncated = False
+
+    def write(self, text):
+        available = max(0, self.limit - self.size)
+        kept = text[:available]
+        self.parts.append(kept) if kept else None
+        self.size += len(kept)
+        if len(text) > available:
+            self.truncated = True
+        return len(text)
+
+    def flush(self):
+        pass
+
+    def getvalue(self):
+        text = "".join(self.parts)
+        if self.truncated:
+            text += "\\n[Output truncated]"
+        return text
+
+def _check_submission(payload):
     namespace = {"__name__": "__main__"}
-    captured = io.StringIO()
+    captured = _LimitedOutput()
+    test_output = _LimitedOutput()
     passed = False
     feedback = ""
 
     try:
         with contextlib.redirect_stdout(captured), contextlib.redirect_stderr(captured):
-            exec(compile(payload["code"], "your_code.py", "exec"), namespace)
+            exec(
+                compile(payload["code"], "your_code.py", "exec"),
+                namespace
+            )
 
-        namespace["__output__"] = captured.getvalue()
+        test_namespace = namespace.copy()
+        test_namespace["__output__"] = captured.getvalue()
 
-        with contextlib.redirect_stdout(captured), contextlib.redirect_stderr(captured):
-            exec(compile(payload["tests"], "assignment_checks.py", "exec"), namespace)
+        with contextlib.redirect_stdout(test_output), contextlib.redirect_stderr(test_output):
+            exec(
+                compile(payload["tests"], "assignment_checks.py", "exec"),
+                test_namespace
+            )
 
         passed = True
         feedback = "All assignment checks passed!"
+
     except AssertionError as error:
-        feedback = "Not quite: " + (str(error) or "A check failed.")
+        feedback = "Not quite: " + (str(error) or "An assignment check failed.")
+
     except BaseException:
-        feedback = traceback.format_exc()
+        feedback = traceback.format_exc(limit=8)
 
     return json.dumps({
         "passed": passed,
@@ -1762,9 +1773,13 @@ def __check_submission(payload):
         "feedback": feedback
     })
 
-__check_submission(json.loads(__payload))
+_check_submission(json.loads(__submission_payload))
 `);
-      self.postMessage({ type: "done", ...JSON.parse(result) });
+
+      self.postMessage({
+        type: "done",
+        ...JSON.parse(resultJSON)
+      });
     } catch (error) {
       self.postMessage({
         type: "error",
@@ -1774,98 +1789,217 @@ __check_submission(json.loads(__payload))
   };
 }
 
-function setBusy(busy) {
-  $("runButton").disabled = busy;
-  $("lesson").disabled = busy;
-  $("resetButton").disabled = busy;
-  $("editor").readOnly = busy;
-  $("nextButton").disabled =
-    busy || state.current === lessons.length - 1;
-}
-
 function runCode() {
-  const index = state.current;
-  state.code[index] = $("editor").value;
-  save();
-  setBusy(true);
+  if (busy) return;
+
+  saveEditor();
+
+  const lessonIndex = state.current;
+  const code = $("editor").value;
+
+  busy = true;
+  updateControls();
+
   $("output").textContent =
     "Loading Python… The first run may take a little while.";
 
-  let worker;
-  let workerURL;
-  let timer;
+  let worker = null;
+  let workerURL = null;
+  let timer = null;
   let finished = false;
 
   function finish(message) {
     if (finished) return;
     finished = true;
+
     clearTimeout(timer);
-    if (worker) worker.terminate();
-    if (workerURL) URL.revokeObjectURL(workerURL);
-    setBusy(false);
+
+    if (worker) {
+      worker.terminate();
+    }
+
+    if (workerURL) {
+      URL.revokeObjectURL(workerURL);
+    }
+
+    busy = false;
+    cancelActiveRun = null;
+
+    updateControls();
     $("output").textContent = message;
   }
 
+  cancelActiveRun = () => {
+    finish("Execution stopped. You can edit your code and try again.");
+  };
+
   try {
-    const source = `(${pythonWorker.toString()})();`;
+    const workerSource = `(${pythonWorkerMain.toString()})();`;
+
     workerURL = URL.createObjectURL(
-      new Blob([source], { type: "text/javascript" })
+      new Blob([workerSource], {
+        type: "text/javascript"
+      })
     );
+
     worker = new Worker(workerURL);
 
     timer = setTimeout(() => {
-      finish("Python took too long to load. Check your connection and try again.");
+      finish(
+        "Python took too long to load.\n\n" +
+        "Check your internet connection and try again. " +
+        "Your browser or network may be blocking cdn.jsdelivr.net."
+      );
     }, 90000);
 
-    worker.onmessage = ({ data }) => {
+    worker.onmessage = event => {
       if (finished) return;
+
+      const data = event.data;
 
       if (data.type === "ready") {
         clearTimeout(timer);
-        $("output").textContent = "Running your code and checking the assignment…";
+
+        $("output").textContent =
+          "Running your code and checking the assignment…";
+
         timer = setTimeout(() => {
           finish(
-            "Execution stopped after 5 seconds. Check for an infinite loop " +
-            "or code that takes too long."
+            "Execution stopped after 5 seconds.\n\n" +
+            "Check for an infinite loop or code that takes too long."
           );
         }, 5000);
-      } else if (data.type === "done") {
-        if (data.passed && !state.completed.includes(index)) {
-          state.completed.push(index);
-          save();
+
+        return;
+      }
+
+      if (data.type === "done") {
+        if (data.passed && !state.completed.includes(lessonIndex)) {
+          state.completed.push(lessonIndex);
+          saveState();
           updateProgress();
         }
 
         const printed = data.output
-          ? `Your output:\n${data.output}\n`
+          ? `Your output:\n${data.output}\n\n`
           : "";
 
-        finish(
+        let message =
           printed +
           (data.passed ? "✅ " : "❌ ") +
-          data.feedback +
-          (data.passed ? "\nYou can move on to the next lesson." : "")
+          data.feedback;
+
+        if (data.passed) {
+          message += state.completed.length === lessons.length
+            ? "\n\n🎉 You have completed all 50 lessons!"
+            : "\n\nYou can move on to the next lesson.";
+        }
+
+        finish(message);
+        return;
+      }
+
+      if (data.type === "error") {
+        finish(
+          "Could not start or run Python:\n" +
+          data.message +
+          "\n\nCheck your connection and try again. " +
+          "Use the published GitHub Pages site, not GitHub's file preview."
         );
-      } else if (data.type === "error") {
-        finish("Could not run Python:\n" + data.message);
       }
     };
 
     worker.onerror = event => {
-      finish("Browser execution error:\n" + event.message);
+      finish(
+        "Browser execution error:\n" +
+        (event.message || "The Python worker could not start.") +
+        "\n\nTry a current version of Chrome, Firefox, Edge, or Safari."
+      );
     };
 
     worker.postMessage({
-      code: $("editor").value,
-      tests: lessons[index].tests
+      code,
+      tests: lessons[lessonIndex].tests
     });
   } catch (error) {
     finish("Could not start Python:\n" + String(error));
   }
 }
 
+/* ============================================================
+   BUTTONS AND EDITOR EVENTS
+   ============================================================ */
+
+$("lessonSelect").addEventListener("change", event => {
+  changeLesson(Number(event.target.value));
+});
+
+$("editor").addEventListener("input", saveEditor);
+
+$("editor").addEventListener("keydown", event => {
+  if (busy) return;
+
+  if (event.key === "Tab") {
+    event.preventDefault();
+
+    const editor = event.target;
+
+    editor.setRangeText(
+      "    ",
+      editor.selectionStart,
+      editor.selectionEnd,
+      "end"
+    );
+
+    saveEditor();
+  }
+
+  if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+    event.preventDefault();
+    runCode();
+  }
+});
+
+$("answerButton").addEventListener("click", () => {
+  const show = $("answerPanel").hidden;
+
+  $("answerPanel").hidden = !show;
+  $("answerButton").textContent =
+    show ? "Hide Correct Answer" : "Show Correct Answer";
+  $("answerButton").setAttribute("aria-expanded", String(show));
+});
+
 $("runButton").addEventListener("click", runCode);
-render();
+
+$("stopButton").addEventListener("click", () => {
+  if (cancelActiveRun) {
+    cancelActiveRun();
+  }
+});
+
+$("resetButton").addEventListener("click", () => {
+  if (busy) return;
+
+  if (!confirm("Replace your code with this lesson's starter code?")) {
+    return;
+  }
+
+  state.code[state.current] = lessons[state.current].starter;
+  saveState();
+  renderLesson();
+});
+
+$("previousButton").addEventListener("click", () => {
+  changeLesson(state.current - 1);
+});
+
+$("nextButton").addEventListener("click", () => {
+  changeLesson(state.current + 1);
+});
+
+// Save on initial load and display the current lesson.
+renderLesson();
+saveState();
 </script>
 </body>
 </html>
